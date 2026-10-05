@@ -1,0 +1,218 @@
+{
+  "version": "2026.10.0",
+  "updatedOn": "2026-10-06",
+  "sectors": ["edition", "presse"],
+  "sources": [
+    {
+      "id": "source.bollore-deu-2025",
+      "title": "Document d'enregistrement universel 2025",
+      "url": "https://www.bollore.com/wp-content/uploads/2026/04/0422_boll25t40_deu_fr_2025_mel.pdf",
+      "publisher": "Bolloré SE"
+    },
+    {
+      "id": "source.vivendi-editis-2023",
+      "title": "Clôture de la cession d'Editis à International Media Invest",
+      "url": "https://www.vivendi.com/en/press-release/vivendi-closing-of-the-editis-sale-to-imi/",
+      "publisher": "Vivendi"
+    }
+  ],
+  "fortunes": [
+    {
+      "id": "fortune.bollore",
+      "name": "famille Bolloré",
+      "aliases": ["famille Bolloré", "Bolloré"],
+      "summary": "Le groupe Bolloré est contrôlé majoritairement par la famille Bolloré."
+    }
+  ],
+  "companies": [
+    {
+      "id": "company.bollore-se",
+      "name": "Bolloré SE",
+      "aliases": ["Bolloré SE"],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.louis-hachette-group",
+      "name": "Louis Hachette Group",
+      "aliases": ["Louis Hachette Group"],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.lagardere-sa",
+      "name": "Lagardère SA",
+      "aliases": ["Lagardère"],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.prisma-media",
+      "name": "Prisma Media",
+      "aliases": ["Prisma Media"],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.odet",
+      "name": "Compagnie de l'Odet",
+      "aliases": ["Compagnie de l'Odet", "Odet"],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.vivendi-se",
+      "name": "Vivendi SE",
+      "aliases": ["Vivendi"],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.editis",
+      "name": "Editis",
+      "aliases": ["Editis"],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    }
+  ],
+  "brands": [
+    {
+      "id": "brand.grasset",
+      "name": "Grasset",
+      "aliases": [
+        "Éditions Grasset",
+        "Grasset & Fasquelle",
+        "Éditions Grasset & Fasquelle"
+      ],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.fayard",
+      "name": "Fayard",
+      "aliases": ["Librairie Arthème Fayard", "Éditions Fayard"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.calmann-levy",
+      "name": "Calmann-Lévy",
+      "aliases": ["Calmann Lévy"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.larousse",
+      "name": "Larousse",
+      "aliases": [],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.livre-de-poche",
+      "name": "Le Livre de Poche",
+      "aliases": ["Livre de Poche"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.lgf",
+      "name": "LGF",
+      "aliases": ["Librairie Générale Française"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.hachette-livre",
+      "name": "Hachette Livre",
+      "aliases": [],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.stock",
+      "name": "Stock",
+      "aliases": ["Éditions Stock"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.jc-lattes",
+      "name": "JC Lattès",
+      "aliases": ["Jean-Claude Lattès"],
+      "sectors": ["edition"],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.editis",
+      "name": "Editis",
+      "aliases": [],
+      "sectors": ["edition"],
+      "companyId": "company.editis"
+    }
+  ],
+  "ownerships": [
+    {
+      "ownedCompanyId": "company.bollore-se",
+      "owner": { "type": "fortune", "id": "fortune.bollore" },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bollore-deu-2025",
+      "status": "active",
+      "note": "Contrôle majoritaire. Le document ne donne pas de pourcentage."
+    },
+    {
+      "ownedCompanyId": "company.louis-hachette-group",
+      "owner": { "type": "company", "id": "company.bollore-se" },
+      "capitalPercent": "30.4",
+      "votingPercent": "30.4",
+      "linkType": "reference_shareholder",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bollore-deu-2025",
+      "status": "active",
+      "note": "Le document indique 30,4 % du capital et des droits de vote."
+    },
+    {
+      "ownedCompanyId": "company.lagardere-sa",
+      "owner": { "type": "company", "id": "company.louis-hachette-group" },
+      "capitalPercent": "66.3",
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bollore-deu-2025",
+      "status": "active",
+      "note": null
+    },
+    {
+      "ownedCompanyId": "company.prisma-media",
+      "owner": { "type": "company", "id": "company.louis-hachette-group" },
+      "capitalPercent": "100",
+      "votingPercent": null,
+      "linkType": "subsidiary",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bollore-deu-2025",
+      "status": "active",
+      "note": null
+    },
+    {
+      "ownedCompanyId": "company.editis",
+      "owner": { "type": "company", "id": "company.vivendi-se" },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2023-11-14",
+      "sourceId": "source.vivendi-editis-2023",
+      "status": "historical",
+      "note": "Cession à International Media Invest."
+    }
+  ]
+}
