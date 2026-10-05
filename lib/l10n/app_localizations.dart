@@ -121,8 +121,116 @@ abstract class AppLocalizations {
   /// No description provided for @scannerPlaceholder.
   ///
   /// In fr, this message translates to:
-  /// **'La lecture d’un code-barres viendra ensuite. La caméra n’est pas encore demandée.'**
+  /// **'Saisissez un ISBN. La caméra viendra ensuite.'**
   String get scannerPlaceholder;
+
+  /// No description provided for @codeHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'ISBN ou code-barres'**
+  String get codeHint;
+
+  /// No description provided for @seeAttachment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le rattachement'**
+  String get seeAttachment;
+
+  /// No description provided for @codeEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisissez un code.'**
+  String get codeEmpty;
+
+  /// No description provided for @codeUnrecognized.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce code n’est pas un code produit.'**
+  String get codeUnrecognized;
+
+  /// No description provided for @codeInvalidCheck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le chiffre de contrôle est faux.'**
+  String get codeInvalidCheck;
+
+  /// No description provided for @searching.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recherche en cours'**
+  String get searching;
+
+  /// No description provided for @putBack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je le repose'**
+  String get putBack;
+
+  /// No description provided for @buyAnyway.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je l’achète quand même'**
+  String get buyAnyway;
+
+  /// No description provided for @notebookTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ils n’auront pas'**
+  String get notebookTitle;
+
+  /// No description provided for @notebookEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun produit reposé.'**
+  String get notebookEmpty;
+
+  /// No description provided for @productUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce numéro n’est pas dans les sources.'**
+  String get productUnknown;
+
+  /// No description provided for @notABook.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les livres sont lus pour l’instant. Ce code n’en est pas un.'**
+  String get notABook;
+
+  /// No description provided for @offlineProduct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le produit n’a pas pu être identifié.'**
+  String get offlineProduct;
+
+  /// No description provided for @brandUnmatched.
+  ///
+  /// In fr, this message translates to:
+  /// **'La marque est identifiée, le rattachement capitalistique ne l’est pas.'**
+  String get brandUnmatched;
+
+  /// No description provided for @gs1Prefix.
+  ///
+  /// In fr, this message translates to:
+  /// **'préfixe GS1, titulaire non identifié'**
+  String get gs1Prefix;
+
+  /// No description provided for @otherShareholders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les autres actionnaires'**
+  String get otherShareholders;
+
+  /// No description provided for @chooseBrand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quelle maison est-ce ?'**
+  String get chooseBrand;
+
+  /// No description provided for @categoryBook.
+  ///
+  /// In fr, this message translates to:
+  /// **'Livre'**
+  String get categoryBook;
 
   /// No description provided for @searchHint.
   ///

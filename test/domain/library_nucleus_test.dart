@@ -55,6 +55,13 @@ void main() {
     );
     expect(
       library
+          .brandsForKey(normalizeBrandName('Bernard Grasset (Paris)'))
+          .single
+          .id,
+      'brand.grasset',
+    );
+    expect(
+      library
           .brandsForKey(normalizeBrandName('Librairie Arthème Fayard'))
           .single
           .id,

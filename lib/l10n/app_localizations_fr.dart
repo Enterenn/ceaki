@@ -23,7 +23,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scannerPlaceholder =>
-      'La lecture d’un code-barres viendra ensuite. La caméra n’est pas encore demandée.';
+      'Saisissez un ISBN. La caméra viendra ensuite.';
+
+  @override
+  String get codeHint => 'ISBN ou code-barres';
+
+  @override
+  String get seeAttachment => 'Voir le rattachement';
+
+  @override
+  String get codeEmpty => 'Saisissez un code.';
+
+  @override
+  String get codeUnrecognized => 'Ce code n’est pas un code produit.';
+
+  @override
+  String get codeInvalidCheck => 'Le chiffre de contrôle est faux.';
+
+  @override
+  String get searching => 'Recherche en cours';
+
+  @override
+  String get putBack => 'Je le repose';
+
+  @override
+  String get buyAnyway => 'Je l’achète quand même';
+
+  @override
+  String get notebookTitle => 'Ils n’auront pas';
+
+  @override
+  String get notebookEmpty => 'Aucun produit reposé.';
+
+  @override
+  String get productUnknown => 'Ce numéro n’est pas dans les sources.';
+
+  @override
+  String get notABook =>
+      'Les livres sont lus pour l’instant. Ce code n’en est pas un.';
+
+  @override
+  String get offlineProduct => 'Le produit n’a pas pu être identifié.';
+
+  @override
+  String get brandUnmatched =>
+      'La marque est identifiée, le rattachement capitalistique ne l’est pas.';
+
+  @override
+  String get gs1Prefix => 'préfixe GS1, titulaire non identifié';
+
+  @override
+  String get otherShareholders => 'Voir les autres actionnaires';
+
+  @override
+  String get chooseBrand => 'Quelle maison est-ce ?';
+
+  @override
+  String get categoryBook => 'Livre';
 
   @override
   String get searchHint => 'Fortune, société ou marque';

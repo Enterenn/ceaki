@@ -33,21 +33,21 @@ class LinkTile extends StatelessWidget {
           ? null
           : IconButton(
               tooltip: source!.title,
-              onPressed: () => _openSource(context, source!.url),
+              onPressed: () => openHttps(context, source!.url),
               icon: const Icon(Icons.open_in_new),
             ),
     );
   }
+}
 
-  Future<void> _openSource(BuildContext context, String url) async {
-    final opened = await launchUrl(
-      Uri.parse(url),
-      mode: LaunchMode.externalApplication,
+Future<void> openHttps(BuildContext context, String url) async {
+  final opened = await launchUrl(
+    Uri.parse(url),
+    mode: LaunchMode.externalApplication,
+  );
+  if (!opened && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context).sourceOpenError)),
     );
-    if (!opened && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).sourceOpenError)),
-      );
-    }
   }
 }
