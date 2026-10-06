@@ -304,6 +304,12 @@ abstract class AppLocalizations {
   /// **'Je l’achète quand même'**
   String get buyAnyway;
 
+  /// No description provided for @esquiveBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Esquive'**
+  String get esquiveBadge;
+
   /// No description provided for @notebookTitle.
   ///
   /// In fr, this message translates to:

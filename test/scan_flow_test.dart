@@ -48,8 +48,11 @@ void main() {
       expect(putBackY < proofY, isTrue);
 
       await tester.tap(find.text('Je le repose'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
 
+      expect(find.text('ESQUIVE'), findsOneWidget);
       expect(find.textContaining('Reposé.'), findsOneWidget);
       expect(find.text('Je le repose'), findsNothing);
 

@@ -128,6 +128,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buyAnyway => 'Je l’achète quand même';
 
   @override
+  String get esquiveBadge => 'Esquive';
+
+  @override
   String get notebookTitle => 'Ils n’auront pas';
 
   @override
