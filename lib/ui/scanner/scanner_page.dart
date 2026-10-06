@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/scan_book.dart';
 import 'package:transparence/domain/gtin.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/brand/ceaki_mark.dart';
 import 'package:transparence/ui/result/result_page.dart';
+import 'package:transparence/ui/scanner/camera_scan_page.dart';
+import 'package:transparence/ui/theme.dart';
 
 class ScannerPage extends ConsumerStatefulWidget {
   const ScannerPage({super.key});
 
   static const codeField = Key('scan-code');
+  static const manualToggle = Key('scan-manual-toggle');
+  static const submitButton = Key('scan-submit');
 
   @override
   ConsumerState<ScannerPage> createState() => _ScannerPageState();
@@ -19,137 +22,114 @@ class ScannerPage extends ConsumerStatefulWidget {
 
 class _ScannerPageState extends ConsumerState<ScannerPage> {
   final _code = TextEditingController();
-  MobileScannerController? _camera;
   String? _error;
-  String? _seen;
   var _busy = false;
-  var _readyAt = DateTime.fromMillisecondsSinceEpoch(0);
+  var _manual = false;
 
   @override
   void dispose() {
     _code.dispose();
-    _camera?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final camera = _camera;
-    return ListView(
-      padding: const EdgeInsets.all(24),
+    final theme = Theme.of(context);
+    return Stack(
       children: [
-        Text(l10n.scannerPlaceholder, textAlign: TextAlign.center),
-        const SizedBox(height: 24),
-        if (camera == null) ...[
-          Text(l10n.cameraReason, textAlign: TextAlign.center),
-          const SizedBox(height: 16),
-          FilledButton.tonal(
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(48),
-            ),
-            onPressed: _allowCamera,
-            child: Text(l10n.cameraAllow),
-          ),
-        ] else
-          SizedBox(
-            height: 200,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: MobileScanner(
-                controller: camera,
-                onDetect: _onDetect,
-                errorBuilder: (context, error) {
-                  final denied =
-                      error.errorCode ==
-                      MobileScannerErrorCode.permissionDenied;
-                  return ColoredBox(
-                    color: Colors.black,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          denied ? l10n.cameraDenied : error.errorCode.message,
-                          style: const TextStyle(color: Colors.white),
-                          textAlign: TextAlign.center,
-                        ),
+        const Positioned.fill(child: _HomeBackdrop()),
+        SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+              const CeakiMark(size: 44),
+              const SizedBox(height: 12),
+              Container(
+                width: 72,
+                height: 8,
+                color: TransparenceColors.lime,
+              ),
+              const SizedBox(height: 28),
+              Text(
+                l10n.scannerHeadline,
+                style: theme.textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                l10n.scannerSub,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: TransparenceColors.mute,
+                ),
+              ),
+              const SizedBox(height: 40),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: TransparenceColors.lime,
+                  foregroundColor: TransparenceColors.ink,
+                  minimumSize: const Size.fromHeight(64),
+                ),
+                onPressed: _busy ? null : _openCamera,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.qr_code_scanner, size: 26),
+                    const SizedBox(width: 12),
+                    Text(
+                      l10n.scanCta,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: TransparenceColors.ink,
                       ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  key: ScannerPage.manualToggle,
+                  onPressed: () => setState(() => _manual = !_manual),
+                  child: Text(
+                    _manual ? l10n.manualHide : l10n.manualShow,
+                  ),
+                ),
+              ),
+              if (_manual) ...[
+                const SizedBox(height: 8),
+                TextField(
+                  key: ScannerPage.codeField,
+                  controller: _code,
+                  enabled: !_busy,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: l10n.codeHint,
+                    errorText: _error,
+                  ),
+                  onSubmitted: (_) => _submit(),
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  key: ScannerPage.submitButton,
+                  onPressed: _busy ? null : _submit,
+                  child: Text(_busy ? l10n.searching : l10n.seeAttachment),
+                ),
+              ],
+            ],
             ),
           ),
-        const SizedBox(height: 16),
-        TextField(
-          key: ScannerPage.codeField,
-          controller: _code,
-          enabled: !_busy,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-            hintText: l10n.codeHint,
-            errorText: _error,
-          ),
-          onSubmitted: (_) => _submit(),
-        ),
-        const SizedBox(height: 16),
-        FilledButton(
-          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
-          onPressed: _busy ? null : _submit,
-          child: Text(_busy ? l10n.searching : l10n.seeAttachment),
         ),
       ],
     );
   }
 
-  void _allowCamera() {
-    if (_camera != null) return;
-    setState(() {
-      _camera = MobileScannerController(
-        formats: const [
-          BarcodeFormat.ean13,
-          BarcodeFormat.ean8,
-          BarcodeFormat.upcA,
-        ],
-      );
-    });
-  }
-
-  Future<void> _onDetect(BarcodeCapture capture) async {
-    if (_busy || DateTime.now().isBefore(_readyAt)) return;
-    final raw = capture.barcodes
-        .map((barcode) => barcode.rawValue)
-        .whereType<String>()
-        .where((value) => value.isNotEmpty)
-        .firstOrNull;
-    if (raw == null || raw == _seen) return;
-    _seen = raw;
-    final l10n = AppLocalizations.of(context);
-    switch (readGtin(raw)) {
-      case GtinRejected(:final reason):
-        setState(() => _error = _reject(l10n, reason));
-      case GtinAccepted(:final gtin):
-        setState(() {
-          _busy = true;
-          _error = null;
-        });
-        await HapticFeedback.lightImpact();
-        await _camera?.stop();
-        try {
-          await _open(gtin);
-        } finally {
-          _seen = null;
-          _readyAt = DateTime.now().add(const Duration(milliseconds: 800));
-          if (mounted) {
-            try {
-              await _camera?.start();
-            } catch (_) {
-              _seen = raw;
-            }
-          }
-        }
-    }
+  Future<void> _openCamera() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const CameraScanPage()),
+    );
   }
 
   Future<void> _submit() async {
@@ -192,4 +172,42 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
       GtinReject.invalidCheck => l10n.codeInvalidCheck,
     };
   }
+}
+
+class _HomeBackdrop extends StatelessWidget {
+  const _HomeBackdrop();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(painter: _StripePainter());
+  }
+}
+
+class _StripePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final base = Paint()..color = TransparenceColors.paper;
+    canvas.drawRect(Offset.zero & size, base);
+    final lime = Paint()
+      ..color = TransparenceColors.lime.withValues(alpha: 0.35);
+    final ink = Paint()..color = TransparenceColors.ink.withValues(alpha: 0.04);
+    canvas.drawRect(
+      Rect.fromLTWH(size.width * 0.62, 0, size.width * 0.38, size.height * 0.34),
+      lime,
+    );
+    canvas.drawRect(
+      Rect.fromLTWH(0, size.height * 0.72, size.width * 0.28, size.height * 0.28),
+      ink,
+    );
+    final line = Paint()
+      ..color = TransparenceColors.ink.withValues(alpha: 0.08)
+      ..strokeWidth = 1.5;
+    for (var i = 0; i < 8; i++) {
+      final y = size.height * 0.4 + i * 18.0;
+      canvas.drawLine(Offset(0, y), Offset(size.width, y + 40), line);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

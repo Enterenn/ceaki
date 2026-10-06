@@ -32,7 +32,7 @@ void main() {
     try {
       await tester.pumpAndSettle();
 
-      expect(find.text('Scanner'), findsWidgets);
+      expect(find.text('Scan'), findsWidgets);
       await tester.tap(find.text('Bibliothèque').last);
       await tester.pumpAndSettle();
 

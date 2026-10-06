@@ -17,6 +17,8 @@ dependencies:
   http: ^1.6.0
   intl: any
   mobile_scanner: ^7.4.2
+  package_info_plus: ^10.2.2
+  permission_handler: ^13.0.2
   url_launcher: ^6.3.3
   xml: ^7.1.0
 
@@ -32,3 +34,10 @@ flutter:
   generate: true
   assets:
     - assets/library/library.json
+  fonts:
+    - family: Syne
+      fonts:
+        - asset: assets/fonts/Syne-Variable.ttf
+    - family: Figtree
+      fonts:
+        - asset: assets/fonts/Figtree-Variable.ttf

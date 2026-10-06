@@ -13,8 +13,11 @@ import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/company_page.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/link_tile.dart';
+import 'package:transparence/application/player_stats.dart';
+import 'package:transparence/ui/game/esquive_burst.dart';
 import 'package:transparence/ui/result/fortune_banner.dart';
 import 'package:transparence/ui/result/path_chain.dart';
+import 'package:transparence/ui/theme.dart';
 
 class ResultPage extends ConsumerWidget {
   const ResultPage({required this.scanId, super.key});
@@ -173,12 +176,9 @@ class _ResultBody extends ConsumerWidget {
         if (scan.choice == ScanChoice.putBack && scan.fortuneNames.isNotEmpty)
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                putBackLine(scan.fortuneNames),
-                style: theme.textTheme.titleMedium,
-              ),
+            child: EsquiveBurst(
+              line: putBackLine(scan.fortuneNames),
+              rankTitle: ref.watch(playerRankProvider).asData?.value.title,
             ),
           )
         else if (scan.choice == null &&
@@ -191,7 +191,9 @@ class _ResultBody extends ConsumerWidget {
               children: [
                 FilledButton(
                   style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48),
+                    backgroundColor: TransparenceColors.lime,
+                    foregroundColor: TransparenceColors.ink,
+                    minimumSize: const Size.fromHeight(56),
                   ),
                   onPressed: () async {
                     final saved = await ref
@@ -201,6 +203,7 @@ class _ResultBody extends ConsumerWidget {
                   },
                   child: Text(l10n.putBack),
                 ),
+                const SizedBox(height: 8),
                 TextButton(
                   style: TextButton.styleFrom(
                     minimumSize: const Size.fromHeight(48),

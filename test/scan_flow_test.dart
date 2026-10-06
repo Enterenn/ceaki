@@ -30,15 +30,10 @@ void main() {
     await tester.pumpWidget(_app(database));
     try {
       await tester.pumpAndSettle();
-
-      await tester.enterText(
-        find.byKey(ScannerPage.codeField),
-        '978-2-246-80723-0',
-      );
-      await tester.tap(find.text('Voir le rattachement'));
+      await _submitCode(tester, '978-2-246-80723-0');
       await tester.pumpAndSettle();
 
-      expect(find.text('Grande fortune'), findsOneWidget);
+      expect(find.text('GRANDE FORTUNE'), findsOneWidget);
       expect(find.textContaining('Grasset y est rattaché'), findsOneWidget);
       expect(find.text("La traversée de l'été : roman"), findsOneWidget);
 
@@ -53,8 +48,8 @@ void main() {
       await tester.tap(find.text('Vous').last);
       await tester.pumpAndSettle();
 
-      expect(find.text('Ils n’auront pas'), findsOneWidget);
-      expect(find.text('famille Bolloré — 1 produit reposé'), findsOneWidget);
+      expect(find.text('Reposés'), findsOneWidget);
+      expect(find.text('famille Bolloré — 1'), findsOneWidget);
     } finally {
       await _closeApp(tester, database);
     }
@@ -63,18 +58,12 @@ void main() {
   testWidgets('a bad check digit stays on the scanner', (tester) async {
     await tester.pumpWidget(_app(database));
     try {
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
-
-      await tester.enterText(
-        find.byKey(ScannerPage.codeField),
-        '9782246807231',
-      );
-      await tester.tap(find.text('Voir le rattachement'));
+      await tester.pumpAndSettle();
+      await _submitCode(tester, '9782246807231');
       await tester.pump();
 
       expect(find.text('Le chiffre de contrôle est faux.'), findsOneWidget);
-      expect(find.text('Grande fortune'), findsNothing);
+      expect(find.text('GRANDE FORTUNE'), findsNothing);
     } finally {
       await _closeApp(tester, database);
     }
@@ -84,35 +73,29 @@ void main() {
     await tester.pumpWidget(_app(database));
     try {
       await tester.pumpAndSettle();
-      await tester.enterText(
-        find.byKey(ScannerPage.codeField),
-        '978-2-259-19540-9',
-      );
-      await tester.tap(find.text('Voir le rattachement'));
+      await _submitCode(tester, '978-2-259-19540-9');
       await tester.pumpAndSettle();
 
       expect(find.text('Propriétaire actuel non documenté'), findsOneWidget);
       expect(find.text('Vivendi SE'), findsOneWidget);
       expect(find.text('Plus belle sera la vie : roman'), findsOneWidget);
-      expect(find.text('Grande fortune'), findsNothing);
+      expect(find.text('GRANDE FORTUNE'), findsNothing);
       expect(find.text('Je le repose'), findsNothing);
     } finally {
       await _closeApp(tester, database);
     }
   });
 
-  testWidgets('the camera stays off until its reason is accepted', (
+  testWidgets('home keeps the camera and code field off until asked', (
     tester,
   ) async {
     await tester.pumpWidget(_app(database));
     try {
       await tester.pump();
-      expect(
-        find.text('La caméra sert à lire un code-barres produit.'),
-        findsOneWidget,
-      );
-      expect(find.text('Autoriser la caméra'), findsOneWidget);
-      expect(find.byKey(ScannerPage.codeField), findsOneWidget);
+      expect(find.text('Scannez'), findsOneWidget);
+      expect(find.text('Code illisible ?'), findsOneWidget);
+      expect(find.byKey(ScannerPage.codeField), findsNothing);
+      expect(find.text('Autoriser la caméra'), findsNothing);
       expect(find.byType(MobileScanner), findsNothing);
     } finally {
       await _closeApp(tester, database);
@@ -123,11 +106,7 @@ void main() {
     await tester.pumpWidget(_app(database));
     try {
       await tester.pumpAndSettle();
-      await tester.enterText(
-        find.byKey(ScannerPage.codeField),
-        '3558380078180',
-      );
-      await tester.tap(find.text('Voir le rattachement'));
+      await _submitCode(tester, '3558380078180');
       await tester.pumpAndSettle();
 
       expect(find.text('Dobble classique'), findsOneWidget);
@@ -136,12 +115,28 @@ void main() {
       expect(find.text('Savvy Gaming Group'), findsWidgets);
       expect(find.textContaining('16,9 % du capital'), findsOneWidget);
       expect(find.text('Aucune grande fortune documentée'), findsOneWidget);
-      expect(find.text('Grande fortune'), findsNothing);
+      expect(find.text('GRANDE FORTUNE'), findsNothing);
       expect(find.text('Je le repose'), findsNothing);
     } finally {
       await _closeApp(tester, database);
     }
   });
+}
+
+Future<void> _openManual(WidgetTester tester) async {
+  final toggle = find.byKey(ScannerPage.manualToggle);
+  await tester.ensureVisible(toggle);
+  await tester.tap(toggle);
+  await tester.pump();
+  expect(find.byKey(ScannerPage.codeField), findsOneWidget);
+}
+
+Future<void> _submitCode(WidgetTester tester, String code) async {
+  await _openManual(tester);
+  await tester.enterText(find.byKey(ScannerPage.codeField), code);
+  final submit = find.byKey(ScannerPage.submitButton);
+  await tester.ensureVisible(submit);
+  await tester.tap(submit);
 }
 
 Widget _app(AppDatabase database) {

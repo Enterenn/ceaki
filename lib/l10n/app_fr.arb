@@ -1,13 +1,20 @@
 {
   "@@locale": "fr",
-  "appTitle": "Transparence",
-  "navScanner": "Scanner",
+  "appTitle": "Céaki?",
+  "navScanner": "Scan",
   "navLibrary": "Bibliothèque",
   "navYou": "Vous",
-  "scannerPlaceholder": "Saisissez un code, ou lisez-le avec la caméra.",
-  "cameraReason": "La caméra sert à lire un code-barres produit.",
+  "scannerHeadline": "Qui est derrière ?",
+  "scannerSub": "Scanne un produit et découvre qui tire les ficelles.",
+  "scanCta": "Scannez",
+  "scanTitle": "Scanner",
+  "scanHint": "Cadrez le code-barres",
+  "manualShow": "Code illisible ?",
+  "manualHide": "Masquer la saisie",
+  "cameraReason": "La caméra sert uniquement à lire un code-barres produit.",
   "cameraAllow": "Autoriser la caméra",
-  "cameraDenied": "La caméra est refusée. La saisie reste possible.",
+  "cameraDenied": "La caméra est bloquée pour Céaki. Active-la dans les réglages du téléphone, ou saisis le code à la main.",
+  "cameraOpenSettings": "Ouvrir les réglages",
   "alertOff": "Alerte retirée",
   "alertRemove": "Retirer l’alerte",
   "alertRestore": "Rétablir l’alerte",
@@ -19,8 +26,21 @@
   "searching": "Recherche en cours",
   "putBack": "Je le repose",
   "buyAnyway": "Je l’achète quand même",
-  "notebookTitle": "Ils n’auront pas",
-  "notebookEmpty": "Aucun produit reposé.",
+  "notebookTitle": "Reposés",
+  "notebookEmpty": "Rien pour l’instant.",
+  "notebookLine": "{name} — {count}",
+  "@notebookLine": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "count": {"type": "int"}
+    }
+  },
+  "rankEsquives": "{count} {count, plural, =0{reposés} =1{reposé} other{reposés}}",
+  "@rankEsquives": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "productUnknown": "Ce numéro n’est pas dans les sources.",
   "notABook": "Les livres sont lus pour l’instant. Ce code n’en est pas un.",
   "offlineProduct": "Le produit n’a pas pu être identifié.",
@@ -46,9 +66,16 @@
   "chain": "Chaîne",
   "noScans": "Aucun produit scanné sur cet appareil",
   "alertOn": "Alerte active",
+  "appVersionLabel": "Version de l’app",
+  "appVersionValue": "Céaki v{version}",
+  "@appVersionValue": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
   "libraryVersionLabel": "Version de la bibliothèque",
-  "aboutPurpose": "Éviter d’acheter un produit rattaché à une grande fortune documentée, et pouvoir privilégier un produit sans ce rattachement.",
-  "aboutLimit": "L’absence de grande fortune documentée n’est pas un label de petite entreprise.",
+  "aboutPurpose": "Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.",
+  "aboutLimit": "Pas de grande fortune documentée ≠ petite entreprise.",
   "libraryError": "La bibliothèque n’a pas pu être lue.",
   "missingEntry": "Cette fiche n’est plus dans la bibliothèque.",
   "sourceOpenError": "La source n’a pas pu être ouverte.",

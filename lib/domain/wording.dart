@@ -126,8 +126,7 @@ String putBackLine(List<String> fortuneNames) {
   final subject = fortuneNames.length == 1
       ? fortuneNames.single
       : '${fortuneNames.sublist(0, fortuneNames.length - 1).join(', ')} et ${fortuneNames.last}';
-  final verb = fortuneNames.length == 1 ? 'n’aura' : 'n’auront';
-  return 'Reposé. $subject $verb pas celui-ci.';
+  return 'Reposé. $subject — celui-ci reste en rayon.';
 }
 
 String _bannerBody(Library library, BrandChain chain, String fortuneId) {
@@ -159,7 +158,6 @@ String _bannerBody(Library library, BrandChain chain, String fortuneId) {
     final suffix = sameDate ? ' (chiffres au ${frenchDate(dates.first)})' : '';
     sentence.write(' ${_joinClauses(rendered)}$suffix.');
   }
-  sentence.write(' L’achat alimente un groupe lié à cette fortune.');
   return sentence.toString();
 }
 

@@ -45,7 +45,8 @@ void main() {
     expect(await book.putBack(id, library), isFalse);
 
     final lines = notebookLines(await database.putBacks());
-    expect(lines.single.label, 'famille Bolloré — 1 produit reposé');
+    expect(lines.single.name, 'famille Bolloré');
+    expect(lines.single.count, 1);
     expect(
       describeScan(
         library,
@@ -62,7 +63,7 @@ void main() {
           excludedFortuneIds: const {},
         ).fortuneNames,
       ),
-      contains('n’aura pas celui-ci'),
+      'Reposé. famille Bolloré — celui-ci reste en rayon.',
     );
   });
 
@@ -120,10 +121,9 @@ void main() {
       expect(kept.state, ChainState.alertMuted);
       expect(kept.choice, ScanChoice.putBack);
       expect(kept.fortuneNames, ['famille Bolloré']);
-      expect(
-        notebookLines(await database.putBacks()).single.label,
-        'famille Bolloré — 1 produit reposé',
-      );
+      final keptLine = notebookLines(await database.putBacks()).single;
+      expect(keptLine.name, 'famille Bolloré');
+      expect(keptLine.count, 1);
       final stored = await (database.select(
         database.alertExclusions,
       )..where((row) => row.fortuneId.equals('fortune.bollore'))).getSingle();

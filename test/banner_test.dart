@@ -17,7 +17,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Grande fortune'), findsOneWidget);
+    expect(find.text('GRANDE FORTUNE'), findsOneWidget);
     expect(find.text('famille Bolloré'), findsOneWidget);
     expect(find.text('Grasset y est rattaché.'), findsOneWidget);
   });

@@ -10,10 +10,10 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appTitle => 'Transparence';
+  String get appTitle => 'Céaki?';
 
   @override
-  String get navScanner => 'Scanner';
+  String get navScanner => 'Scan';
 
   @override
   String get navLibrary => 'Bibliothèque';
@@ -22,17 +22,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navYou => 'Vous';
 
   @override
-  String get scannerPlaceholder =>
-      'Saisissez un code, ou lisez-le avec la caméra.';
+  String get scannerHeadline => 'Qui est derrière ?';
 
   @override
-  String get cameraReason => 'La caméra sert à lire un code-barres produit.';
+  String get scannerSub =>
+      'Scanne un produit et découvre qui tire les ficelles.';
+
+  @override
+  String get scanCta => 'Scannez';
+
+  @override
+  String get scanTitle => 'Scanner';
+
+  @override
+  String get scanHint => 'Cadrez le code-barres';
+
+  @override
+  String get manualShow => 'Code illisible ?';
+
+  @override
+  String get manualHide => 'Masquer la saisie';
+
+  @override
+  String get cameraReason =>
+      'La caméra sert uniquement à lire un code-barres produit.';
 
   @override
   String get cameraAllow => 'Autoriser la caméra';
 
   @override
-  String get cameraDenied => 'La caméra est refusée. La saisie reste possible.';
+  String get cameraDenied =>
+      'La caméra est bloquée pour Céaki. Active-la dans les réglages du téléphone, ou saisis le code à la main.';
+
+  @override
+  String get cameraOpenSettings => 'Ouvrir les réglages';
 
   @override
   String get alertOff => 'Alerte retirée';
@@ -68,10 +91,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buyAnyway => 'Je l’achète quand même';
 
   @override
-  String get notebookTitle => 'Ils n’auront pas';
+  String get notebookTitle => 'Reposés';
 
   @override
-  String get notebookEmpty => 'Aucun produit reposé.';
+  String get notebookEmpty => 'Rien pour l’instant.';
+
+  @override
+  String notebookLine(String name, int count) {
+    return '$name — $count';
+  }
+
+  @override
+  String rankEsquives(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'reposés',
+      one: 'reposé',
+      zero: 'reposés',
+    );
+    return '$count $_temp0';
+  }
 
   @override
   String get productUnknown => 'Ce numéro n’est pas dans les sources.';
@@ -151,15 +191,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get alertOn => 'Alerte active';
 
   @override
+  String get appVersionLabel => 'Version de l’app';
+
+  @override
+  String appVersionValue(String version) {
+    return 'Céaki v$version';
+  }
+
+  @override
   String get libraryVersionLabel => 'Version de la bibliothèque';
 
   @override
   String get aboutPurpose =>
-      'Éviter d’acheter un produit rattaché à une grande fortune documentée, et pouvoir privilégier un produit sans ce rattachement.';
+      'Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.';
 
   @override
   String get aboutLimit =>
-      'L’absence de grande fortune documentée n’est pas un label de petite entreprise.';
+      'Pas de grande fortune documentée ≠ petite entreprise.';
 
   @override
   String get libraryError => 'La bibliothèque n’a pas pu être lue.';

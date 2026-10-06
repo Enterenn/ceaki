@@ -26,7 +26,7 @@ void main() {
 
   test('the put-back line names the fortune and invents no price', () {
     final line = putBackLine(const ['famille Bolloré']);
-    expect(line, 'Reposé. famille Bolloré n’aura pas celui-ci.');
+    expect(line, 'Reposé. famille Bolloré — celui-ci reste en rayon.');
     expect(line.contains('€'), isFalse);
     expect(line.toLowerCase().contains('euro'), isFalse);
   });

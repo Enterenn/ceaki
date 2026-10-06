@@ -101,6 +101,12 @@ class AppDatabase extends _$AppDatabase {
     return (select(scans)..where((row) => row.id.equals(id))).watchSingle();
   }
 
+  Stream<List<Scan>> watchScans() {
+    return (select(scans)
+          ..orderBy([(row) => OrderingTerm.desc(row.scannedAt)]))
+        .watch();
+  }
+
   Stream<List<Scan>> watchPutBacks() {
     return (select(scans)
           ..where((row) => row.choice.equals('put_back'))

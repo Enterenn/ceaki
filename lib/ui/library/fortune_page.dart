@@ -47,12 +47,20 @@ class FortunePage extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 child: Text(fortune.summary),
               ),
-              ListTile(title: Text(off ? l10n.alertOff : l10n.alertOn)),
+              ListTile(
+                title: Text(
+                  off ? l10n.alertOff : l10n.alertOn,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: off ? null : const Color(0xFFFF3D5A),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48),
+                    minimumSize: const Size.fromHeight(52),
                   ),
                   onPressed: () {
                     final database = ref.read(appDatabaseProvider);

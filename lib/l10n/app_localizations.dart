@@ -97,13 +97,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Transparence'**
+  /// **'Céaki?'**
   String get appTitle;
 
   /// No description provided for @navScanner.
   ///
   /// In fr, this message translates to:
-  /// **'Scanner'**
+  /// **'Scan'**
   String get navScanner;
 
   /// No description provided for @navLibrary.
@@ -118,16 +118,52 @@ abstract class AppLocalizations {
   /// **'Vous'**
   String get navYou;
 
-  /// No description provided for @scannerPlaceholder.
+  /// No description provided for @scannerHeadline.
   ///
   /// In fr, this message translates to:
-  /// **'Saisissez un code, ou lisez-le avec la caméra.'**
-  String get scannerPlaceholder;
+  /// **'Qui est derrière ?'**
+  String get scannerHeadline;
+
+  /// No description provided for @scannerSub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanne un produit et découvre qui tire les ficelles.'**
+  String get scannerSub;
+
+  /// No description provided for @scanCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scannez'**
+  String get scanCta;
+
+  /// No description provided for @scanTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner'**
+  String get scanTitle;
+
+  /// No description provided for @scanHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cadrez le code-barres'**
+  String get scanHint;
+
+  /// No description provided for @manualShow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code illisible ?'**
+  String get manualShow;
+
+  /// No description provided for @manualHide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer la saisie'**
+  String get manualHide;
 
   /// No description provided for @cameraReason.
   ///
   /// In fr, this message translates to:
-  /// **'La caméra sert à lire un code-barres produit.'**
+  /// **'La caméra sert uniquement à lire un code-barres produit.'**
   String get cameraReason;
 
   /// No description provided for @cameraAllow.
@@ -139,8 +175,14 @@ abstract class AppLocalizations {
   /// No description provided for @cameraDenied.
   ///
   /// In fr, this message translates to:
-  /// **'La caméra est refusée. La saisie reste possible.'**
+  /// **'La caméra est bloquée pour Céaki. Active-la dans les réglages du téléphone, ou saisis le code à la main.'**
   String get cameraDenied;
+
+  /// No description provided for @cameraOpenSettings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir les réglages'**
+  String get cameraOpenSettings;
 
   /// No description provided for @alertOff.
   ///
@@ -211,14 +253,26 @@ abstract class AppLocalizations {
   /// No description provided for @notebookTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Ils n’auront pas'**
+  /// **'Reposés'**
   String get notebookTitle;
 
   /// No description provided for @notebookEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Aucun produit reposé.'**
+  /// **'Rien pour l’instant.'**
   String get notebookEmpty;
+
+  /// No description provided for @notebookLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} — {count}'**
+  String notebookLine(String name, int count);
+
+  /// No description provided for @rankEsquives.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} {count, plural, =0{reposés} =1{reposé} other{reposés}}'**
+  String rankEsquives(int count);
 
   /// No description provided for @productUnknown.
   ///
@@ -370,6 +424,18 @@ abstract class AppLocalizations {
   /// **'Alerte active'**
   String get alertOn;
 
+  /// No description provided for @appVersionLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version de l’app'**
+  String get appVersionLabel;
+
+  /// No description provided for @appVersionValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Céaki v{version}'**
+  String appVersionValue(String version);
+
   /// No description provided for @libraryVersionLabel.
   ///
   /// In fr, this message translates to:
@@ -379,13 +445,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPurpose.
   ///
   /// In fr, this message translates to:
-  /// **'Éviter d’acheter un produit rattaché à une grande fortune documentée, et pouvoir privilégier un produit sans ce rattachement.'**
+  /// **'Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.'**
   String get aboutPurpose;
 
   /// No description provided for @aboutLimit.
   ///
   /// In fr, this message translates to:
-  /// **'L’absence de grande fortune documentée n’est pas un label de petite entreprise.'**
+  /// **'Pas de grande fortune documentée ≠ petite entreprise.'**
   String get aboutLimit;
 
   /// No description provided for @libraryError.

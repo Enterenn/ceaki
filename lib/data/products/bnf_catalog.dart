@@ -3,7 +3,7 @@ import 'package:transparence/data/products/book_record.dart';
 import 'package:xml/xml.dart';
 
 const catalogUserAgent =
-    'Transparence/0.1.0 (https://github.com/Enterenn/ceaki)';
+    'Ceaki/0.1.0 (https://github.com/Enterenn/ceaki)';
 
 abstract class BookCatalog {
   Future<BookRecord?> find(String gtin);

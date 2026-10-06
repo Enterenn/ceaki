@@ -28,10 +28,7 @@ void main() {
     expect(body.contains('30,4 % des droits de vote'), isTrue);
     expect(body.contains('66,3 % du capital'), isTrue);
     expect(body.contains('31 décembre 2025'), isTrue);
-    expect(
-      body.contains('L’achat alimente un groupe lié à cette fortune'),
-      isTrue,
-    );
+    expect(body.contains('L’achat alimente'), isFalse);
     expect(body.contains('possède'), isFalse);
     expect(body.contains('100'), isFalse);
     expect(

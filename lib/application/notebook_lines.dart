@@ -14,11 +14,6 @@ final class NotebookLine {
   final String fortuneId;
   final String name;
   final int count;
-
-  String get label {
-    final products = count == 1 ? 'produit reposé' : 'produits reposés';
-    return '$name — $count $products';
-  }
 }
 
 List<NotebookLine> notebookLines(List<Scan> rows) {
