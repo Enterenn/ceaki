@@ -33,18 +33,21 @@ class _EsquiveBurstState extends State<EsquiveBurst>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 420),
+      duration: const Duration(milliseconds: 560),
     );
     final curve = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeOutCubic,
+      curve: Curves.easeOutBack,
     );
-    _fade = curve;
+    _fade = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0, 0.6, curve: Curves.easeOut),
+    );
     _slide = Tween<Offset>(
-      begin: const Offset(0, 0.1),
+      begin: const Offset(0, 0.18),
       end: Offset.zero,
     ).animate(curve);
-    _scale = Tween<double>(begin: 0.96, end: 1).animate(curve);
+    _scale = Tween<double>(begin: 0.86, end: 1).animate(curve);
     _controller.forward();
   }
 

@@ -7,6 +7,7 @@ import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/game/rank_card.dart';
 import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
+import 'package:transparence/ui/motion/entrance.dart';
 import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 import 'package:transparence/ui/you/about_page.dart';
@@ -30,84 +31,100 @@ class YouPage extends ConsumerWidget {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
             children: [
-              HubHeader(
-                title: l10n.navYou,
-                subtitle: l10n.notebookSub,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: rank.when(
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, _) => const SizedBox.shrink(),
-                  data: (value) => RankCard(rank: value),
+              Entrance(
+                child: HubHeader(
+                  title: l10n.navYou,
+                  subtitle: l10n.notebookSub,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 28, 16, 0),
-                child: Text(
-                  l10n.notebookTitle,
-                  style: theme.textTheme.titleLarge,
+              Entrance(
+                delay: const Duration(milliseconds: 80),
+                slide: 0.08,
+                scaleFrom: 0.96,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: rank.when(
+                    loading: () => const SizedBox.shrink(),
+                    error: (_, _) => const SizedBox.shrink(),
+                    data: (value) => RankCard(rank: value),
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: notebook.when(
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, _) => const SizedBox.shrink(),
-                  data: (lines) {
-                    if (lines.isEmpty) {
-                      return FichePanel(
-                        margin: EdgeInsets.zero,
-                        accent: TransparenceColors.mist,
-                        color: TransparenceColors.mist,
-                        lifted: false,
-                        child: Text(
-                          l10n.notebookEmpty,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: TransparenceColors.mute,
-                          ),
-                        ),
-                      );
-                    }
-                    return Column(
-                      children: [
-                        for (final line in lines) ...[
-                          _NotebookRow(
-                            countLabel:
-                                l10n.notebookLine(line.name, line.count),
-                            count: line.count,
-                            onTap: () => _open(
-                              context,
-                              FortunePage(fortuneId: line.fortuneId),
+              Entrance(
+                delay: const Duration(milliseconds: 150),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 28, 16, 0),
+                  child: Text(
+                    l10n.notebookTitle,
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ),
+              ),
+              Entrance(
+                delay: const Duration(milliseconds: 200),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                  child: notebook.when(
+                    loading: () => const SizedBox.shrink(),
+                    error: (_, _) => const SizedBox.shrink(),
+                    data: (lines) {
+                      if (lines.isEmpty) {
+                        return FichePanel(
+                          margin: EdgeInsets.zero,
+                          accent: TransparenceColors.mist,
+                          color: TransparenceColors.mist,
+                          lifted: false,
+                          child: Text(
+                            l10n.notebookEmpty,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: TransparenceColors.mute,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                        );
+                      }
+                      return Column(
+                        children: [
+                          for (final line in lines) ...[
+                            _NotebookRow(
+                              countLabel:
+                                  l10n.notebookLine(line.name, line.count),
+                              count: line.count,
+                              onTap: () => _open(
+                                context,
+                                FortunePage(fortuneId: line.fortuneId),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
                         ],
-                      ],
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-                child: Column(
-                  children: [
-                    FicheNavRow(
-                      title: l10n.scanHistoryTitle,
-                      subtitle: l10n.profileHistorySub,
-                      onTap: () => _open(context, const HistoryPage()),
-                    ),
-                    FicheNavRow(
-                      title: l10n.profileDataTitle,
-                      subtitle: l10n.profileDataSub,
-                      onTap: () => _open(context, const DataPage()),
-                    ),
-                    FicheNavRow(
-                      title: l10n.profileAboutTitle,
-                      subtitle: l10n.profileAboutSub,
-                      onTap: () => _open(context, const AboutPage()),
-                    ),
-                  ],
+              Entrance(
+                delay: const Duration(milliseconds: 280),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
+                  child: Column(
+                    children: [
+                      FicheNavRow(
+                        title: l10n.scanHistoryTitle,
+                        subtitle: l10n.profileHistorySub,
+                        onTap: () => _open(context, const HistoryPage()),
+                      ),
+                      FicheNavRow(
+                        title: l10n.profileDataTitle,
+                        subtitle: l10n.profileDataSub,
+                        onTap: () => _open(context, const DataPage()),
+                      ),
+                      FicheNavRow(
+                        title: l10n.profileAboutTitle,
+                        subtitle: l10n.profileAboutSub,
+                        onTap: () => _open(context, const AboutPage()),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

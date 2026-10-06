@@ -1,7 +1,7 @@
 name: transparence
 description: "Rendre visible le rattachement d'un produit à une grande fortune."
 publish_to: "none"
-version: 0.7.0+8
+version: 0.8.0+9
 
 environment:
   sdk: ^3.13.3

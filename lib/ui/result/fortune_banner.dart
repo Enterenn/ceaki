@@ -78,25 +78,34 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Icon(
-                          _open
-                              ? Icons.keyboard_arrow_up
-                              : Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                          size: 20,
+                        AnimatedRotation(
+                          turns: _open ? 0.5 : 0,
+                          duration: const Duration(milliseconds: 200),
+                          child: const Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  if (_open) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      banner.detail,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.95),
-                      ),
-                    ),
-                  ],
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 220),
+                    curve: Curves.easeOutCubic,
+                    alignment: Alignment.topCenter,
+                    child: _open
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              banner.detail,
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.white.withValues(alpha: 0.95),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(width: double.infinity),
+                  ),
                 ],
               ],
             ),

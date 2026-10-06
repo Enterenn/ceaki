@@ -9,6 +9,7 @@ import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/fiche_chrome.dart';
+import 'package:transparence/ui/motion/entrance.dart';
 import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
@@ -47,66 +48,80 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            HubHeader(
-              title: l10n.navLibrary,
-              subtitle: l10n.archiveSub,
-              trailing: l10n.archiveCount(entries.length),
+            Entrance(
+              child: HubHeader(
+                title: l10n.navLibrary,
+                subtitle: l10n.archiveSub,
+                trailing: l10n.archiveCount(entries.length),
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: TextField(
-                controller: _search,
-                decoration: InputDecoration(
-                  hintText: l10n.archiveSearchHint,
-                  prefixIcon: const Icon(Icons.search),
+            Entrance(
+              delay: const Duration(milliseconds: 70),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: TextField(
+                  controller: _search,
+                  decoration: InputDecoration(
+                    hintText: l10n.archiveSearchHint,
+                    prefixIcon: const Icon(Icons.search),
+                  ),
+                  onChanged: (_) => setState(() {}),
                 ),
-                onChanged: (_) => setState(() {}),
               ),
             ),
             if (entries.isNotEmpty)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: Row(
-                  children: [
-                    _FilterChip(
-                      label: l10n.archiveFilterAll,
-                      selected: _tone == null,
-                      color: TransparenceColors.ink,
-                      onTap: () => setState(() => _tone = null),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: l10n.archiveFilterFortune,
-                      selected: _tone == ArchiveTone.fortune,
-                      color: TransparenceColors.coral,
-                      onTap: () => setState(() => _tone = ArchiveTone.fortune),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: l10n.archiveFilterClear,
-                      selected: _tone == ArchiveTone.clear,
-                      color: TransparenceColors.leaf,
-                      onTap: () => setState(() => _tone = ArchiveTone.clear),
-                    ),
-                    const SizedBox(width: 8),
-                    _FilterChip(
-                      label: l10n.archiveFilterUnknown,
-                      selected: _tone == ArchiveTone.unknown,
-                      color: TransparenceColors.mute,
-                      onTap: () => setState(() => _tone = ArchiveTone.unknown),
-                    ),
-                  ],
+              Entrance(
+                delay: const Duration(milliseconds: 120),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                  child: Row(
+                    children: [
+                      _FilterChip(
+                        label: l10n.archiveFilterAll,
+                        selected: _tone == null,
+                        color: TransparenceColors.ink,
+                        onTap: () => setState(() => _tone = null),
+                      ),
+                      const SizedBox(width: 8),
+                      _FilterChip(
+                        label: l10n.archiveFilterFortune,
+                        selected: _tone == ArchiveTone.fortune,
+                        color: TransparenceColors.coral,
+                        onTap: () =>
+                            setState(() => _tone = ArchiveTone.fortune),
+                      ),
+                      const SizedBox(width: 8),
+                      _FilterChip(
+                        label: l10n.archiveFilterClear,
+                        selected: _tone == ArchiveTone.clear,
+                        color: TransparenceColors.leaf,
+                        onTap: () => setState(() => _tone = ArchiveTone.clear),
+                      ),
+                      const SizedBox(width: 8),
+                      _FilterChip(
+                        label: l10n.archiveFilterUnknown,
+                        selected: _tone == ArchiveTone.unknown,
+                        color: TransparenceColors.mute,
+                        onTap: () =>
+                            setState(() => _tone = ArchiveTone.unknown),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             Expanded(
               child: entries.isEmpty
-                  ? _EmptyArchive(
-                      message: l10n.archiveEmpty,
-                      cta: l10n.archiveEmptyCta,
-                      onScan: () {
-                        ref.read(shellTabProvider.notifier).select(0);
-                      },
+                  ? Entrance(
+                      delay: const Duration(milliseconds: 140),
+                      slide: 0.08,
+                      child: _EmptyArchive(
+                        message: l10n.archiveEmpty,
+                        cta: l10n.archiveEmptyCta,
+                        onScan: () {
+                          ref.read(shellTabProvider.notifier).select(0);
+                        },
+                      ),
                     )
                   : visible.isEmpty
                   ? Center(
@@ -122,10 +137,15 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
                       separatorBuilder: (_, _) => const SizedBox(height: 10),
                       itemBuilder: (context, index) {
                         final entry = visible[index];
-                        return _ArchiveTile(
-                          entry: entry,
-                          brand: _brandOf(library, entry.brandId),
-                          onTap: () => _openEntry(context, entry),
+                        final stagger = index.clamp(0, 7) * 45;
+                        return Entrance(
+                          delay: Duration(milliseconds: 160 + stagger),
+                          slide: 0.05,
+                          child: _ArchiveTile(
+                            entry: entry,
+                            brand: _brandOf(library, entry.brandId),
+                            onTap: () => _openEntry(context, entry),
+                          ),
                         );
                       },
                     ),
@@ -182,14 +202,17 @@ class _FilterChip extends StatelessWidget {
         ? TransparenceColors.panel
         : Colors.white;
     return Material(
-      color: selected ? color : TransparenceColors.panel,
+      color: Colors.transparent,
       borderRadius: TransparenceRadii.all,
       child: InkWell(
         onTap: onTap,
         borderRadius: TransparenceRadii.all,
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
+            color: selected ? color : TransparenceColors.panel,
             borderRadius: TransparenceRadii.all,
             border: Border.all(color: color, width: 1.5),
             boxShadow: selected ? null : TransparenceShadows.stamp,

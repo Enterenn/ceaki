@@ -17,6 +17,7 @@ import 'package:transparence/ui/library/company_page.dart';
 import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/link_tile.dart';
+import 'package:transparence/ui/motion/entrance.dart';
 import 'package:transparence/ui/result/fortune_banner.dart';
 import 'package:transparence/ui/result/path_chain.dart';
 import 'package:transparence/ui/theme.dart';
@@ -91,54 +92,76 @@ class _ResultBody extends ConsumerWidget {
         children: [
           // 1. Alerte / état — décision émotionnelle d'abord
           for (final banner in scan.banners)
-            FortuneBannerView(banner: banner),
+            Entrance(
+              slide: 0.08,
+              scaleFrom: 0.96,
+              child: FortuneBannerView(banner: banner),
+            ),
           if (scan.banners.isEmpty && scan.state != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: _StatusStrip(scan: scan, library: library, l10n: l10n),
+            Entrance(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: _StatusStrip(scan: scan, library: library, l10n: l10n),
+              ),
             ),
 
           // 2. Produit compact
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: _ProductBlock(
-              scan: scan,
-              brands: [for (final chain in scan.chains) chain.brand],
-              l10n: l10n,
-              theme: theme,
+          Entrance(
+            delay: const Duration(milliseconds: 90),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: _ProductBlock(
+                scan: scan,
+                brands: [for (final chain in scan.chains) chain.brand],
+                l10n: l10n,
+                theme: theme,
+              ),
             ),
           ),
 
           // 3. Geste — CTAs / esquive / choix de marque
           if (showEsquive)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: EsquiveBurst(
-                line: putBackLine(scan.fortuneNames),
-                rankTitle: ref.watch(playerRankProvider).asData?.value.title,
-                brands: [for (final chain in scan.chains) chain.brand],
+            Entrance(
+              delay: const Duration(milliseconds: 140),
+              slide: 0.1,
+              scaleFrom: 0.92,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: EsquiveBurst(
+                  line: putBackLine(scan.fortuneNames),
+                  rankTitle: ref.watch(playerRankProvider).asData?.value.title,
+                  brands: [for (final chain in scan.chains) chain.brand],
+                ),
               ),
             )
           else if (showDecision)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-              child: _DecisionActions(
-                onPutBack: () async {
-                  final saved = await ref
-                      .read(scanBookProvider)
-                      .putBack(scanId, library);
-                  if (saved) await HapticFeedback.mediumImpact();
-                },
-                onBuy: () => ref.read(scanBookProvider).buyAnyway(scanId),
-                putBackLabel: l10n.putBack,
-                buyLabel: l10n.buyAnyway,
+            Entrance(
+              delay: const Duration(milliseconds: 160),
+              slide: 0.1,
+              scaleFrom: 0.94,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                child: _DecisionActions(
+                  onPutBack: () async {
+                    final saved = await ref
+                        .read(scanBookProvider)
+                        .putBack(scanId, library);
+                    if (saved) await HapticFeedback.mediumImpact();
+                  },
+                  onBuy: () => ref.read(scanBookProvider).buyAnyway(scanId),
+                  putBackLabel: l10n.putBack,
+                  buyLabel: l10n.buyAnyway,
+                ),
               ),
             ),
 
           if (scan.choices.isNotEmpty) ...[
-            FicheSection(
-              l10n.chooseBrand,
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 6),
+            Entrance(
+              delay: const Duration(milliseconds: 120),
+              child: FicheSection(
+                l10n.chooseBrand,
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 6),
+              ),
             ),
             for (final choice in scan.choices)
               for (final brand in choice.brands)
