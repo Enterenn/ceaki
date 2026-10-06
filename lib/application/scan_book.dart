@@ -102,6 +102,7 @@ class ScanBook {
   Future<int> open(Gtin gtin, Library library, {bool bypassCache = false}) async {
     final now = _now();
     final excluded = await database.excludedFortuneIds();
+    final remembered = await database.choicesForGtin(gtin.value);
     final catalog = _catalogFor(gtin);
 
     if (!bypassCache) {
@@ -113,6 +114,7 @@ class ScanBook {
           book: _fromCache(cached),
           issue: ScanIssue.resolved,
           excludedFortuneIds: excluded,
+          chosenIds: remembered,
           now: now,
         );
       }
@@ -133,6 +135,7 @@ class ScanBook {
             book: _fromCache(stale),
             issue: ScanIssue.resolved,
             excludedFortuneIds: excluded,
+            chosenIds: remembered,
             now: now,
           );
         }
@@ -149,6 +152,7 @@ class ScanBook {
           ? (offline ? ScanIssue.offline : ScanIssue.productUnknown)
           : ScanIssue.resolved,
       excludedFortuneIds: excluded,
+      chosenIds: remembered,
       now: now,
     );
   }
@@ -201,8 +205,13 @@ class ScanBook {
     required Library library,
   }) async {
     final scan = await database.getScan(scanId);
-    final chosen = decodeChoices(scan.chosenBrandIds);
+    final chosen = Map<String, String>.of(decodeChoices(scan.chosenBrandIds));
     chosen[key] = brandId;
+    await database.rememberGtinChoice(
+      gtin: scan.gtin,
+      choiceKey: key,
+      brandId: brandId,
+    );
     final attachment = attachmentOf(
       library: library,
       names: splitFields(scan.brandNames),
@@ -256,13 +265,14 @@ class ScanBook {
     required BookRecord? book,
     required ScanIssue issue,
     required Set<String> excludedFortuneIds,
+    required Map<String, String> chosenIds,
     required DateTime now,
   }) {
     final names = book?.publishers ?? const <String>[];
     final attachment = attachmentOf(
       library: library,
       names: names,
-      chosenIds: const {},
+      chosenIds: chosenIds,
       issue: issue,
       excludedFortuneIds: excludedFortuneIds,
     );
@@ -278,6 +288,7 @@ class ScanBook {
         signaledFortuneNames: Value(joinFields(attachment.fortuneNames)),
         libraryVersion: library.version,
         issue: attachment.issue.name,
+        chosenBrandIds: Value(encodeChoices(chosenIds)),
       ),
     );
   }

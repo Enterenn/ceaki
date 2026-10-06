@@ -1518,6 +1518,273 @@ class AlertExclusionsCompanion extends UpdateCompanion<AlertExclusion> {
   }
 }
 
+class $GtinBrandChoicesTable extends GtinBrandChoices
+    with TableInfo<$GtinBrandChoicesTable, GtinBrandChoice> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GtinBrandChoicesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _gtinMeta = const VerificationMeta('gtin');
+  @override
+  late final GeneratedColumn<String> gtin = GeneratedColumn<String>(
+    'gtin',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _choiceKeyMeta = const VerificationMeta(
+    'choiceKey',
+  );
+  @override
+  late final GeneratedColumn<String> choiceKey = GeneratedColumn<String>(
+    'choice_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _brandIdMeta = const VerificationMeta(
+    'brandId',
+  );
+  @override
+  late final GeneratedColumn<String> brandId = GeneratedColumn<String>(
+    'brand_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [gtin, choiceKey, brandId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'gtin_brand_choices';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GtinBrandChoice> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('gtin')) {
+      context.handle(
+        _gtinMeta,
+        gtin.isAcceptableOrUnknown(data['gtin']!, _gtinMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_gtinMeta);
+    }
+    if (data.containsKey('choice_key')) {
+      context.handle(
+        _choiceKeyMeta,
+        choiceKey.isAcceptableOrUnknown(data['choice_key']!, _choiceKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_choiceKeyMeta);
+    }
+    if (data.containsKey('brand_id')) {
+      context.handle(
+        _brandIdMeta,
+        brandId.isAcceptableOrUnknown(data['brand_id']!, _brandIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_brandIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {gtin, choiceKey};
+  @override
+  GtinBrandChoice map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GtinBrandChoice(
+      gtin: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}gtin'],
+      )!,
+      choiceKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}choice_key'],
+      )!,
+      brandId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}brand_id'],
+      )!,
+    );
+  }
+
+  @override
+  $GtinBrandChoicesTable createAlias(String alias) {
+    return $GtinBrandChoicesTable(attachedDatabase, alias);
+  }
+}
+
+class GtinBrandChoice extends DataClass implements Insertable<GtinBrandChoice> {
+  final String gtin;
+  final String choiceKey;
+  final String brandId;
+  const GtinBrandChoice({
+    required this.gtin,
+    required this.choiceKey,
+    required this.brandId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['gtin'] = Variable<String>(gtin);
+    map['choice_key'] = Variable<String>(choiceKey);
+    map['brand_id'] = Variable<String>(brandId);
+    return map;
+  }
+
+  GtinBrandChoicesCompanion toCompanion(bool nullToAbsent) {
+    return GtinBrandChoicesCompanion(
+      gtin: Value(gtin),
+      choiceKey: Value(choiceKey),
+      brandId: Value(brandId),
+    );
+  }
+
+  factory GtinBrandChoice.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GtinBrandChoice(
+      gtin: serializer.fromJson<String>(json['gtin']),
+      choiceKey: serializer.fromJson<String>(json['choiceKey']),
+      brandId: serializer.fromJson<String>(json['brandId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'gtin': serializer.toJson<String>(gtin),
+      'choiceKey': serializer.toJson<String>(choiceKey),
+      'brandId': serializer.toJson<String>(brandId),
+    };
+  }
+
+  GtinBrandChoice copyWith({
+    String? gtin,
+    String? choiceKey,
+    String? brandId,
+  }) => GtinBrandChoice(
+    gtin: gtin ?? this.gtin,
+    choiceKey: choiceKey ?? this.choiceKey,
+    brandId: brandId ?? this.brandId,
+  );
+  GtinBrandChoice copyWithCompanion(GtinBrandChoicesCompanion data) {
+    return GtinBrandChoice(
+      gtin: data.gtin.present ? data.gtin.value : this.gtin,
+      choiceKey: data.choiceKey.present ? data.choiceKey.value : this.choiceKey,
+      brandId: data.brandId.present ? data.brandId.value : this.brandId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GtinBrandChoice(')
+          ..write('gtin: $gtin, ')
+          ..write('choiceKey: $choiceKey, ')
+          ..write('brandId: $brandId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(gtin, choiceKey, brandId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GtinBrandChoice &&
+          other.gtin == this.gtin &&
+          other.choiceKey == this.choiceKey &&
+          other.brandId == this.brandId);
+}
+
+class GtinBrandChoicesCompanion extends UpdateCompanion<GtinBrandChoice> {
+  final Value<String> gtin;
+  final Value<String> choiceKey;
+  final Value<String> brandId;
+  final Value<int> rowid;
+  const GtinBrandChoicesCompanion({
+    this.gtin = const Value.absent(),
+    this.choiceKey = const Value.absent(),
+    this.brandId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GtinBrandChoicesCompanion.insert({
+    required String gtin,
+    required String choiceKey,
+    required String brandId,
+    this.rowid = const Value.absent(),
+  }) : gtin = Value(gtin),
+       choiceKey = Value(choiceKey),
+       brandId = Value(brandId);
+  static Insertable<GtinBrandChoice> custom({
+    Expression<String>? gtin,
+    Expression<String>? choiceKey,
+    Expression<String>? brandId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (gtin != null) 'gtin': gtin,
+      if (choiceKey != null) 'choice_key': choiceKey,
+      if (brandId != null) 'brand_id': brandId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GtinBrandChoicesCompanion copyWith({
+    Value<String>? gtin,
+    Value<String>? choiceKey,
+    Value<String>? brandId,
+    Value<int>? rowid,
+  }) {
+    return GtinBrandChoicesCompanion(
+      gtin: gtin ?? this.gtin,
+      choiceKey: choiceKey ?? this.choiceKey,
+      brandId: brandId ?? this.brandId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (gtin.present) {
+      map['gtin'] = Variable<String>(gtin.value);
+    }
+    if (choiceKey.present) {
+      map['choice_key'] = Variable<String>(choiceKey.value);
+    }
+    if (brandId.present) {
+      map['brand_id'] = Variable<String>(brandId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GtinBrandChoicesCompanion(')
+          ..write('gtin: $gtin, ')
+          ..write('choiceKey: $choiceKey, ')
+          ..write('brandId: $brandId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1525,6 +1792,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ProductCacheEntriesTable productCacheEntries =
       $ProductCacheEntriesTable(this);
   late final $AlertExclusionsTable alertExclusions = $AlertExclusionsTable(
+    this,
+  );
+  late final $GtinBrandChoicesTable gtinBrandChoices = $GtinBrandChoicesTable(
     this,
   );
   @override
@@ -1535,6 +1805,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     scans,
     productCacheEntries,
     alertExclusions,
+    gtinBrandChoices,
   ];
 }
 
@@ -2344,6 +2615,183 @@ typedef $$AlertExclusionsTableProcessedTableManager =
       AlertExclusion,
       PrefetchHooks Function()
     >;
+typedef $$GtinBrandChoicesTableCreateCompanionBuilder =
+    GtinBrandChoicesCompanion Function({
+      required String gtin,
+      required String choiceKey,
+      required String brandId,
+      Value<int> rowid,
+    });
+typedef $$GtinBrandChoicesTableUpdateCompanionBuilder =
+    GtinBrandChoicesCompanion Function({
+      Value<String> gtin,
+      Value<String> choiceKey,
+      Value<String> brandId,
+      Value<int> rowid,
+    });
+
+class $$GtinBrandChoicesTableFilterComposer
+    extends Composer<_$AppDatabase, $GtinBrandChoicesTable> {
+  $$GtinBrandChoicesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get gtin => $composableBuilder(
+    column: $table.gtin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get choiceKey => $composableBuilder(
+    column: $table.choiceKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get brandId => $composableBuilder(
+    column: $table.brandId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GtinBrandChoicesTableOrderingComposer
+    extends Composer<_$AppDatabase, $GtinBrandChoicesTable> {
+  $$GtinBrandChoicesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get gtin => $composableBuilder(
+    column: $table.gtin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get choiceKey => $composableBuilder(
+    column: $table.choiceKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get brandId => $composableBuilder(
+    column: $table.brandId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GtinBrandChoicesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GtinBrandChoicesTable> {
+  $$GtinBrandChoicesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get gtin =>
+      $composableBuilder(column: $table.gtin, builder: (column) => column);
+
+  GeneratedColumn<String> get choiceKey =>
+      $composableBuilder(column: $table.choiceKey, builder: (column) => column);
+
+  GeneratedColumn<String> get brandId =>
+      $composableBuilder(column: $table.brandId, builder: (column) => column);
+}
+
+class $$GtinBrandChoicesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GtinBrandChoicesTable,
+          GtinBrandChoice,
+          $$GtinBrandChoicesTableFilterComposer,
+          $$GtinBrandChoicesTableOrderingComposer,
+          $$GtinBrandChoicesTableAnnotationComposer,
+          $$GtinBrandChoicesTableCreateCompanionBuilder,
+          $$GtinBrandChoicesTableUpdateCompanionBuilder,
+          (
+            GtinBrandChoice,
+            BaseReferences<
+              _$AppDatabase,
+              $GtinBrandChoicesTable,
+              GtinBrandChoice
+            >,
+          ),
+          GtinBrandChoice,
+          PrefetchHooks Function()
+        > {
+  $$GtinBrandChoicesTableTableManager(
+    _$AppDatabase db,
+    $GtinBrandChoicesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GtinBrandChoicesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GtinBrandChoicesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GtinBrandChoicesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> gtin = const Value.absent(),
+                Value<String> choiceKey = const Value.absent(),
+                Value<String> brandId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GtinBrandChoicesCompanion(
+                gtin: gtin,
+                choiceKey: choiceKey,
+                brandId: brandId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String gtin,
+                required String choiceKey,
+                required String brandId,
+                Value<int> rowid = const Value.absent(),
+              }) => GtinBrandChoicesCompanion.insert(
+                gtin: gtin,
+                choiceKey: choiceKey,
+                brandId: brandId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$GtinBrandChoicesTable, GtinBrandChoice>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $GtinBrandChoicesTable,
+                    GtinBrandChoice
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GtinBrandChoicesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GtinBrandChoicesTable,
+      GtinBrandChoice,
+      $$GtinBrandChoicesTableFilterComposer,
+      $$GtinBrandChoicesTableOrderingComposer,
+      $$GtinBrandChoicesTableAnnotationComposer,
+      $$GtinBrandChoicesTableCreateCompanionBuilder,
+      $$GtinBrandChoicesTableUpdateCompanionBuilder,
+      (
+        GtinBrandChoice,
+        BaseReferences<_$AppDatabase, $GtinBrandChoicesTable, GtinBrandChoice>,
+      ),
+      GtinBrandChoice,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2354,4 +2802,6 @@ class $AppDatabaseManager {
       $$ProductCacheEntriesTableTableManager(_db, _db.productCacheEntries);
   $$AlertExclusionsTableTableManager get alertExclusions =>
       $$AlertExclusionsTableTableManager(_db, _db.alertExclusions);
+  $$GtinBrandChoicesTableTableManager get gtinBrandChoices =>
+      $$GtinBrandChoicesTableTableManager(_db, _db.gtinBrandChoices);
 }

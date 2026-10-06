@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Bottom navigation index: 0 Scan · 1 Bibliothèque · 2 Vous.
+/// Bottom navigation index: 0 Scan · 1 Bibliothèque · 2 Profil.
 class ShellTab extends Notifier<int> {
   @override
   int build() => 0;

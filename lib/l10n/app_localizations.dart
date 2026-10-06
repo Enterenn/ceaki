@@ -115,8 +115,62 @@ abstract class AppLocalizations {
   /// No description provided for @navYou.
   ///
   /// In fr, this message translates to:
-  /// **'Vous'**
+  /// **'Profil'**
   String get navYou;
+
+  /// No description provided for @profileHistorySub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes checks, recherchables'**
+  String get profileHistorySub;
+
+  /// No description provided for @profileDataTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Données locales'**
+  String get profileDataTitle;
+
+  /// No description provided for @profileDataSub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique et cache produit'**
+  String get profileDataSub;
+
+  /// No description provided for @profileDataBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout reste sur cet appareil. Vider l’historique remet aussi le compteur de reposés à zéro.'**
+  String get profileDataBody;
+
+  /// No description provided for @profileAboutTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get profileAboutTitle;
+
+  /// No description provided for @profileAboutSub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versions et sources'**
+  String get profileAboutSub;
+
+  /// No description provided for @aboutSourcesLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sources'**
+  String get aboutSourcesLabel;
+
+  /// No description provided for @profileCacheLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cache produit'**
+  String get profileCacheLabel;
+
+  /// No description provided for @profileScanCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} {count, plural, =0{scan} =1{scan} other{scans}}'**
+  String profileScanCount(int count);
 
   /// No description provided for @scannerHeadline.
   ///
@@ -514,6 +568,90 @@ abstract class AppLocalizations {
   /// **'Aucun produit scanné sur cet appareil'**
   String get noScans;
 
+  /// No description provided for @scanHistoryTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scans'**
+  String get scanHistoryTitle;
+
+  /// No description provided for @scanHistorySub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes checks, du plus récent au plus ancien.'**
+  String get scanHistorySub;
+
+  /// No description provided for @scanHistorySearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre, marque ou code'**
+  String get scanHistorySearch;
+
+  /// No description provided for @scanHistoryEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun scan pour l’instant.\nChecke un produit pour commencer.'**
+  String get scanHistoryEmpty;
+
+  /// No description provided for @scanHistoryEmptyCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'On checke'**
+  String get scanHistoryEmptyCta;
+
+  /// No description provided for @scanHistoryNoMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun scan ne correspond.'**
+  String get scanHistoryNoMatch;
+
+  /// No description provided for @scanHistoryCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} {count, plural, =0{scan} =1{scan} other{scans}}'**
+  String scanHistoryCount(int count);
+
+  /// No description provided for @scanHistoryPutBack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reposé'**
+  String get scanHistoryPutBack;
+
+  /// No description provided for @scanHistoryBought.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acheté'**
+  String get scanHistoryBought;
+
+  /// No description provided for @clearScanHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vider l’historique'**
+  String get clearScanHistory;
+
+  /// No description provided for @clearProductCache.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vider le cache produit'**
+  String get clearProductCache;
+
+  /// No description provided for @productCacheCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} {count, plural, =0{produit en cache} =1{produit en cache} other{produits en cache}}'**
+  String productCacheCount(int count);
+
+  /// No description provided for @memoryCleared.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mémoire locale vidée.'**
+  String get memoryCleared;
+
+  /// No description provided for @cacheCleared.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cache produit vidé.'**
+  String get cacheCleared;
+
   /// No description provided for @alertOn.
   ///
   /// In fr, this message translates to:
@@ -523,7 +661,7 @@ abstract class AppLocalizations {
   /// No description provided for @appVersionLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Version de l’app'**
+  /// **'Application'**
   String get appVersionLabel;
 
   /// No description provided for @appVersionValue.
@@ -535,13 +673,19 @@ abstract class AppLocalizations {
   /// No description provided for @libraryVersionLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Version de la bibliothèque'**
+  /// **'Bibliothèque capitalistique'**
   String get libraryVersionLabel;
+
+  /// No description provided for @libraryVersionValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{version} · maj {date}'**
+  String libraryVersionValue(String version, String date);
 
   /// No description provided for @aboutPurpose.
   ///
   /// In fr, this message translates to:
-  /// **'Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.'**
+  /// **'On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.'**
   String get aboutPurpose;
 
   /// No description provided for @aboutLimit.
@@ -549,6 +693,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pas de grande fortune documentée ≠ petite entreprise.'**
   String get aboutLimit;
+
+  /// No description provided for @aboutSources.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.'**
+  String get aboutSources;
 
   /// No description provided for @libraryError.
   ///

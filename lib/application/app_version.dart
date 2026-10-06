@@ -1,7 +1,2 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
-final appVersionProvider = FutureProvider.autoDispose<String>((ref) async {
-  final info = await PackageInfo.fromPlatform();
-  return info.version;
-});
+/// Keep in sync with the `version:` field in pubspec.yaml (before `+`).
+const publishedAppVersion = '0.5.0';

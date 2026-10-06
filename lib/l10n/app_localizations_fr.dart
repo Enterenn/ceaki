@@ -19,7 +19,44 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navLibrary => 'Bibliothèque';
 
   @override
-  String get navYou => 'Vous';
+  String get navYou => 'Profil';
+
+  @override
+  String get profileHistorySub => 'Tes checks, recherchables';
+
+  @override
+  String get profileDataTitle => 'Données locales';
+
+  @override
+  String get profileDataSub => 'Historique et cache produit';
+
+  @override
+  String get profileDataBody =>
+      'Tout reste sur cet appareil. Vider l’historique remet aussi le compteur de reposés à zéro.';
+
+  @override
+  String get profileAboutTitle => 'À propos';
+
+  @override
+  String get profileAboutSub => 'Versions et sources';
+
+  @override
+  String get aboutSourcesLabel => 'Sources';
+
+  @override
+  String get profileCacheLabel => 'Cache produit';
+
+  @override
+  String profileScanCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'scans',
+      one: 'scan',
+      zero: 'scan',
+    );
+    return '$count $_temp0';
+  }
 
   @override
   String get scannerHeadline => 'Qui est derrière ?';
@@ -247,10 +284,71 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noScans => 'Aucun produit scanné sur cet appareil';
 
   @override
+  String get scanHistoryTitle => 'Scans';
+
+  @override
+  String get scanHistorySub => 'Tes checks, du plus récent au plus ancien.';
+
+  @override
+  String get scanHistorySearch => 'Titre, marque ou code';
+
+  @override
+  String get scanHistoryEmpty =>
+      'Aucun scan pour l’instant.\nChecke un produit pour commencer.';
+
+  @override
+  String get scanHistoryEmptyCta => 'On checke';
+
+  @override
+  String get scanHistoryNoMatch => 'Aucun scan ne correspond.';
+
+  @override
+  String scanHistoryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'scans',
+      one: 'scan',
+      zero: 'scan',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get scanHistoryPutBack => 'Reposé';
+
+  @override
+  String get scanHistoryBought => 'Acheté';
+
+  @override
+  String get clearScanHistory => 'Vider l’historique';
+
+  @override
+  String get clearProductCache => 'Vider le cache produit';
+
+  @override
+  String productCacheCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'produits en cache',
+      one: 'produit en cache',
+      zero: 'produit en cache',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get memoryCleared => 'Mémoire locale vidée.';
+
+  @override
+  String get cacheCleared => 'Cache produit vidé.';
+
+  @override
   String get alertOn => 'Alerte active';
 
   @override
-  String get appVersionLabel => 'Version de l’app';
+  String get appVersionLabel => 'Application';
 
   @override
   String appVersionValue(String version) {
@@ -258,15 +356,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get libraryVersionLabel => 'Version de la bibliothèque';
+  String get libraryVersionLabel => 'Bibliothèque capitalistique';
+
+  @override
+  String libraryVersionValue(String version, String date) {
+    return '$version · maj $date';
+  }
 
   @override
   String get aboutPurpose =>
-      'Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.';
+      'On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.';
 
   @override
   String get aboutLimit =>
       'Pas de grande fortune documentée ≠ petite entreprise.';
+
+  @override
+  String get aboutSources =>
+      'Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.';
 
   @override
   String get libraryError => 'La bibliothèque n’a pas pu être lue.';

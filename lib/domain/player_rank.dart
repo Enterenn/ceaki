@@ -1,4 +1,4 @@
-/// Progression based on put-backs (esquives). Scans fill the side quest meter.
+/// Soft progression on put-backs — paliers 1 / 10 / 50, no XP chrome.
 final class PlayerRank {
   const PlayerRank({
     required this.level,
@@ -13,7 +13,7 @@ final class PlayerRank {
   final int esquives;
   final int scans;
 
-  /// Put-backs needed for the next level, or null at max.
+  /// Put-backs needed for the next palier, or null at max.
   final int? nextAt;
 
   int get xpIntoLevel {
@@ -41,12 +41,11 @@ const _titles = [
   'Curieux',
   'Observateur',
   'Attentif',
-  'Aiguisé',
-  'Rodé',
   'Fin connaisseur',
 ];
 
-const _floors = [0, 1, 3, 6, 10, 15];
+/// Floors: 0 → first put-back → 10 → 50.
+const _floors = [0, 1, 10, 50];
 
 PlayerRank playerRank({required int esquives, required int scans}) {
   final safe = esquives < 0 ? 0 : esquives;

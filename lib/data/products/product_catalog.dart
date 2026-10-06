@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:transparence/data/products/book_record.dart';
 
 const catalogUserAgent =
-    'Ceaki/0.4.0 (https://github.com/Enterenn/ceaki)';
+    'Ceaki/0.5.0 (https://github.com/Enterenn/ceaki)';
 
 const catalogTimeout = Duration(seconds: 8);
 

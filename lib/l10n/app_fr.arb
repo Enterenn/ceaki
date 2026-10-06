@@ -3,7 +3,21 @@
   "appTitle": "Céaki?",
   "navScanner": "Scan",
   "navLibrary": "Bibliothèque",
-  "navYou": "Vous",
+  "navYou": "Profil",
+  "profileHistorySub": "Tes checks, recherchables",
+  "profileDataTitle": "Données locales",
+  "profileDataSub": "Historique et cache produit",
+  "profileDataBody": "Tout reste sur cet appareil. Vider l’historique remet aussi le compteur de reposés à zéro.",
+  "profileAboutTitle": "À propos",
+  "profileAboutSub": "Versions et sources",
+  "aboutSourcesLabel": "Sources",
+  "profileCacheLabel": "Cache produit",
+  "profileScanCount": "{count} {count, plural, =0{scan} =1{scan} other{scans}}",
+  "@profileScanCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "scannerHeadline": "Qui est derrière ?",
   "scannerSub": "On checke un produit et on voit qui tire les ficelles.",
   "scanCta": "On checke",
@@ -86,17 +100,49 @@
   "aliases": "Alias",
   "chain": "Chaîne",
   "noScans": "Aucun produit scanné sur cet appareil",
+  "scanHistoryTitle": "Scans",
+  "scanHistorySub": "Tes checks, du plus récent au plus ancien.",
+  "scanHistorySearch": "Titre, marque ou code",
+  "scanHistoryEmpty": "Aucun scan pour l’instant.\nChecke un produit pour commencer.",
+  "scanHistoryEmptyCta": "On checke",
+  "scanHistoryNoMatch": "Aucun scan ne correspond.",
+  "scanHistoryCount": "{count} {count, plural, =0{scan} =1{scan} other{scans}}",
+  "@scanHistoryCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "scanHistoryPutBack": "Reposé",
+  "scanHistoryBought": "Acheté",
+  "clearScanHistory": "Vider l’historique",
+  "clearProductCache": "Vider le cache produit",
+  "productCacheCount": "{count} {count, plural, =0{produit en cache} =1{produit en cache} other{produits en cache}}",
+  "@productCacheCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "memoryCleared": "Mémoire locale vidée.",
+  "cacheCleared": "Cache produit vidé.",
   "alertOn": "Alerte active",
-  "appVersionLabel": "Version de l’app",
+  "appVersionLabel": "Application",
   "appVersionValue": "Céaki v{version}",
   "@appVersionValue": {
     "placeholders": {
       "version": {"type": "String"}
     }
   },
-  "libraryVersionLabel": "Version de la bibliothèque",
-  "aboutPurpose": "Tu scannes, on te montre les liens capitalistiques documentés. La suite, c’est toi.",
+  "libraryVersionLabel": "Bibliothèque capitalistique",
+  "libraryVersionValue": "{version} · maj {date}",
+  "@libraryVersionValue": {
+    "placeholders": {
+      "version": {"type": "String"},
+      "date": {"type": "String"}
+    }
+  },
+  "aboutPurpose": "On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.",
   "aboutLimit": "Pas de grande fortune documentée ≠ petite entreprise.",
+  "aboutSources": "Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.",
   "libraryError": "La bibliothèque n’a pas pu être lue.",
   "missingEntry": "Cette fiche n’est plus dans la bibliothèque.",
   "sourceOpenError": "La source n’a pas pu être ouverte.",

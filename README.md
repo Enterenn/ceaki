@@ -2,19 +2,21 @@
 
 Rendre visible le rattachement d’un produit à une grande fortune — pour pouvoir s’abstenir.
 
-## Produit (v0.4)
+## Produit (v0.5)
 
 Trois onglets :
 
 1. **Scan** — identité + CTA « On checke », puis caméra / saisie manuelle.
 2. **Bibliothèque** — **archive personnelle** des marques déjà croisées en scan (pas le référentiel capitalistique).
-3. **Vous** — carnet des « reposés », rang soft, à propos.
+3. **Profil** — paliers, historique, données locales, à propos.
 
 ### Identification
 
 - **Livres** (ISBN 978 / 979) : BnF → Open Library → Google Books
 - **Hors livre** : Open Food Facts (`product_type=all`)
 - Cache produit local 30 jours ; pull-to-refresh sur le résultat ; fallback cache périmé si hors ligne
+- Homonymes de marque mémorisés par GTIN
+- Paliers soft sur les reposés : 1 / 10 / 50
 
 ### Archive (labels)
 

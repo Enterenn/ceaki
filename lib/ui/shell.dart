@@ -14,11 +14,7 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final index = ref.watch(shellTabProvider);
-    final hideAppBar = index != 2;
     return Scaffold(
-      appBar: hideAppBar
-          ? null
-          : AppBar(title: Text(l10n.navYou)),
       body: IndexedStack(
         index: index,
         children: const [ScannerPage(), LibraryPage(), YouPage()],

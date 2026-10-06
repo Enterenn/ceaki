@@ -45,11 +45,10 @@ void main() {
 
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Vous').last);
+      await tester.tap(find.text('Profil').last);
       await tester.pumpAndSettle();
 
-      expect(find.text('Reposés'), findsOneWidget);
-      expect(find.text('famille Bolloré — 1'), findsOneWidget);
+      expect(find.textContaining('1 reposé'), findsOneWidget);
     } finally {
       await _closeApp(tester, database);
     }

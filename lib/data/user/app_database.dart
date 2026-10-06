@@ -50,7 +50,22 @@ class AlertExclusions extends Table {
   Set<Column<Object>> get primaryKey => {fortuneId};
 }
 
-@DriftDatabase(tables: [Scans, ProductCacheEntries, AlertExclusions])
+/// Homonym brand choices remembered per GTIN across scans.
+class GtinBrandChoices extends Table {
+  @override
+  String get tableName => 'gtin_brand_choices';
+
+  TextColumn get gtin => text()();
+  TextColumn get choiceKey => text()();
+  TextColumn get brandId => text()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {gtin, choiceKey};
+}
+
+@DriftDatabase(
+  tables: [Scans, ProductCacheEntries, AlertExclusions, GtinBrandChoices],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'transparence'));
@@ -58,12 +73,13 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (migrator, from, to) async {
       if (from < 2) await migrator.createTable(alertExclusions);
+      if (from < 3) await migrator.createTable(gtinBrandChoices);
     },
   );
 
@@ -85,6 +101,20 @@ class AppDatabase extends _$AppDatabase {
     return (delete(
       productCacheEntries,
     )..where((entry) => entry.gtin.equals(gtin))).go();
+  }
+
+  Future<int> productCacheCount() async {
+    final count = countAll();
+    final query = selectOnly(productCacheEntries)..addColumns([count]);
+    final row = await query.getSingle();
+    return row.read(count) ?? 0;
+  }
+
+  Future<void> clearProductCache() => delete(productCacheEntries).go();
+
+  Future<void> clearScanHistory() async {
+    await delete(scans).go();
+    await delete(gtinBrandChoices).go();
   }
 
   Future<void> saveProduct(BookRecord book, DateTime fetchedAt) {
@@ -206,6 +236,27 @@ class AppDatabase extends _$AppDatabase {
     return (delete(
       alertExclusions,
     )..where((row) => row.fortuneId.equals(fortuneId))).go();
+  }
+
+  Future<Map<String, String>> choicesForGtin(String gtin) async {
+    final rows = await (select(
+      gtinBrandChoices,
+    )..where((row) => row.gtin.equals(gtin))).get();
+    return {for (final row in rows) row.choiceKey: row.brandId};
+  }
+
+  Future<void> rememberGtinChoice({
+    required String gtin,
+    required String choiceKey,
+    required String brandId,
+  }) {
+    return into(gtinBrandChoices).insertOnConflictUpdate(
+      GtinBrandChoicesCompanion.insert(
+        gtin: gtin,
+        choiceKey: choiceKey,
+        brandId: brandId,
+      ),
+    );
   }
 
   Future<void> rememberChoice({

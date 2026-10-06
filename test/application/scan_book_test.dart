@@ -127,6 +127,59 @@ void main() {
     expect(view.title, "La traversée de l'été : roman");
   });
 
+  test('homonym brand choice is remembered for the same GTIN', () async {
+    final homonyms = Library.parse(_homonymJson);
+    final atlasGtin = (readGtin('3017620422003') as GtinAccepted).gtin;
+    final book = ScanBook(
+      database: database,
+      books: _EmptyCatalog(),
+      other: _AtlasCatalog(),
+    );
+
+    final first = await book.open(atlasGtin, homonyms);
+    final pending = describeScan(
+      homonyms,
+      await database.getScan(first),
+      excludedFortuneIds: const {},
+    );
+    expect(pending.choices, isNotEmpty);
+
+    await book.chooseBrand(
+      scanId: first,
+      key: 'atlas',
+      brandId: 'brand.atlas-food',
+      library: homonyms,
+    );
+
+    final second = await book.open(atlasGtin, homonyms);
+    final remembered = describeScan(
+      homonyms,
+      await database.getScan(second),
+      excludedFortuneIds: const {},
+    );
+    expect(remembered.choices, isEmpty);
+    expect(remembered.chains.single.brand.id, 'brand.atlas-food');
+  });
+
+  test('clearing history removes scans and remembered choices', () async {
+    final book = ScanBook(
+      database: database,
+      books: _FixtureBookCatalog(),
+      other: _EmptyCatalog(),
+    );
+    await book.open(gtin, library);
+    await database.rememberGtinChoice(
+      gtin: gtin.value,
+      choiceKey: 'atlas',
+      brandId: 'brand.atlas-food',
+    );
+    expect(await database.choicesForGtin(gtin.value), isNotEmpty);
+
+    await database.clearScanHistory();
+    expect(await database.watchScans().first, isEmpty);
+    expect(await database.choicesForGtin(gtin.value), isEmpty);
+  });
+
   test(
     'a removed alert hides the banner and keeps a recorded put-back',
     () async {
@@ -192,3 +245,70 @@ class _EmptyCatalog implements ProductCatalog {
   @override
   void close() {}
 }
+
+class _AtlasCatalog implements ProductCatalog {
+  @override
+  Future<BookRecord?> find(String gtin) async {
+    return BookRecord(
+      gtin: gtin,
+      title: 'Atlas test',
+      creator: null,
+      publishers: const ['Atlas'],
+      source: 'fixture',
+      category: 'alimentaire',
+    );
+  }
+
+  @override
+  void close() {}
+}
+
+const _homonymJson = '''
+{
+  "version": "test",
+  "updatedOn": "2026-10-06",
+  "sectors": ["edition", "alimentaire"],
+  "sources": [{
+    "id": "source.test",
+    "title": "Jeu de test",
+    "url": "https://example.com/jeu-de-test",
+    "publisher": "Test"
+  }],
+  "fortunes": [],
+  "companies": [
+    {
+      "id": "company.edition",
+      "name": "Edition",
+      "aliases": [],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.food",
+      "name": "Food",
+      "aliases": [],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    }
+  ],
+  "brands": [
+    {
+      "id": "brand.atlas-edition",
+      "name": "Atlas",
+      "aliases": [],
+      "sectors": ["edition"],
+      "companyId": "company.edition"
+    },
+    {
+      "id": "brand.atlas-food",
+      "name": "Atlas",
+      "aliases": [],
+      "sectors": ["alimentaire"],
+      "companyId": "company.food"
+    }
+  ],
+  "ownerships": []
+}
+''';

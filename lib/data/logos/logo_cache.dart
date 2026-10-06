@@ -36,7 +36,7 @@ class LogoCache {
 
     try {
       final response = await _client
-          .get(uri, headers: const {'User-Agent': 'Ceaki/0.4 (logo-cache)'})
+          .get(uri, headers: const {'User-Agent': 'Ceaki/0.5 (logo-cache)'})
           .timeout(const Duration(seconds: 8));
       if (response.statusCode < 200 || response.statusCode >= 300) {
         return null;
