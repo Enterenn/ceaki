@@ -442,12 +442,6 @@ abstract class AppLocalizations {
   /// **'Cherche une marque'**
   String get archiveSearchHint;
 
-  /// No description provided for @archiveBadge.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terrain'**
-  String get archiveBadge;
-
   /// No description provided for @archiveSub.
   ///
   /// In fr, this message translates to:
@@ -459,24 +453,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{count} {count, plural, =0{marque} =1{marque} other{marques}}'**
   String archiveCount(int count);
-
-  /// No description provided for @archiveLegendFortune.
-  ///
-  /// In fr, this message translates to:
-  /// **'Fortune'**
-  String get archiveLegendFortune;
-
-  /// No description provided for @archiveLegendClear.
-  ///
-  /// In fr, this message translates to:
-  /// **'Entreprise'**
-  String get archiveLegendClear;
-
-  /// No description provided for @archiveLegendUnknown.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inconnu'**
-  String get archiveLegendUnknown;
 
   /// No description provided for @archiveFilterAll.
   ///

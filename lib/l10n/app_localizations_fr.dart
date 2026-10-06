@@ -220,9 +220,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archiveSearchHint => 'Cherche une marque';
 
   @override
-  String get archiveBadge => 'Terrain';
-
-  @override
   String get archiveSub => 'Ce que t’as déjà croisé.';
 
   @override
@@ -236,15 +233,6 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$count $_temp0';
   }
-
-  @override
-  String get archiveLegendFortune => 'Fortune';
-
-  @override
-  String get archiveLegendClear => 'Entreprise';
-
-  @override
-  String get archiveLegendUnknown => 'Inconnu';
 
   @override
   String get archiveFilterAll => 'Toutes';

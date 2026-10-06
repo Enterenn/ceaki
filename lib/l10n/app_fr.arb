@@ -79,7 +79,6 @@
   "categoryProduct": "Produit",
   "searchHint": "Fortune, société ou marque",
   "archiveSearchHint": "Cherche une marque",
-  "archiveBadge": "Terrain",
   "archiveSub": "Ce que t’as déjà croisé.",
   "archiveCount": "{count} {count, plural, =0{marque} =1{marque} other{marques}}",
   "@archiveCount": {
@@ -87,9 +86,6 @@
       "count": {"type": "int"}
     }
   },
-  "archiveLegendFortune": "Fortune",
-  "archiveLegendClear": "Entreprise",
-  "archiveLegendUnknown": "Inconnu",
   "archiveFilterAll": "Toutes",
   "archiveFilterFortune": "Fortune",
   "archiveFilterClear": "Entreprise",

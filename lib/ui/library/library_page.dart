@@ -50,24 +50,6 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
               title: l10n.navLibrary,
               subtitle: l10n.archiveSub,
               trailing: l10n.archiveCount(entries.length),
-              bottom: Wrap(
-                spacing: 14,
-                runSpacing: 8,
-                children: [
-                  _LegendDot(
-                    color: TransparenceColors.coral,
-                    label: l10n.archiveLegendFortune,
-                  ),
-                  _LegendDot(
-                    color: TransparenceColors.leaf,
-                    label: l10n.archiveLegendClear,
-                  ),
-                  _LegendDot(
-                    color: TransparenceColors.mute,
-                    label: l10n.archiveLegendUnknown,
-                  ),
-                ],
-              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -195,6 +177,9 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final onSelected = color == TransparenceColors.mute
+        ? TransparenceColors.paper
+        : Colors.white;
     return Material(
       color: selected ? color : Colors.white,
       child: InkWell(
@@ -207,37 +192,12 @@ class _FilterChip extends StatelessWidget {
           child: Text(
             label,
             style: theme.textTheme.labelMedium?.copyWith(
-              color: selected ? Colors.white : color,
+              color: selected ? onSelected : color,
               fontVariations: const [FontVariation('wght', 700)],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _LegendDot extends StatelessWidget {
-  const _LegendDot({required this.color, required this.label});
-
-  final Color color;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(width: 8, height: 8, color: color),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: TransparenceColors.mute,
-            letterSpacing: 0.3,
-          ),
-        ),
-      ],
     );
   }
 }
