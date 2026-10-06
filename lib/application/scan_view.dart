@@ -14,6 +14,7 @@ final class ScanView {
     required this.title,
     required this.creator,
     required this.brandLabel,
+    required this.category,
     required this.banners,
     required this.chains,
     required this.choices,
@@ -30,6 +31,7 @@ final class ScanView {
   final String? title;
   final String? creator;
   final String? brandLabel;
+  final String? category;
   final List<FortuneBanner> banners;
   final List<BrandChain> chains;
   final List<BrandLookup> choices;
@@ -60,11 +62,12 @@ Attachment attachmentOf({
   required List<String> names,
   required Map<String, String> chosenIds,
   required ScanIssue issue,
+  required Set<String> excludedFortuneIds,
 }) {
   final resolved = names.isEmpty
       ? const ResolvedNames(chains: [], choices: [], unmatched: [])
       : resolveBrandNames(library, names, chosenIds: chosenIds);
-  final signaled = _signaled(library, resolved.chains);
+  final signaled = _signaled(library, resolved.chains, excludedFortuneIds);
   return Attachment(
     issue: _issue(issue, resolved, names),
     resolved: resolved,
@@ -73,7 +76,11 @@ Attachment attachmentOf({
   );
 }
 
-ScanView describeScan(Library library, Scan scan) {
+ScanView describeScan(
+  Library library,
+  Scan scan, {
+  required Set<String> excludedFortuneIds,
+}) {
   final stored = ScanIssue.values.byName(scan.issue);
   final names = splitFields(scan.brandNames);
   final attachment = attachmentOf(
@@ -81,6 +88,7 @@ ScanView describeScan(Library library, Scan scan) {
     names: names,
     chosenIds: decodeChoices(scan.chosenBrandIds),
     issue: stored == ScanIssue.brandUnknown ? ScanIssue.resolved : stored,
+    excludedFortuneIds: excludedFortuneIds,
   );
   final choice = switch (scan.choice) {
     'put_back' => ScanChoice.putBack,
@@ -95,12 +103,13 @@ ScanView describeScan(Library library, Scan scan) {
     title: _text(scan.productName),
     creator: _text(scan.creator),
     brandLabel: _brandLabel(chains, names),
+    category: scan.category,
     banners: [
       for (final chain in chains)
         ...bannersFor(
           library: library,
           chain: chain,
-          excludedFortuneIds: const {},
+          excludedFortuneIds: excludedFortuneIds,
         ),
     ],
     chains: chains,
@@ -114,7 +123,7 @@ ScanView describeScan(Library library, Scan scan) {
         : attachment.fortuneNames,
     choice: choice,
     sources: _sources(library, chains),
-    state: _state(chains),
+    state: _state(chains, excludedFortuneIds),
   );
 }
 
@@ -129,13 +138,16 @@ ScanIssue _issue(ScanIssue issue, ResolvedNames resolved, List<String> names) {
 (List<String>, List<String>) _signaled(
   Library library,
   List<BrandChain> chains,
+  Set<String> excludedFortuneIds,
 ) {
   final ids = <String>[];
   final names = <String>[];
   for (final chain in chains) {
-    if (chainState(chain.chain, const {}) != ChainState.signaled) continue;
+    if (chainState(chain.chain, excludedFortuneIds) != ChainState.signaled) {
+      continue;
+    }
     for (final id in chain.chain.fortuneIds) {
-      if (ids.contains(id)) continue;
+      if (excludedFortuneIds.contains(id) || ids.contains(id)) continue;
       ids.add(id);
       names.add(library.fortune(id).name);
     }
@@ -143,10 +155,10 @@ ScanIssue _issue(ScanIssue issue, ResolvedNames resolved, List<String> names) {
   return (ids, names);
 }
 
-ChainState? _state(List<BrandChain> chains) {
+ChainState? _state(List<BrandChain> chains, Set<String> excludedFortuneIds) {
   ChainState? state;
   for (final chain in chains) {
-    final next = chainState(chain.chain, const {});
+    final next = chainState(chain.chain, excludedFortuneIds);
     if (next == ChainState.signaled) return next;
     state ??= next;
   }

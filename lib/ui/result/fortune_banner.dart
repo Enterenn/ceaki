@@ -18,6 +18,10 @@ class FortuneBannerView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (banner.title != grandeFortuneTitle) ...[
+                Text(grandeFortuneTitle, style: theme.textTheme.labelLarge),
+                const SizedBox(height: 4),
+              ],
               Text(banner.title, style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
               Text(banner.body),

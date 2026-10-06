@@ -121,13 +121,49 @@ abstract class AppLocalizations {
   /// No description provided for @scannerPlaceholder.
   ///
   /// In fr, this message translates to:
-  /// **'Saisissez un ISBN. La caméra viendra ensuite.'**
+  /// **'Saisissez un code, ou lisez-le avec la caméra.'**
   String get scannerPlaceholder;
+
+  /// No description provided for @cameraReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'La caméra sert à lire un code-barres produit.'**
+  String get cameraReason;
+
+  /// No description provided for @cameraAllow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autoriser la caméra'**
+  String get cameraAllow;
+
+  /// No description provided for @cameraDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'La caméra est refusée. La saisie reste possible.'**
+  String get cameraDenied;
+
+  /// No description provided for @alertOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte retirée'**
+  String get alertOff;
+
+  /// No description provided for @alertRemove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer l’alerte'**
+  String get alertRemove;
+
+  /// No description provided for @alertRestore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rétablir l’alerte'**
+  String get alertRestore;
 
   /// No description provided for @codeHint.
   ///
   /// In fr, this message translates to:
-  /// **'ISBN ou code-barres'**
+  /// **'Code-barres'**
   String get codeHint;
 
   /// No description provided for @seeAttachment.
@@ -231,6 +267,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Livre'**
   String get categoryBook;
+
+  /// No description provided for @categoryGame.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jeu de société'**
+  String get categoryGame;
 
   /// No description provided for @searchHint.
   ///

@@ -9,6 +9,13 @@ BookRecord? demoBook(String gtin) {
       publishers: ['Bernard Grasset (Paris)'],
       source: 'fixture',
     ),
+    '9782259195409' => const BookRecord(
+      gtin: '9782259195409',
+      title: 'Plus belle sera la vie : roman',
+      creator: 'Bern, Stéphane (1963-....)',
+      publishers: ['Plon (Paris)'],
+      source: 'fixture',
+    ),
     _ => null,
   };
 }

@@ -1,7 +1,7 @@
 {
-  "version": "2026.10.0",
+  "version": "2026.10.1",
   "updatedOn": "2026-10-06",
-  "sectors": ["edition", "presse"],
+  "sectors": ["edition", "presse", "jeu", "telecom"],
   "sources": [
     {
       "id": "source.bollore-deu-2025",
@@ -14,6 +14,24 @@
       "title": "Clôture de la cession d'Editis à International Media Invest",
       "url": "https://www.vivendi.com/en/press-release/vivendi-closing-of-the-editis-sale-to-imi/",
       "publisher": "Vivendi"
+    },
+    {
+      "id": "source.asmodee-shareholders-2026",
+      "title": "Actionnaires",
+      "url": "https://investor.asmodee.com/shareholders",
+      "publisher": "Asmodee Group"
+    },
+    {
+      "id": "source.bouygues-deu-2025",
+      "title": "Document d'enregistrement universel 2025",
+      "url": "https://www.bouygues.com/app/uploads/2026/03/bouygues_deu_2025_fr_web.pdf",
+      "publisher": "Bouygues"
+    },
+    {
+      "id": "source.iliad-holding-2025",
+      "title": "Rapport financier annuel 2025",
+      "url": "https://www.iliad.fr/media/iliad_Holding_2025_Annual_Financial_Report_bc9ea07ccc.pdf",
+      "publisher": "iliad Holding"
     }
   ],
   "fortunes": [
@@ -22,6 +40,18 @@
       "name": "famille Bolloré",
       "aliases": ["famille Bolloré", "Bolloré"],
       "summary": "Le groupe Bolloré est contrôlé majoritairement par la famille Bolloré."
+    },
+    {
+      "id": "fortune.bouygues",
+      "name": "famille Bouygues",
+      "aliases": ["Martin Bouygues", "Olivier Bouygues"],
+      "summary": "Martin Bouygues, Olivier Bouygues et leurs familles contrôlent SCDM, actionnaire de référence de Bouygues."
+    },
+    {
+      "id": "fortune.niel",
+      "name": "Xavier Niel",
+      "aliases": ["groupe familial Xavier Niel"],
+      "summary": "Le groupe familial Xavier Niel contrôle iliad Holding, qui contrôle iliad."
     }
   ],
   "companies": [
@@ -77,6 +107,62 @@
       "id": "company.editis",
       "name": "Editis",
       "aliases": ["Editis"],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.asmodee",
+      "name": "Asmodee Group",
+      "aliases": ["Asmodee"],
+      "country": "SE",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.lars-wingefors-ab",
+      "name": "Lars Wingefors AB",
+      "aliases": [],
+      "country": "SE",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.savvy-gaming-group",
+      "name": "Savvy Gaming Group",
+      "aliases": [],
+      "country": "SA",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.scdm",
+      "name": "SCDM",
+      "aliases": [],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.bouygues",
+      "name": "Bouygues",
+      "aliases": ["Bouygues SA"],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.iliad-holding",
+      "name": "iliad Holding",
+      "aliases": [],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.iliad",
+      "name": "iliad",
+      "aliases": ["iliad S.A."],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -153,11 +239,39 @@
       "companyId": "company.lagardere-sa"
     },
     {
+      "id": "brand.plon",
+      "name": "Plon",
+      "aliases": ["Éditions Plon", "Plon (Paris)"],
+      "sectors": ["edition"],
+      "companyId": "company.editis"
+    },
+    {
       "id": "brand.editis",
       "name": "Editis",
       "aliases": [],
       "sectors": ["edition"],
       "companyId": "company.editis"
+    },
+    {
+      "id": "brand.asmodee",
+      "name": "Asmodee",
+      "aliases": ["Asmodee France", "Asmodee Group"],
+      "sectors": ["jeu"],
+      "companyId": "company.asmodee"
+    },
+    {
+      "id": "brand.dobble",
+      "name": "Dobble",
+      "aliases": ["Dobble classique"],
+      "sectors": ["jeu"],
+      "companyId": "company.asmodee"
+    },
+    {
+      "id": "brand.free",
+      "name": "Free",
+      "aliases": [],
+      "sectors": ["telecom"],
+      "companyId": "company.iliad"
     }
   ],
   "ownerships": [
@@ -215,6 +329,72 @@
       "sourceId": "source.vivendi-editis-2023",
       "status": "historical",
       "note": "Cession à International Media Invest."
+    },
+    {
+      "ownedCompanyId": "company.asmodee",
+      "owner": { "type": "company", "id": "company.lars-wingefors-ab" },
+      "capitalPercent": "16.9",
+      "votingPercent": "38.09",
+      "linkType": "reference_shareholder",
+      "factDate": "2026-09-14",
+      "sourceId": "source.asmodee-shareholders-2026",
+      "status": "active",
+      "note": null
+    },
+    {
+      "ownedCompanyId": "company.asmodee",
+      "owner": { "type": "company", "id": "company.savvy-gaming-group" },
+      "capitalPercent": "7.03",
+      "votingPercent": "5.24",
+      "linkType": "stake",
+      "factDate": "2026-09-14",
+      "sourceId": "source.asmodee-shareholders-2026",
+      "status": "active",
+      "note": null
+    },
+    {
+      "ownedCompanyId": "company.scdm",
+      "owner": { "type": "fortune", "id": "fortune.bouygues" },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bouygues-deu-2025",
+      "status": "active",
+      "note": "SCDM est contrôlée par Martin Bouygues, Olivier Bouygues et leurs familles. Le document ne donne pas de pourcentage."
+    },
+    {
+      "ownedCompanyId": "company.bouygues",
+      "owner": { "type": "company", "id": "company.scdm" },
+      "capitalPercent": "28.3",
+      "votingPercent": "29.3",
+      "linkType": "reference_shareholder",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bouygues-deu-2025",
+      "status": "active",
+      "note": null
+    },
+    {
+      "ownedCompanyId": "company.iliad-holding",
+      "owner": { "type": "fortune", "id": "fortune.niel" },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.iliad-holding-2025",
+      "status": "active",
+      "note": "Le rapport indique une détention de près de 98 % par le groupe familial, sans pourcentage exact."
+    },
+    {
+      "ownedCompanyId": "company.iliad",
+      "owner": { "type": "company", "id": "company.iliad-holding" },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.iliad-holding-2025",
+      "status": "active",
+      "note": "Le rapport dit qu’iliad Holding contrôle iliad, sans pourcentage."
     }
   ]
 }

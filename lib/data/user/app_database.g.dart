@@ -1244,12 +1244,289 @@ class ProductCacheEntriesCompanion extends UpdateCompanion<ProductCacheEntry> {
   }
 }
 
+class $AlertExclusionsTable extends AlertExclusions
+    with TableInfo<$AlertExclusionsTable, AlertExclusion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AlertExclusionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _fortuneIdMeta = const VerificationMeta(
+    'fortuneId',
+  );
+  @override
+  late final GeneratedColumn<String> fortuneId = GeneratedColumn<String>(
+    'fortune_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fortuneNameMeta = const VerificationMeta(
+    'fortuneName',
+  );
+  @override
+  late final GeneratedColumn<String> fortuneName = GeneratedColumn<String>(
+    'fortune_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _removedAtMeta = const VerificationMeta(
+    'removedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> removedAt = GeneratedColumn<DateTime>(
+    'removed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [fortuneId, fortuneName, removedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'alert_exclusions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AlertExclusion> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('fortune_id')) {
+      context.handle(
+        _fortuneIdMeta,
+        fortuneId.isAcceptableOrUnknown(data['fortune_id']!, _fortuneIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fortuneIdMeta);
+    }
+    if (data.containsKey('fortune_name')) {
+      context.handle(
+        _fortuneNameMeta,
+        fortuneName.isAcceptableOrUnknown(
+          data['fortune_name']!,
+          _fortuneNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_fortuneNameMeta);
+    }
+    if (data.containsKey('removed_at')) {
+      context.handle(
+        _removedAtMeta,
+        removedAt.isAcceptableOrUnknown(data['removed_at']!, _removedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_removedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {fortuneId};
+  @override
+  AlertExclusion map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AlertExclusion(
+      fortuneId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fortune_id'],
+      )!,
+      fortuneName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fortune_name'],
+      )!,
+      removedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}removed_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AlertExclusionsTable createAlias(String alias) {
+    return $AlertExclusionsTable(attachedDatabase, alias);
+  }
+}
+
+class AlertExclusion extends DataClass implements Insertable<AlertExclusion> {
+  final String fortuneId;
+  final String fortuneName;
+  final DateTime removedAt;
+  const AlertExclusion({
+    required this.fortuneId,
+    required this.fortuneName,
+    required this.removedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['fortune_id'] = Variable<String>(fortuneId);
+    map['fortune_name'] = Variable<String>(fortuneName);
+    map['removed_at'] = Variable<DateTime>(removedAt);
+    return map;
+  }
+
+  AlertExclusionsCompanion toCompanion(bool nullToAbsent) {
+    return AlertExclusionsCompanion(
+      fortuneId: Value(fortuneId),
+      fortuneName: Value(fortuneName),
+      removedAt: Value(removedAt),
+    );
+  }
+
+  factory AlertExclusion.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AlertExclusion(
+      fortuneId: serializer.fromJson<String>(json['fortuneId']),
+      fortuneName: serializer.fromJson<String>(json['fortuneName']),
+      removedAt: serializer.fromJson<DateTime>(json['removedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'fortuneId': serializer.toJson<String>(fortuneId),
+      'fortuneName': serializer.toJson<String>(fortuneName),
+      'removedAt': serializer.toJson<DateTime>(removedAt),
+    };
+  }
+
+  AlertExclusion copyWith({
+    String? fortuneId,
+    String? fortuneName,
+    DateTime? removedAt,
+  }) => AlertExclusion(
+    fortuneId: fortuneId ?? this.fortuneId,
+    fortuneName: fortuneName ?? this.fortuneName,
+    removedAt: removedAt ?? this.removedAt,
+  );
+  AlertExclusion copyWithCompanion(AlertExclusionsCompanion data) {
+    return AlertExclusion(
+      fortuneId: data.fortuneId.present ? data.fortuneId.value : this.fortuneId,
+      fortuneName: data.fortuneName.present
+          ? data.fortuneName.value
+          : this.fortuneName,
+      removedAt: data.removedAt.present ? data.removedAt.value : this.removedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AlertExclusion(')
+          ..write('fortuneId: $fortuneId, ')
+          ..write('fortuneName: $fortuneName, ')
+          ..write('removedAt: $removedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(fortuneId, fortuneName, removedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AlertExclusion &&
+          other.fortuneId == this.fortuneId &&
+          other.fortuneName == this.fortuneName &&
+          other.removedAt == this.removedAt);
+}
+
+class AlertExclusionsCompanion extends UpdateCompanion<AlertExclusion> {
+  final Value<String> fortuneId;
+  final Value<String> fortuneName;
+  final Value<DateTime> removedAt;
+  final Value<int> rowid;
+  const AlertExclusionsCompanion({
+    this.fortuneId = const Value.absent(),
+    this.fortuneName = const Value.absent(),
+    this.removedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AlertExclusionsCompanion.insert({
+    required String fortuneId,
+    required String fortuneName,
+    required DateTime removedAt,
+    this.rowid = const Value.absent(),
+  }) : fortuneId = Value(fortuneId),
+       fortuneName = Value(fortuneName),
+       removedAt = Value(removedAt);
+  static Insertable<AlertExclusion> custom({
+    Expression<String>? fortuneId,
+    Expression<String>? fortuneName,
+    Expression<DateTime>? removedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (fortuneId != null) 'fortune_id': fortuneId,
+      if (fortuneName != null) 'fortune_name': fortuneName,
+      if (removedAt != null) 'removed_at': removedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AlertExclusionsCompanion copyWith({
+    Value<String>? fortuneId,
+    Value<String>? fortuneName,
+    Value<DateTime>? removedAt,
+    Value<int>? rowid,
+  }) {
+    return AlertExclusionsCompanion(
+      fortuneId: fortuneId ?? this.fortuneId,
+      fortuneName: fortuneName ?? this.fortuneName,
+      removedAt: removedAt ?? this.removedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (fortuneId.present) {
+      map['fortune_id'] = Variable<String>(fortuneId.value);
+    }
+    if (fortuneName.present) {
+      map['fortune_name'] = Variable<String>(fortuneName.value);
+    }
+    if (removedAt.present) {
+      map['removed_at'] = Variable<DateTime>(removedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AlertExclusionsCompanion(')
+          ..write('fortuneId: $fortuneId, ')
+          ..write('fortuneName: $fortuneName, ')
+          ..write('removedAt: $removedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ScansTable scans = $ScansTable(this);
   late final $ProductCacheEntriesTable productCacheEntries =
       $ProductCacheEntriesTable(this);
+  late final $AlertExclusionsTable alertExclusions = $AlertExclusionsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1257,6 +1534,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     scans,
     productCacheEntries,
+    alertExclusions,
   ];
 }
 
@@ -1887,6 +2165,185 @@ typedef $$ProductCacheEntriesTableProcessedTableManager =
       ProductCacheEntry,
       PrefetchHooks Function()
     >;
+typedef $$AlertExclusionsTableCreateCompanionBuilder =
+    AlertExclusionsCompanion Function({
+      required String fortuneId,
+      required String fortuneName,
+      required DateTime removedAt,
+      Value<int> rowid,
+    });
+typedef $$AlertExclusionsTableUpdateCompanionBuilder =
+    AlertExclusionsCompanion Function({
+      Value<String> fortuneId,
+      Value<String> fortuneName,
+      Value<DateTime> removedAt,
+      Value<int> rowid,
+    });
+
+class $$AlertExclusionsTableFilterComposer
+    extends Composer<_$AppDatabase, $AlertExclusionsTable> {
+  $$AlertExclusionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get fortuneId => $composableBuilder(
+    column: $table.fortuneId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fortuneName => $composableBuilder(
+    column: $table.fortuneName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get removedAt => $composableBuilder(
+    column: $table.removedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AlertExclusionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AlertExclusionsTable> {
+  $$AlertExclusionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get fortuneId => $composableBuilder(
+    column: $table.fortuneId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fortuneName => $composableBuilder(
+    column: $table.fortuneName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get removedAt => $composableBuilder(
+    column: $table.removedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AlertExclusionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AlertExclusionsTable> {
+  $$AlertExclusionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get fortuneId =>
+      $composableBuilder(column: $table.fortuneId, builder: (column) => column);
+
+  GeneratedColumn<String> get fortuneName => $composableBuilder(
+    column: $table.fortuneName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get removedAt =>
+      $composableBuilder(column: $table.removedAt, builder: (column) => column);
+}
+
+class $$AlertExclusionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AlertExclusionsTable,
+          AlertExclusion,
+          $$AlertExclusionsTableFilterComposer,
+          $$AlertExclusionsTableOrderingComposer,
+          $$AlertExclusionsTableAnnotationComposer,
+          $$AlertExclusionsTableCreateCompanionBuilder,
+          $$AlertExclusionsTableUpdateCompanionBuilder,
+          (
+            AlertExclusion,
+            BaseReferences<
+              _$AppDatabase,
+              $AlertExclusionsTable,
+              AlertExclusion
+            >,
+          ),
+          AlertExclusion,
+          PrefetchHooks Function()
+        > {
+  $$AlertExclusionsTableTableManager(
+    _$AppDatabase db,
+    $AlertExclusionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AlertExclusionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AlertExclusionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AlertExclusionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> fortuneId = const Value.absent(),
+                Value<String> fortuneName = const Value.absent(),
+                Value<DateTime> removedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AlertExclusionsCompanion(
+                fortuneId: fortuneId,
+                fortuneName: fortuneName,
+                removedAt: removedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String fortuneId,
+                required String fortuneName,
+                required DateTime removedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => AlertExclusionsCompanion.insert(
+                fortuneId: fortuneId,
+                fortuneName: fortuneName,
+                removedAt: removedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$AlertExclusionsTable, AlertExclusion>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $AlertExclusionsTable,
+                    AlertExclusion
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AlertExclusionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AlertExclusionsTable,
+      AlertExclusion,
+      $$AlertExclusionsTableFilterComposer,
+      $$AlertExclusionsTableOrderingComposer,
+      $$AlertExclusionsTableAnnotationComposer,
+      $$AlertExclusionsTableCreateCompanionBuilder,
+      $$AlertExclusionsTableUpdateCompanionBuilder,
+      (
+        AlertExclusion,
+        BaseReferences<_$AppDatabase, $AlertExclusionsTable, AlertExclusion>,
+      ),
+      AlertExclusion,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1895,4 +2352,6 @@ class $AppDatabaseManager {
       $$ScansTableTableManager(_db, _db.scans);
   $$ProductCacheEntriesTableTableManager get productCacheEntries =>
       $$ProductCacheEntriesTableTableManager(_db, _db.productCacheEntries);
+  $$AlertExclusionsTableTableManager get alertExclusions =>
+      $$AlertExclusionsTableTableManager(_db, _db.alertExclusions);
 }

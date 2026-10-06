@@ -21,7 +21,7 @@ void main() {
       excludedFortuneIds: const {},
     );
 
-    expect(banners.single.title, grandeFortuneTitle);
+    expect(banners.single.title, 'famille Bolloré');
     final body = banners.single.body;
     expect(body.contains('Grasset y est rattaché'), isTrue);
     expect(body.contains('30,4 % du capital'), isTrue);

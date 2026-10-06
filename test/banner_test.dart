@@ -7,7 +7,7 @@ void main() {
   testWidgets('the banner says grande fortune in text', (tester) async {
     const banner = FortuneBanner(
       fortuneId: 'fortune.bollore',
-      title: grandeFortuneTitle,
+      title: 'famille Bolloré',
       body: 'Grasset y est rattaché.',
     );
 
@@ -18,6 +18,7 @@ void main() {
     );
 
     expect(find.text('Grande fortune'), findsOneWidget);
+    expect(find.text('famille Bolloré'), findsOneWidget);
     expect(find.text('Grasset y est rattaché.'), findsOneWidget);
   });
 }

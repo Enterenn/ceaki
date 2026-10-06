@@ -5,6 +5,7 @@ import 'package:transparence/application/scan_view.dart';
 import 'package:transparence/data/products/bnf_catalog.dart';
 import 'package:transparence/data/products/book_record.dart';
 import 'package:transparence/data/products/demo_books.dart';
+import 'package:transparence/data/products/demo_games.dart';
 import 'package:transparence/data/user/app_database.dart';
 import 'package:transparence/data/user/stored_fields.dart';
 import 'package:transparence/domain/gtin.dart';
@@ -29,17 +30,30 @@ final scanBookProvider = Provider<ScanBook>((ref) {
   );
 });
 
+final excludedFortuneIdsProvider = StreamProvider<Set<String>>((ref) {
+  return ref.watch(appDatabaseProvider).watchExcludedFortuneIds();
+});
+
 final scanViewProvider = Provider.autoDispose.family<AsyncValue<ScanView>, int>(
   (ref, id) {
     final library = ref.watch(capitalLibraryProvider);
     final scan = ref.watch(_scanRowProvider(id));
-    return library.when(
-      loading: () => const AsyncLoading(),
-      error: AsyncError.new,
-      data: (loaded) => scan.when(
-        loading: () => const AsyncLoading(),
-        error: AsyncError.new,
-        data: (row) => AsyncData(describeScan(loaded, row)),
+    final excluded = ref.watch(excludedFortuneIdsProvider);
+    if (library.isLoading || scan.isLoading || excluded.isLoading) {
+      return const AsyncLoading();
+    }
+    if (library.hasError) {
+      return AsyncError(library.error!, library.stackTrace!);
+    }
+    if (scan.hasError) return AsyncError(scan.error!, scan.stackTrace!);
+    if (excluded.hasError) {
+      return AsyncError(excluded.error!, excluded.stackTrace!);
+    }
+    return AsyncData(
+      describeScan(
+        library.requireValue,
+        scan.requireValue,
+        excludedFortuneIds: excluded.requireValue,
       ),
     );
   },
@@ -65,12 +79,15 @@ class ScanBook {
 
   Future<int> open(Gtin gtin, Library library) async {
     final now = _now();
+    final excluded = await database.excludedFortuneIds();
     if (gtin.codeCategory != CodeCategory.livre) {
+      final game = demoGame(gtin.value);
       return _store(
         gtin: gtin,
         library: library,
-        book: null,
-        issue: ScanIssue.notABook,
+        book: game,
+        issue: game == null ? ScanIssue.productUnknown : ScanIssue.resolved,
+        excludedFortuneIds: excluded,
         now: now,
       );
     }
@@ -86,8 +103,10 @@ class ScanBook {
           creator: cached.creator,
           publishers: splitFields(cached.brandNames),
           source: cached.source,
+          category: cached.category,
         ),
         issue: ScanIssue.resolved,
+        excludedFortuneIds: excluded,
         now: now,
       );
     }
@@ -111,6 +130,7 @@ class ScanBook {
       issue: book == null
           ? (offline ? ScanIssue.offline : ScanIssue.productUnknown)
           : ScanIssue.resolved,
+      excludedFortuneIds: excluded,
       now: now,
     );
   }
@@ -129,6 +149,7 @@ class ScanBook {
       names: splitFields(scan.brandNames),
       chosenIds: chosen,
       issue: ScanIssue.resolved,
+      excludedFortuneIds: await database.excludedFortuneIds(),
     );
     await database.rememberChoice(
       id: scanId,
@@ -140,7 +161,11 @@ class ScanBook {
   }
 
   Future<bool> putBack(int id, Library library) async {
-    final view = describeScan(library, await database.getScan(id));
+    final view = describeScan(
+      library,
+      await database.getScan(id),
+      excludedFortuneIds: await database.excludedFortuneIds(),
+    );
     if (view.fortuneNames.isEmpty) return false;
     return database.putBack(
       id: id,
@@ -156,6 +181,7 @@ class ScanBook {
     required Library library,
     required BookRecord? book,
     required ScanIssue issue,
+    required Set<String> excludedFortuneIds,
     required DateTime now,
   }) {
     final names = book?.publishers ?? const <String>[];
@@ -164,6 +190,7 @@ class ScanBook {
       names: names,
       chosenIds: const {},
       issue: issue,
+      excludedFortuneIds: excludedFortuneIds,
     );
     return database.insertScan(
       ScansCompanion.insert(
@@ -171,7 +198,7 @@ class ScanBook {
         gtin: gtin.value,
         productName: Value(_text(book?.title)),
         creator: Value(_text(book?.creator)),
-        category: Value(book == null ? null : 'livre'),
+        category: Value(book?.category),
         brandNames: Value(joinFields(names)),
         signaledFortuneIds: Value(joinFields(attachment.fortuneIds)),
         signaledFortuneNames: Value(joinFields(attachment.fortuneNames)),

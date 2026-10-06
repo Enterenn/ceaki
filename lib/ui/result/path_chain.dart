@@ -20,6 +20,25 @@ class PathChain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final head = path.isEmpty ? null : path.first;
+    if (path.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final holding in owners) ...[
+            _OwnerTile(library: library, holding: holding),
+            if (holding.above.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: PathChain(
+                  library: library,
+                  owners: holding.above,
+                  path: const [],
+                ),
+              ),
+          ],
+        ],
+      );
+    }
     final primary = [
       for (final owner in owners)
         if (head != null && owner.owner.id == head.owner.id) owner,

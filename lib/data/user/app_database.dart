@@ -41,7 +41,16 @@ class ProductCacheEntries extends Table {
   Set<Column<Object>> get primaryKey => {gtin};
 }
 
-@DriftDatabase(tables: [Scans, ProductCacheEntries])
+class AlertExclusions extends Table {
+  TextColumn get fortuneId => text()();
+  TextColumn get fortuneName => text()();
+  DateTimeColumn get removedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {fortuneId};
+}
+
+@DriftDatabase(tables: [Scans, ProductCacheEntries, AlertExclusions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'transparence'));
@@ -49,7 +58,14 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (migrator, from, to) async {
+      if (from < 2) await migrator.createTable(alertExclusions);
+    },
+  );
 
   Future<ProductCacheEntry?> freshProduct(String gtin, DateTime now) async {
     final row = await (select(
@@ -67,7 +83,7 @@ class AppDatabase extends _$AppDatabase {
         gtin: book.gtin,
         productName: Value(book.title),
         creator: Value(book.creator),
-        category: 'livre',
+        category: book.category,
         brandNames: joinFields(book.publishers),
         fetchedAt: fetchedAt,
         source: book.source,
@@ -120,6 +136,37 @@ class AppDatabase extends _$AppDatabase {
               ..where((row) => row.id.equals(id) & row.choice.isNull()))
             .write(const ScansCompanion(choice: Value('bought')));
     return updated == 1;
+  }
+
+  Stream<Set<String>> watchExcludedFortuneIds() {
+    return select(alertExclusions).watch().map((rows) {
+      return {for (final row in rows) row.fortuneId};
+    });
+  }
+
+  Future<Set<String>> excludedFortuneIds() async {
+    final rows = await select(alertExclusions).get();
+    return {for (final row in rows) row.fortuneId};
+  }
+
+  Future<void> removeAlert({
+    required String fortuneId,
+    required String fortuneName,
+    required DateTime removedAt,
+  }) {
+    return into(alertExclusions).insertOnConflictUpdate(
+      AlertExclusionsCompanion.insert(
+        fortuneId: fortuneId,
+        fortuneName: fortuneName,
+        removedAt: removedAt,
+      ),
+    );
+  }
+
+  Future<void> restoreAlert(String fortuneId) {
+    return (delete(
+      alertExclusions,
+    )..where((row) => row.fortuneId.equals(fortuneId))).go();
   }
 
   Future<void> rememberChoice({

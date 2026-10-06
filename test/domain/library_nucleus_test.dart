@@ -67,6 +67,18 @@ void main() {
           .id,
       'brand.fayard',
     );
+    expect(
+      library.brandsForKey(normalizeBrandName('Plon (Paris)')).single.id,
+      'brand.plon',
+    );
+    expect(
+      library.brandsForKey(normalizeBrandName('Éditions Plon')).single.id,
+      'brand.plon',
+    );
+    expect(
+      library.brands.firstWhere((brand) => brand.id == 'brand.plon').companyId,
+      'company.editis',
+    );
   });
 
   test('no active shortcut skips louis hachette group', () {
@@ -85,8 +97,33 @@ void main() {
     final companyIds = portfolio.companies.map((company) => company.id);
     expect(brandIds, containsAll(['brand.grasset', 'brand.fayard']));
     expect(brandIds, isNot(contains('brand.editis')));
+    expect(brandIds, isNot(contains('brand.plon')));
+    expect(brandIds, isNot(contains('brand.asmodee')));
+    expect(brandIds, isNot(contains('brand.free')));
     expect(companyIds, contains('company.prisma-media'));
     expect(companyIds, isNot(contains('company.editis')));
     expect(companyIds, isNot(contains('company.odet')));
+  });
+
+  test('asmodee is held by its published shareholders', () {
+    final owners = library.ownersOf('company.asmodee', LinkStatus.active);
+    expect(owners.map((link) => link.owner.id), [
+      'company.lars-wingefors-ab',
+      'company.savvy-gaming-group',
+    ]);
+    expect(owners.first.capitalPercent!.french, '16,9');
+    expect(owners.first.votingPercent!.french, '38,09');
+    expect(
+      library.brandsForKey(normalizeBrandName('Asmodee')).single.id,
+      'brand.asmodee',
+    );
+    expect(library.fortune('fortune.bouygues').name, 'famille Bouygues');
+    expect(library.fortune('fortune.niel').name, 'Xavier Niel');
+    final bouygues = library
+        .ownersOf('company.bouygues', LinkStatus.active)
+        .single;
+    expect(bouygues.owner.id, 'company.scdm');
+    expect(bouygues.capitalPercent!.raw, '28.3');
+    expect(bouygues.votingPercent!.raw, '29.3');
   });
 }

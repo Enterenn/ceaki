@@ -57,6 +57,11 @@ class _ResultBody extends ConsumerWidget {
                 FortuneBannerView(banner: banner),
                 const SizedBox(height: 16),
               ],
+              if (scan.banners.isEmpty)
+                for (final name in documentedOwnerNames(library, scan.chains))
+                  Text(name, style: theme.textTheme.titleLarge),
+              if (scan.state == ChainState.alertMuted)
+                Text(l10n.alertOff, style: theme.textTheme.titleMedium),
               if (scan.state == ChainState.noDocumentedFortune)
                 Text(
                   noDocumentedFortuneLabel,
@@ -77,9 +82,13 @@ class _ResultBody extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Text(scan.brandLabel!),
               ],
-              if (scan.title != null) ...[
+              if (scan.category == 'jeu' || scan.category == 'livre') ...[
                 const SizedBox(height: 4),
-                Text(l10n.categoryBook),
+                Text(
+                  scan.category == 'jeu'
+                      ? l10n.categoryGame
+                      : l10n.categoryBook,
+                ),
               ],
               const SizedBox(height: 8),
               Text(scan.gtin, style: theme.textTheme.bodySmall),
@@ -101,7 +110,7 @@ class _ResultBody extends ConsumerWidget {
                 PathChain(
                   library: library,
                   owners: chain.chain.owners,
-                  path: _path(chain, scan.fortuneIds),
+                  path: _path(chain),
                 ),
                 for (final link in chain.chain.historical)
                   LinkTile(
@@ -207,9 +216,10 @@ class _ResultBody extends ConsumerWidget {
   }
 }
 
-List<Holding> _path(BrandChain chain, List<String> fortuneIds) {
-  if (fortuneIds.isEmpty) return const [];
-  return pathToFortune(chain.chain, fortuneIds.first);
+List<Holding> _path(BrandChain chain) {
+  final ids = chain.chain.fortuneIds;
+  if (ids.isEmpty) return const [];
+  return pathToFortune(chain.chain, ids.first);
 }
 
 Source? _source(Library library, String? id) {

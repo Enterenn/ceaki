@@ -23,10 +23,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scannerPlaceholder =>
-      'Saisissez un ISBN. La caméra viendra ensuite.';
+      'Saisissez un code, ou lisez-le avec la caméra.';
 
   @override
-  String get codeHint => 'ISBN ou code-barres';
+  String get cameraReason => 'La caméra sert à lire un code-barres produit.';
+
+  @override
+  String get cameraAllow => 'Autoriser la caméra';
+
+  @override
+  String get cameraDenied => 'La caméra est refusée. La saisie reste possible.';
+
+  @override
+  String get alertOff => 'Alerte retirée';
+
+  @override
+  String get alertRemove => 'Retirer l’alerte';
+
+  @override
+  String get alertRestore => 'Rétablir l’alerte';
+
+  @override
+  String get codeHint => 'Code-barres';
 
   @override
   String get seeAttachment => 'Voir le rattachement';
@@ -80,6 +98,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get categoryBook => 'Livre';
+
+  @override
+  String get categoryGame => 'Jeu de société';
 
   @override
   String get searchHint => 'Fortune, société ou marque';

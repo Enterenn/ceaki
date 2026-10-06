@@ -46,6 +46,8 @@ String sectorLabel(String sector) {
   return switch (sector) {
     'edition' => 'édition',
     'presse' => 'presse',
+    'jeu' => 'jeu de société',
+    'telecom' => 'télécom',
     _ => sector,
   };
 }
@@ -97,10 +99,24 @@ List<FortuneBanner> bannersFor({
       if (!excludedFortuneIds.contains(fortuneId))
         FortuneBanner(
           fortuneId: fortuneId,
-          title: grandeFortuneTitle,
+          title: library.fortune(fortuneId).name,
           body: _bannerBody(library, chain, fortuneId),
         ),
   ];
+}
+
+List<String> documentedOwnerNames(Library library, List<BrandChain> chains) {
+  final names = <String>[];
+  for (final chain in chains) {
+    for (final holding in chain.chain.owners) {
+      final name = switch (holding.owner.kind) {
+        OwnerKind.company => library.company(holding.owner.id).name,
+        OwnerKind.fortune => library.fortune(holding.owner.id).name,
+      };
+      if (!names.contains(name)) names.add(name);
+    }
+  }
+  return names;
 }
 
 String putBackLine(List<String> fortuneNames) {
