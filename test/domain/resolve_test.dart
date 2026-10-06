@@ -28,7 +28,8 @@ void main() {
 
     expect(path[1].owner.id, 'company.bollore-se');
     expect(path[1].capitalPercent?.raw, '30.4');
-    expect(path[1].votingPercent?.raw, '30.4');
+    // CDC: rights of vote stay empty until a source separates them.
+    expect(path[1].votingPercent, isNull);
     expect(path[1].factDate, '2025-12-31');
 
     expect(path[2].owner.id, 'fortune.bollore');
@@ -55,16 +56,49 @@ void main() {
     expect(chain.chain.fortuneIds, ['fortune.bollore']);
   });
 
-  test('editis stays historical and does not alert on bollore', () {
+  test('editis alerts on kretinsky, not bollore, and keeps vivendi history', () {
     final chain = resolveBrand(library, editis).chain;
-    expect(chain.fortuneIds, isEmpty);
+    expect(chain.fortuneIds, ['fortune.kretinsky']);
+    expect(chain.fortuneIds, isNot(contains('fortune.bollore')));
     expect(chain.historical.single.owner.id, 'company.vivendi-se');
     expect(chain.historical.single.status, LinkStatus.historical);
-    expect(chainState(chain, const {}), ChainState.currentOwnerUndocumented);
-    expect(
-      labelFor(ChainState.currentOwnerUndocumented),
-      currentOwnerUndocumentedLabel,
-    );
+    expect(chainState(chain, const {}), ChainState.signaled);
+
+    final path = pathToFortune(chain, 'fortune.kretinsky');
+    expect(path.map((hop) => hop.owner.id).toList(), [
+      'company.imi',
+      'company.cmi',
+      'fortune.kretinsky',
+    ]);
+    expect(path.first.capitalPercent?.raw, '100');
+  });
+
+  test('garnier reaches bettencourt with tethys figures', () {
+    final garnier = library.brands.firstWhere((b) => b.id == 'brand.garnier');
+    final chain = resolveBrand(library, garnier).chain;
+    expect(chain.fortuneIds, contains('fortune.bettencourt'));
+    final path = pathToFortune(chain, 'fortune.bettencourt');
+    expect(path.map((hop) => hop.owner.id).take(2).toList(), [
+      'company.tethys',
+      'fortune.bettencourt',
+    ]);
+    expect(path.first.capitalPercent?.raw, '28.55');
+    expect(path.first.votingPercent?.raw, '28.55');
+  });
+
+  test('sephora reaches arnault through christian dior', () {
+    final sephora = library.brands.firstWhere((b) => b.id == 'brand.sephora');
+    final chain = resolveBrand(library, sephora).chain;
+    expect(chain.fortuneIds, ['fortune.arnault']);
+    final path = pathToFortune(chain, 'fortune.arnault');
+    expect(path.map((hop) => hop.owner.id).toList(), [
+      'company.christian-dior-se',
+      'company.financiere-agache',
+      'company.agache',
+      'fortune.arnault',
+    ]);
+    expect(path.first.capitalPercent?.raw, '42');
+    expect(path.first.votingPercent?.raw, '56');
   });
 
   test('two distinct names give two chains, a homonym gives a choice', () {

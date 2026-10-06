@@ -6,6 +6,7 @@ import 'package:transparence/application/scan_view.dart';
 import 'package:transparence/data/products/bnf_catalog.dart';
 import 'package:transparence/data/products/book_record.dart';
 import 'package:transparence/data/products/google_books_catalog.dart';
+import 'package:transparence/data/products/known_products_catalog.dart';
 import 'package:transparence/data/products/open_food_facts_catalog.dart';
 import 'package:transparence/data/products/open_library_catalog.dart';
 import 'package:transparence/data/products/product_catalog.dart';
@@ -35,9 +36,13 @@ final bookCatalogProvider = Provider<ProductCatalog>((ref) {
   return catalog;
 });
 
-/// Non-book products via Open Food Facts (`product_type=all`).
+/// Non-book: local seeds (jeux, EAN stables) puis Open Food Facts.
 final otherCatalogProvider = Provider<ProductCatalog>((ref) {
-  final catalog = OpenFoodFactsCatalog();
+  final off = OpenFoodFactsCatalog();
+  final catalog = CascadingCatalog([
+    const KnownProductsCatalog(),
+    off,
+  ]);
   ref.onDispose(catalog.close);
   return catalog;
 });
@@ -212,6 +217,34 @@ class ScanBook {
       choiceKey: key,
       brandId: brandId,
     );
+    final attachment = attachmentOf(
+      library: library,
+      names: splitFields(scan.brandNames),
+      chosenIds: chosen,
+      issue: ScanIssue.resolved,
+      excludedFortuneIds: await database.excludedFortuneIds(),
+    );
+    await database.rememberChoice(
+      id: scanId,
+      chosenBrandIds: encodeChoices(chosen),
+      signaledFortuneIds: joinFields(attachment.fortuneIds),
+      signaledFortuneNames: joinFields(attachment.fortuneNames),
+      issue: attachment.issue.name,
+    );
+  }
+
+  Future<void> clearBrandChoice({
+    required int scanId,
+    required Library library,
+    String? key,
+  }) async {
+    final scan = await database.getScan(scanId);
+    final chosen = Map<String, String>.of(decodeChoices(scan.chosenBrandIds));
+    final keys = key == null ? chosen.keys.toList() : [key];
+    for (final choiceKey in keys) {
+      chosen.remove(choiceKey);
+      await database.forgetGtinChoice(gtin: scan.gtin, choiceKey: choiceKey);
+    }
     final attachment = attachmentOf(
       library: library,
       names: splitFields(scan.brandNames),

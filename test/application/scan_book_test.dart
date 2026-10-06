@@ -68,7 +68,7 @@ void main() {
           excludedFortuneIds: const {},
         ).fortuneNames,
       ),
-      'Reposé. famille Bolloré — celui-ci reste en rayon.',
+      "Reposé. famille Bolloré n'aura pas celui-ci.",
     );
   });
 

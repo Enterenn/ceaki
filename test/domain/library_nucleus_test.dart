@@ -55,4 +55,34 @@ void main() {
     final brandIds = portfolio.brands.map((brand) => brand.id);
     expect(brandIds, containsAll(['brand.tf1', 'brand.bouygues-telecom']));
   });
+
+  test('kretinsky reaches editis and plon, not grasset', () {
+    final portfolio = descendFromFortune(library, 'fortune.kretinsky');
+    final brandIds = portfolio.brands.map((brand) => brand.id);
+    expect(brandIds, containsAll(['brand.editis', 'brand.plon', 'brand.pocket']));
+    expect(brandIds, isNot(contains('brand.grasset')));
+  });
+
+  test('bettencourt reaches garnier and maybelline via loreal', () {
+    final portfolio = descendFromFortune(library, 'fortune.bettencourt');
+    final brandIds = portfolio.brands.map((brand) => brand.id);
+    expect(
+      brandIds,
+      containsAll(['brand.garnier', 'brand.loreal-paris', 'brand.maybelline']),
+    );
+    expect(brandIds, isNot(contains('brand.nestle')));
+  });
+
+  test('arnault reaches sephora and dior via lvmh, not bollore marques', () {
+    final portfolio = descendFromFortune(library, 'fortune.arnault');
+    final brandIds = portfolio.brands.map((brand) => brand.id);
+    expect(brandIds, containsAll(['brand.sephora', 'brand.dior', 'brand.louis-vuitton']));
+    expect(brandIds, isNot(contains('brand.grasset')));
+  });
+
+  test('mulliez reaches auchan', () {
+    final portfolio = descendFromFortune(library, 'fortune.mulliez');
+    final brandIds = portfolio.brands.map((brand) => brand.id);
+    expect(brandIds, contains('brand.auchan'));
+  });
 }

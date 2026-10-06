@@ -1,12 +1,16 @@
 {
-  "version": "2026.10.2",
+  "version": "2026.10.5",
   "updatedOn": "2026-10-06",
   "sectors": [
     "edition",
     "presse",
     "jeu",
     "telecom",
-    "media"
+    "media",
+    "alimentaire",
+    "hygiene",
+    "distribution",
+    "luxe"
   ],
   "sources": [
     {
@@ -50,6 +54,48 @@
       "title": "Activités",
       "url": "https://www.prismamedia.com/groupe/activites/",
       "publisher": "Prisma Media"
+    },
+    {
+      "id": "source.madrigall-groupe",
+      "title": "Le groupe Madrigall",
+      "url": "https://www.gallimard.fr/",
+      "publisher": "Gallimard / Madrigall"
+    },
+    {
+      "id": "source.vivendi-editis-closing-2023",
+      "title": "Closing of the Editis sale to IMI",
+      "url": "https://www.vivendi.com/en/press-release/vivendi-closing-of-the-editis-sale-to-imi/",
+      "publisher": "Vivendi"
+    },
+    {
+      "id": "source.eu-editis-imi-2023",
+      "title": "Case M.11153 – CMI / Editis (public version)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023M11153",
+      "publisher": "European Commission"
+    },
+    {
+      "id": "source.loreal-deu-2025",
+      "title": "Document d'enregistrement universel 2025",
+      "url": "https://www.loreal-finance.com/system/files/2026-03/LOREAL_DEU_2025_FR.pdf",
+      "publisher": "L'Oréal"
+    },
+    {
+      "id": "source.christian-dior-ra-2025",
+      "title": "Rapport annuel au 31 décembre 2025",
+      "url": "https://www.dior-finance.com/pdf/d/1/1186/CD%20SE%20-%20Rapport%20annuel%20au%2031%20d%C3%A9cembre%202025.pdf",
+      "publisher": "Christian Dior SE"
+    },
+    {
+      "id": "source.lvmh-deu-2025",
+      "title": "Document d'enregistrement universel 2025",
+      "url": "https://urd.lvmh.com/fr/2025",
+      "publisher": "LVMH"
+    },
+    {
+      "id": "source.elo-rfa-2023",
+      "title": "Rapport financier et déclaration de performance extra-financière",
+      "url": "https://www.auchan-retail.com/storage/app/uploads/public/66a/c76/e2e/66ac76e2e89c3389924940.pdf",
+      "publisher": "ELO / Auchan Retail"
     }
   ],
   "fortunes": [
@@ -78,6 +124,46 @@
         "groupe familial Xavier Niel"
       ],
       "summary": "Le groupe familial Xavier Niel contrôle iliad Holding, qui contrôle iliad."
+    },
+    {
+      "id": "fortune.kretinsky",
+      "name": "Daniel Křetínský",
+      "aliases": [
+        "Daniel Kretinsky",
+        "Křetínský",
+        "Kretinsky"
+      ],
+      "summary": "Homme d'affaires ; via Czech Media Invest et International Media Invest, contrôle notamment Editis depuis 2023."
+    },
+    {
+      "id": "fortune.bettencourt",
+      "name": "famille Bettencourt Meyers",
+      "aliases": [
+        "Françoise Bettencourt Meyers",
+        "Bettencourt Meyers",
+        "famille Bettencourt"
+      ],
+      "summary": "Premier actionnaire de L'Oréal, notamment via Téthys SAS et Financière L'Arcouest SAS."
+    },
+    {
+      "id": "fortune.arnault",
+      "name": "famille Arnault",
+      "aliases": [
+        "Bernard Arnault",
+        "groupe familial Arnault",
+        "Arnault"
+      ],
+      "summary": "Contrôle LVMH via Agache, Financière Agache et Christian Dior SE."
+    },
+    {
+      "id": "fortune.mulliez",
+      "name": "famille Mulliez",
+      "aliases": [
+        "Association Familiale Mulliez",
+        "AFM",
+        "Gérard Mulliez"
+      ],
+      "summary": "Actionnariat familial d'ELO (Auchan Retail, New Immo Holding), via l'Association Familiale Mulliez."
     }
   ],
   "companies": [
@@ -230,6 +316,258 @@
       "name": "Bouygues Telecom",
       "aliases": [
         "Bouygues Télécom"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.danone",
+      "name": "Danone",
+      "aliases": [
+        "Danone SA",
+        "Groupe Danone"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.nestle",
+      "name": "Nestlé",
+      "aliases": [
+        "Nestlé S.A.",
+        "Nestle"
+      ],
+      "country": "CH",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.ferrero",
+      "name": "Ferrero",
+      "aliases": [
+        "Ferrero SpA",
+        "Groupe Ferrero"
+      ],
+      "country": "IT",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.coca-cola",
+      "name": "The Coca-Cola Company",
+      "aliases": [
+        "Coca-Cola",
+        "Coca Cola"
+      ],
+      "country": "US",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.pepsico",
+      "name": "PepsiCo",
+      "aliases": [
+        "Pepsico"
+      ],
+      "country": "US",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.mondelez",
+      "name": "Mondelez International",
+      "aliases": [
+        "Mondelēz",
+        "Mondelez"
+      ],
+      "country": "US",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.unilever",
+      "name": "Unilever",
+      "aliases": [
+        "Unilever PLC"
+      ],
+      "country": "GB",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.loreal",
+      "name": "L'Oréal",
+      "aliases": [
+        "Loreal",
+        "L'Oreal"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.beiersdorf",
+      "name": "Beiersdorf",
+      "aliases": [
+        "Beiersdorf AG"
+      ],
+      "country": "DE",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.carrefour",
+      "name": "Carrefour",
+      "aliases": [
+        "Carrefour SA",
+        "Groupe Carrefour"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.madrigall",
+      "name": "Madrigall",
+      "aliases": [],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.gallimard",
+      "name": "Éditions Gallimard",
+      "aliases": [
+        "Gallimard"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "maison d'édition"
+    },
+    {
+      "id": "company.flammarion",
+      "name": "Flammarion",
+      "aliases": [
+        "Groupe Flammarion",
+        "Éditions Flammarion"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "maison d'édition"
+    },
+    {
+      "id": "company.albin-michel",
+      "name": "Albin Michel",
+      "aliases": [
+        "Éditions Albin Michel"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "maison d'édition"
+    },
+    {
+      "id": "company.imi",
+      "name": "International Media Invest",
+      "aliases": [
+        "IMI",
+        "International Media Invest a.s."
+      ],
+      "country": "CZ",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.cmi",
+      "name": "Czech Media Invest",
+      "aliases": [
+        "CMI",
+        "Czech Media Invest a.s."
+      ],
+      "country": "CZ",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.tethys",
+      "name": "Téthys SAS",
+      "aliases": [
+        "Tethys",
+        "Téthys"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.financiere-arcouest",
+      "name": "Financière L'Arcouest SAS",
+      "aliases": [
+        "Financière L'Arcouest",
+        "L'Arcouest"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.agache",
+      "name": "Agache",
+      "aliases": [
+        "Agache SCA"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.financiere-agache",
+      "name": "Financière Agache",
+      "aliases": [
+        "Financiere Agache"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.christian-dior-se",
+      "name": "Christian Dior SE",
+      "aliases": [
+        "Christian Dior"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.lvmh",
+      "name": "LVMH",
+      "aliases": [
+        "LVMH Moët Hennessy Louis Vuitton",
+        "LVMH SE"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.elo",
+      "name": "ELO",
+      "aliases": [
+        "ELO SA",
+        "Auchan Holding"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "holding"
+    },
+    {
+      "id": "company.auchan-retail",
+      "name": "Auchan Retail",
+      "aliases": [
+        "Auchan"
       ],
       "country": "FR",
       "siren": null,
@@ -489,6 +827,466 @@
       "companyId": "company.prisma-media",
       "logoAsset": "assets/logos/tele-loisirs.png",
       "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.danone",
+      "name": "Danone",
+      "aliases": [
+        "Groupe Danone"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.danone",
+      "logoAsset": "assets/logos/danone.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.evian",
+      "name": "Evian",
+      "aliases": [
+        "Évian"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.danone",
+      "logoAsset": "assets/logos/evian.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.activia",
+      "name": "Activia",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.danone",
+      "logoAsset": "assets/logos/activia.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.volvic",
+      "name": "Volvic",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.danone",
+      "logoAsset": "assets/logos/volvic.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nestle",
+      "name": "Nestlé",
+      "aliases": [
+        "Nestle"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.nestle",
+      "logoAsset": "assets/logos/nestle.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nespresso",
+      "name": "Nespresso",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.nestle",
+      "logoAsset": "assets/logos/nespresso.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nescafe",
+      "name": "Nescafé",
+      "aliases": [
+        "Nescafe"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.nestle",
+      "logoAsset": "assets/logos/nescafe.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nutella",
+      "name": "Nutella",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.ferrero",
+      "logoAsset": "assets/logos/nutella.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.kinder",
+      "name": "Kinder",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.ferrero",
+      "logoAsset": "assets/logos/kinder.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.coca-cola",
+      "name": "Coca-Cola",
+      "aliases": [
+        "COCA COLA",
+        "COCA-COLA SERVICES SA/NV",
+        "Coca Cola",
+        "Coca-Cola Services",
+        "Coca-Cola Services SA",
+        "Coke"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.coca-cola",
+      "logoAsset": "assets/logos/coca-cola.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.pepsi",
+      "name": "Pepsi",
+      "aliases": [
+        "Pepsi-Cola"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.pepsico",
+      "logoAsset": "assets/logos/pepsi.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.lu",
+      "name": "LU",
+      "aliases": [
+        "Lefèvre-Utile"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.mondelez",
+      "logoAsset": "assets/logos/lu.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.milka",
+      "name": "Milka",
+      "aliases": [],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.mondelez",
+      "logoAsset": "assets/logos/milka.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.garnier",
+      "name": "Garnier",
+      "aliases": [],
+      "sectors": [
+        "hygiene"
+      ],
+      "companyId": "company.loreal",
+      "logoAsset": "assets/logos/garnier.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.loreal-paris",
+      "name": "L'Oréal Paris",
+      "aliases": [
+        "Loreal Paris",
+        "L'Oreal Paris"
+      ],
+      "sectors": [
+        "hygiene"
+      ],
+      "companyId": "company.loreal",
+      "logoAsset": "assets/logos/loreal-paris.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.dove",
+      "name": "Dove",
+      "aliases": [],
+      "sectors": [
+        "hygiene"
+      ],
+      "companyId": "company.unilever",
+      "logoAsset": "assets/logos/dove.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nivea",
+      "name": "Nivea",
+      "aliases": [
+        "NIVEA"
+      ],
+      "sectors": [
+        "hygiene"
+      ],
+      "companyId": "company.beiersdorf",
+      "logoAsset": "assets/logos/nivea.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.carrefour",
+      "name": "Carrefour",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.carrefour",
+      "logoAsset": "assets/logos/carrefour.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.gallimard",
+      "name": "Gallimard",
+      "aliases": [
+        "Éditions Gallimard"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.gallimard",
+      "logoAsset": "assets/logos/gallimard.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.folio",
+      "name": "Folio",
+      "aliases": [],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.gallimard",
+      "logoAsset": "assets/logos/folio.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.pocket",
+      "name": "Pocket",
+      "aliases": [
+        "éditions Pocket"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/pocket.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.flammarion",
+      "name": "Flammarion",
+      "aliases": [
+        "Éditions Flammarion"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.flammarion",
+      "logoAsset": "assets/logos/flammarion.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.jai-lu",
+      "name": "J'ai lu",
+      "aliases": [
+        "Jai lu"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.flammarion",
+      "logoAsset": "assets/logos/jai-lu.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.albin-michel",
+      "name": "Albin Michel",
+      "aliases": [
+        "Éditions Albin Michel"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.albin-michel",
+      "logoAsset": "assets/logos/albin-michel.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.ferrero",
+      "name": "Ferrero",
+      "aliases": [
+        "Ferrero France",
+        "Ferrero SpA",
+        "Groupe Ferrero"
+      ],
+      "sectors": [
+        "alimentaire"
+      ],
+      "companyId": "company.ferrero",
+      "logoAsset": "assets/logos/ferrero.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.nathan",
+      "name": "Nathan",
+      "aliases": [
+        "Éditions Nathan"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/nathan.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.robert-laffont",
+      "name": "Robert Laffont",
+      "aliases": [
+        "Éditions Robert Laffont",
+        "Laffont"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/robert-laffont.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.bordas",
+      "name": "Bordas",
+      "aliases": [
+        "Éditions Bordas"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/bordas.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.julliard",
+      "name": "Julliard",
+      "aliases": [
+        "Éditions Julliard"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/julliard.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.presses-de-la-cite",
+      "name": "Presses de la Cité",
+      "aliases": [
+        "La Cité"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/presses-de-la-cite.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.sephora",
+      "name": "Sephora",
+      "aliases": [],
+      "sectors": [
+        "hygiene",
+        "luxe"
+      ],
+      "companyId": "company.lvmh",
+      "logoAsset": "assets/logos/sephora.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.louis-vuitton",
+      "name": "Louis Vuitton",
+      "aliases": [
+        "LV"
+      ],
+      "sectors": [
+        "luxe"
+      ],
+      "companyId": "company.lvmh",
+      "logoAsset": "assets/logos/louis-vuitton.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.dior",
+      "name": "Dior",
+      "aliases": [
+        "Christian Dior",
+        "Parfums Christian Dior"
+      ],
+      "sectors": [
+        "luxe",
+        "hygiene"
+      ],
+      "companyId": "company.lvmh",
+      "logoAsset": "assets/logos/dior.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.auchan",
+      "name": "Auchan",
+      "aliases": [
+        "Auchan Retail",
+        "Auchan France"
+      ],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.auchan-retail",
+      "logoAsset": "assets/logos/auchan.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.maybelline",
+      "name": "Maybelline",
+      "aliases": [
+        "Maybelline New York"
+      ],
+      "sectors": [
+        "hygiene"
+      ],
+      "companyId": "company.loreal",
+      "logoAsset": "assets/logos/maybelline.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.lancome",
+      "name": "Lancôme",
+      "aliases": [
+        "Lancome"
+      ],
+      "sectors": [
+        "hygiene",
+        "luxe"
+      ],
+      "companyId": "company.loreal",
+      "logoAsset": "assets/logos/lancome.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     }
   ],
   "ownerships": [
@@ -513,7 +1311,7 @@
         "id": "company.bollore-se"
       },
       "capitalPercent": "30.4",
-      "votingPercent": "30.4",
+      "votingPercent": null,
       "linkType": "reference_shareholder",
       "factDate": "2025-12-31",
       "sourceId": "source.bollore-deu-2025",
@@ -673,6 +1471,230 @@
       "sourceId": "source.bouygues-deu-2025",
       "status": "active",
       "note": "Métier Télécoms du groupe Bouygues. Le document ne donne pas de pourcentage."
+    },
+    {
+      "ownedCompanyId": "company.gallimard",
+      "owner": {
+        "type": "company",
+        "id": "company.madrigall"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2024-12-31",
+      "sourceId": "source.madrigall-groupe",
+      "status": "active",
+      "note": "Contrôle éditorial via le groupe Madrigall."
+    },
+    {
+      "ownedCompanyId": "company.flammarion",
+      "owner": {
+        "type": "company",
+        "id": "company.madrigall"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2024-12-31",
+      "sourceId": "source.madrigall-groupe",
+      "status": "active",
+      "note": "Flammarion fait partie du groupe Madrigall."
+    },
+    {
+      "ownedCompanyId": "company.editis",
+      "owner": {
+        "type": "company",
+        "id": "company.imi"
+      },
+      "capitalPercent": "100",
+      "votingPercent": null,
+      "linkType": "subsidiary",
+      "factDate": "2023-11-14",
+      "sourceId": "source.vivendi-editis-closing-2023",
+      "status": "active",
+      "note": "Cession Vivendi → IMI ; 100 % du capital."
+    },
+    {
+      "ownedCompanyId": "company.imi",
+      "owner": {
+        "type": "company",
+        "id": "company.cmi"
+      },
+      "capitalPercent": "100",
+      "votingPercent": null,
+      "linkType": "subsidiary",
+      "factDate": "2023-11-14",
+      "sourceId": "source.eu-editis-imi-2023",
+      "status": "active",
+      "note": "IMI est une filiale à 100 % de CMI (décision UE M.11153)."
+    },
+    {
+      "ownedCompanyId": "company.cmi",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.kretinsky"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2023-11-14",
+      "sourceId": "source.eu-editis-imi-2023",
+      "status": "active",
+      "note": "Contrôle de CMI / véhicule IMI pour l'acquisition d'Editis."
+    },
+    {
+      "ownedCompanyId": "company.tethys",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.bettencourt"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.loreal-deu-2025",
+      "status": "active",
+      "note": "Téthys SAS est contrôlée par Mme Françoise Bettencourt Meyers et sa famille."
+    },
+    {
+      "ownedCompanyId": "company.financiere-arcouest",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.bettencourt"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.loreal-deu-2025",
+      "status": "active",
+      "note": "Financière L'Arcouest SAS est également contrôlée par la famille Bettencourt Meyers."
+    },
+    {
+      "ownedCompanyId": "company.loreal",
+      "owner": {
+        "type": "company",
+        "id": "company.tethys"
+      },
+      "capitalPercent": "28.55",
+      "votingPercent": "28.55",
+      "linkType": "reference_shareholder",
+      "factDate": "2025-12-31",
+      "sourceId": "source.loreal-deu-2025",
+      "status": "active",
+      "note": "152 514 292 actions L'Oréal détenues en pleine propriété par Téthys SAS."
+    },
+    {
+      "ownedCompanyId": "company.loreal",
+      "owner": {
+        "type": "company",
+        "id": "company.financiere-arcouest"
+      },
+      "capitalPercent": "5.18",
+      "votingPercent": "5.18",
+      "linkType": "stake",
+      "factDate": "2025-12-31",
+      "sourceId": "source.loreal-deu-2025",
+      "status": "active",
+      "note": "27 650 000 actions L'Oréal détenues par Financière L'Arcouest SAS (≈ 5,18 % du capital)."
+    },
+    {
+      "ownedCompanyId": "company.loreal",
+      "owner": {
+        "type": "company",
+        "id": "company.nestle"
+      },
+      "capitalPercent": "20.16",
+      "votingPercent": "20.16",
+      "linkType": "stake",
+      "factDate": "2025-12-31",
+      "sourceId": "source.loreal-deu-2025",
+      "status": "active",
+      "note": "Via Nestlé Equity Holdings Limited ; Nestlé n'est pas une fortune du noyau."
+    },
+    {
+      "ownedCompanyId": "company.agache",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.arnault"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.christian-dior-ra-2025",
+      "status": "active",
+      "note": "Agache porte la participation familiale Arnault."
+    },
+    {
+      "ownedCompanyId": "company.financiere-agache",
+      "owner": {
+        "type": "company",
+        "id": "company.agache"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.christian-dior-ra-2025",
+      "status": "active",
+      "note": "Financière Agache est dans le périmètre Agache / famille Arnault."
+    },
+    {
+      "ownedCompanyId": "company.christian-dior-se",
+      "owner": {
+        "type": "company",
+        "id": "company.financiere-agache"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2025-12-31",
+      "sourceId": "source.christian-dior-ra-2025",
+      "status": "active",
+      "note": "Contrôle de Christian Dior SE dans le périmètre Agache / groupe familial Arnault."
+    },
+    {
+      "ownedCompanyId": "company.lvmh",
+      "owner": {
+        "type": "company",
+        "id": "company.christian-dior-se"
+      },
+      "capitalPercent": "42",
+      "votingPercent": "56",
+      "linkType": "reference_shareholder",
+      "factDate": "2025-12-31",
+      "sourceId": "source.christian-dior-ra-2025",
+      "status": "active",
+      "note": "Christian Dior SE détient environ 42 % du capital et 56 % des droits de vote de LVMH (rapport annuel 2025)."
+    },
+    {
+      "ownedCompanyId": "company.elo",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.mulliez"
+      },
+      "capitalPercent": "98",
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2023-12-31",
+      "sourceId": "source.elo-rfa-2023",
+      "status": "active",
+      "note": "Actionnariat familial ≈ 98 % d'ELO ; salariés ≈ 2 % (rapport ELO)."
+    },
+    {
+      "ownedCompanyId": "company.auchan-retail",
+      "owner": {
+        "type": "company",
+        "id": "company.elo"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2023-12-31",
+      "sourceId": "source.elo-rfa-2023",
+      "status": "active",
+      "note": "ELO réunit Auchan Retail et New Immo Holding."
     }
   ]
 }

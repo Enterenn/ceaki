@@ -1,47 +1,97 @@
-# Recette appareil Android
+# Phase 1 — Recette appareil Android
 
-Checklist manuelle avant une release 0.x. Appareil réel recommandé.
+Checklist manuelle avant d’ouvrir la Phase 2 (couverture noyau).  
+Appareil réel recommandé. Journal : [`phase-1-journal.md`](phase-1-journal.md).
 
-## Préparation
+## Objectif
 
-1. `flutter pub get`
-2. `flutter test`
-3. Installer le build debug : `flutter run` (ou APK debug)
-4. Vérifier que **Profil → À propos** affiche la version courante (`pubspec.yaml` / `publishedAppVersion`)
+Savoir, en conditions réelles :
 
-## Permission caméra
+1. ce qui s’identifie (BnF / OFF) ;
+2. ce qui se rattache au noyau (fortune / entreprise / inconnu) ;
+3. si Scan → Archive → Repos → Profil tient la route.
+
+**Done Phase 1 :** checklist UI cochée + ≥ 15 lignes dans le journal + liste des ratés pour la Phase 2.
+
+## 0. Préparation machine
+
+```bash
+flutter pub get
+flutter test
+python tools/phase1_probe.py
+```
+
+Le probe interroge les catalogues (réseau) et croise le noyau embarqué.  
+Il ne remplace pas la caméra : il valide la batterie de codes connus.
+
+Installer ensuite :
+
+```bash
+flutter run
+```
+
+Vérifier **Profil → À propos** : version app + version bibliothèque (`2026.10.3` ou plus).
+
+## 1. Permission caméra
 
 1. Onglet **Scan** → **On checke**
-2. Première fois : écran d’explication → autoriser
-3. Refus : message + ouverture des réglages fonctionne
-4. Autorisation : viseur prêt
+2. Autoriser → viseur prêt
+3. (Optionnel) Refuser / révoquer → message + **Ouvrir les réglages** fonctionne
+4. Saisie manuelle toujours accessible (**Code illisible ?**)
 
-## Scan
+## 2. Batterie de codes (saisie ou scan)
 
-1. Scanner un ISBN magasin (ou saisir manuellement `978-2-246-80723-0`)
-2. Résultat : bandeau fortune si applicable, produit, marque, CTA
-3. Pull-to-refresh sur le résultat : rechargement sans planter
-4. Scanner un hors-livre connu OFF (ex. alimentaire) : marque/titre renseignés ou état inconnu clair
+Remplir le [journal](phase-1-journal.md). Minimum :
 
-## Archive
+| GTIN | Attendu métier |
+| --- | --- |
+| `978-2-246-80723-0` | Livre Grasset → **fortune** Bolloré, CTA repos |
+| `978-2-259-19540-9` | Plon → **entreprise** Editis, pas de bandeau fortune |
+| `3558380078180` | Dobble / Asmodee → **entreprise** (vert archive) |
+| `3017620429484` | Nutella → Ferrero si OFF OK |
+| + 10 codes magasin | mélange livre / alimentaire / hygiène |
 
-1. Après 1–2 scans, onglet **Bibliothèque**
-2. Marques présentes, labels rouge / vert / neutre lisibles
-3. Tap fiche marque → chaîne + sources ouvrables
+Pour chaque code, noter :
 
-## Repos
+- titre / marque renvoyés ;
+- tone : fortune / clear / unknown / product_unknown ;
+- bug UI éventuel.
 
-1. Sur un résultat avec fortune : **Je le repose**
-2. Moment « Reposé… » affiché
-3. **Profil** : palier / compteur de reposés mis à jour
-4. **Profil → Scans** : ligne avec statut Reposé
+Sur un résultat fortune :
 
-## Données locales
+1. Pull-to-refresh sans crash
+2. **Je le repose** → texte « n’aura pas celui-ci »
+3. **Profil** : compteur + ligne carnet « Ils n’auront pas »
+4. Rescanner le même code : pas de double recherche tant que le résultat est ouvert (revenir d’abord)
 
-1. **Profil → Données locales** : vider le cache produit
-2. Vider l’historique : scans et compteur reposés remis à zéro
-3. Rescanner un GTIN déjà vu : identification réseau ou cache selon cas
+Sur un résultat sans fortune mais avec entreprise : pas de CTA repos (comportement voulu).
 
-## Compte
+## 3. Archive
 
-Pas de compte en 0.x — reporté hors pré-v1 (voir README / À propos).
+Après ≥ 3 scans distincts :
+
+1. Onglet **Bibliothèque**
+2. Marques présentes, **nom d’entreprise** sous la marque si connue
+3. Labels lisibles (légende + pastille)
+4. Tap fiche → chaîne / historique / sources ouvrables
+
+## 4. Profil & données
+
+1. Carnet non vide après un repos
+2. **Scans** : recherche + statuts Reposé / Acheté
+3. **Données locales** : vider le cache produit
+4. Vider l’historique → carnet et scans à zéro
+5. Rescanner un GTIN connu → réseau ou cache selon cas
+
+## 5. Compte
+
+Pas de compte en 0.x — hors Phase 1.
+
+## 6. Clôture Phase 1
+
+- [ ] `flutter test` encore vert
+- [ ] Journal ≥ 15 lignes
+- [ ] Checklist UI cochée
+- [ ] Tableau « Ratés à traiter en Phase 2 » rempli (même s’il est court)
+
+Ensuite seulement : Phase 2 (aliases, marques, monogrammes, Editis, DV Bolloré).
