@@ -2,7 +2,7 @@
 
 Rendre visible le rattachement d’un produit à une grande fortune — pour pouvoir s’abstenir.
 
-## Produit (v0.5)
+## Produit (v0.6)
 
 Trois onglets :
 
@@ -17,6 +17,7 @@ Trois onglets :
 - Cache produit local 30 jours ; pull-to-refresh sur le résultat ; fallback cache périmé si hors ligne
 - Homonymes de marque mémorisés par GTIN
 - Paliers soft sur les reposés : 1 / 10 / 50
+- **Pas de compte** en 0.x (reporté hors pré-v1) — données locales uniquement
 
 ### Archive (labels)
 
@@ -39,7 +40,8 @@ Le JSON embarqué (`assets/library/library.json`) reste le **moteur de résoluti
 
 - Flutter, Riverpod, Drift (local), `mobile_scanner`
 - Couches : `ui` → `application` → `domain` ← `data`
-- Identification livres : BnF (+ fixtures offline) ; hors-livre : fixtures pour l’instant
+- Identification livres : BnF → Open Library → Google Books ; hors-livre : Open Food Facts
+- Recette appareil : [`docs/recette-android.md`](docs/recette-android.md)
 
 ```bash
 flutter pub get
@@ -47,4 +49,4 @@ flutter test
 flutter run
 ```
 
-Version app : voir `pubspec.yaml`.
+Version app : voir `pubspec.yaml` et `publishedAppVersion` dans `lib/application/app_version.dart`.

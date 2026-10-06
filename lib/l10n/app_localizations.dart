@@ -700,6 +700,12 @@ abstract class AppLocalizations {
   /// **'Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.'**
   String get aboutSources;
 
+  /// No description provided for @aboutAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de compte en ligne pour l’instant : tout reste sur cet appareil. Un compte facultatif, s’il arrive, sera après la pré-v1.'**
+  String get aboutAccount;
+
   /// No description provided for @libraryError.
   ///
   /// In fr, this message translates to:

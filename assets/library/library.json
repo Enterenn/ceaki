@@ -1,11 +1,12 @@
 {
-  "version": "2026.10.1",
+  "version": "2026.10.2",
   "updatedOn": "2026-10-06",
   "sectors": [
     "edition",
     "presse",
     "jeu",
-    "telecom"
+    "telecom",
+    "media"
   ],
   "sources": [
     {
@@ -37,6 +38,18 @@
       "title": "Rapport financier annuel 2025",
       "url": "https://www.iliad.fr/media/iliad_Holding_2025_Annual_Financial_Report_bc9ea07ccc.pdf",
       "publisher": "iliad Holding"
+    },
+    {
+      "id": "source.tf1-rapport-2025",
+      "title": "Rapport d'activité 2025",
+      "url": "https://groupe-tf1.fr/sites/default/files/pdf-financiers/Rapport%20d%27activit%C3%A9%20TF1%20FY%202025.pdf",
+      "publisher": "TF1"
+    },
+    {
+      "id": "source.prisma-activites",
+      "title": "Activités",
+      "url": "https://www.prismamedia.com/groupe/activites/",
+      "publisher": "Prisma Media"
     }
   ],
   "fortunes": [
@@ -200,6 +213,27 @@
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.tf1",
+      "name": "TF1",
+      "aliases": [
+        "Groupe TF1",
+        "TF1 SA"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.bouygues-telecom",
+      "name": "Bouygues Telecom",
+      "aliases": [
+        "Bouygues Télécom"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
     }
   ],
   "brands": [
@@ -242,7 +276,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/calmann-levy.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.larousse",
@@ -251,7 +287,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/larousse.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.livre-de-poche",
@@ -262,7 +300,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/livre-de-poche.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.lgf",
@@ -282,7 +322,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/hachette-livre.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.stock",
@@ -293,7 +335,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/stock.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.jc-lattes",
@@ -304,7 +348,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.lagardere-sa"
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/jc-lattes.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.plon",
@@ -326,7 +372,9 @@
       "sectors": [
         "edition"
       ],
-      "companyId": "company.editis"
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/editis.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.asmodee",
@@ -364,6 +412,82 @@
       ],
       "companyId": "company.iliad",
       "logoAsset": "assets/logos/free.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.tf1",
+      "name": "TF1",
+      "aliases": [
+        "TF1+"
+      ],
+      "sectors": [
+        "media"
+      ],
+      "companyId": "company.tf1",
+      "logoAsset": "assets/logos/tf1.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.bouygues-telecom",
+      "name": "Bouygues Telecom",
+      "aliases": [
+        "Bouygues Télécom",
+        "B&You"
+      ],
+      "sectors": [
+        "telecom"
+      ],
+      "companyId": "company.bouygues-telecom",
+      "logoAsset": "assets/logos/bouygues-telecom.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.geo",
+      "name": "GEO",
+      "aliases": [
+        "Géo"
+      ],
+      "sectors": [
+        "presse"
+      ],
+      "companyId": "company.prisma-media",
+      "logoAsset": "assets/logos/geo.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.capital",
+      "name": "Capital",
+      "aliases": [],
+      "sectors": [
+        "presse"
+      ],
+      "companyId": "company.prisma-media",
+      "logoAsset": "assets/logos/capital.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.femme-actuelle",
+      "name": "Femme Actuelle",
+      "aliases": [],
+      "sectors": [
+        "presse"
+      ],
+      "companyId": "company.prisma-media",
+      "logoAsset": "assets/logos/femme-actuelle.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.tele-loisirs",
+      "name": "Télé-Loisirs",
+      "aliases": [
+        "Tele Loisirs",
+        "Télé Loisirs"
+      ],
+      "sectors": [
+        "presse"
+      ],
+      "companyId": "company.prisma-media",
+      "logoAsset": "assets/logos/tele-loisirs.png",
       "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     }
   ],
@@ -521,6 +645,34 @@
       "sourceId": "source.iliad-holding-2025",
       "status": "active",
       "note": "Le rapport dit qu’iliad Holding contrôle iliad, sans pourcentage."
+    },
+    {
+      "ownedCompanyId": "company.tf1",
+      "owner": {
+        "type": "company",
+        "id": "company.bouygues"
+      },
+      "capitalPercent": "46.8",
+      "votingPercent": "46.8",
+      "linkType": "reference_shareholder",
+      "factDate": "2025-12-31",
+      "sourceId": "source.tf1-rapport-2025",
+      "status": "active",
+      "note": "Actionnaire de référence selon le rapport d'activité TF1 2025."
+    },
+    {
+      "ownedCompanyId": "company.bouygues-telecom",
+      "owner": {
+        "type": "company",
+        "id": "company.bouygues"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "subsidiary",
+      "factDate": "2025-12-31",
+      "sourceId": "source.bouygues-deu-2025",
+      "status": "active",
+      "note": "Métier Télécoms du groupe Bouygues. Le document ne donne pas de pourcentage."
     }
   ]
 }

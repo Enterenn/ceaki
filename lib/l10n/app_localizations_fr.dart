@@ -376,6 +376,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.';
 
   @override
+  String get aboutAccount =>
+      'Pas de compte en ligne pour l’instant : tout reste sur cet appareil. Un compte facultatif, s’il arrive, sera après la pré-v1.';
+
+  @override
   String get libraryError => 'La bibliothèque n’a pas pu être lue.';
 
   @override

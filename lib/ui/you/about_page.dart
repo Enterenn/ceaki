@@ -73,6 +73,14 @@ class AboutPage extends ConsumerWidget {
               height: 1.45,
             ),
           ),
+          const SizedBox(height: 20),
+          Text(
+            l10n.aboutAccount,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: TransparenceColors.mute,
+              height: 1.45,
+            ),
+          ),
           const SizedBox(height: 40),
           const Divider(height: 1),
           const SizedBox(height: 24),

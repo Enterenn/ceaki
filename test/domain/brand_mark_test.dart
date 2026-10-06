@@ -21,6 +21,11 @@ void main() {
       'brand.free',
       'brand.dobble',
       'brand.plon',
+      'brand.tf1',
+      'brand.bouygues-telecom',
+      'brand.geo',
+      'brand.capital',
+      'brand.hachette-livre',
     ]) {
       final brand = library.brands.firstWhere((b) => b.id == id);
       expect(brand.logoAsset, isNotNull);

@@ -143,6 +143,7 @@
   "aboutPurpose": "On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.",
   "aboutLimit": "Pas de grande fortune documentée ≠ petite entreprise.",
   "aboutSources": "Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.",
+  "aboutAccount": "Pas de compte en ligne pour l’instant : tout reste sur cet appareil. Un compte facultatif, s’il arrive, sera après la pré-v1.",
   "libraryError": "La bibliothèque n’a pas pu être lue.",
   "missingEntry": "Cette fiche n’est plus dans la bibliothèque.",
   "sourceOpenError": "La source n’a pas pu être ouverte.",

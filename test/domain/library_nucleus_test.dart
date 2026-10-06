@@ -43,9 +43,16 @@ void main() {
     final brandIds = portfolio.brands.map((brand) => brand.id);
     final companyIds = portfolio.companies.map((company) => company.id);
     expect(brandIds, containsAll(['brand.grasset', 'brand.fayard']));
+    expect(brandIds, containsAll(['brand.geo', 'brand.capital']));
     expect(brandIds, isNot(contains('brand.editis')));
     expect(brandIds, isNot(contains('brand.plon')));
     expect(companyIds, isNot(contains('company.editis')));
     expect(companyIds, isNot(contains('company.odet')));
+  });
+
+  test('bouygues reaches tf1 and bouygues telecom', () {
+    final portfolio = descendFromFortune(library, 'fortune.bouygues');
+    final brandIds = portfolio.brands.map((brand) => brand.id);
+    expect(brandIds, containsAll(['brand.tf1', 'brand.bouygues-telecom']));
   });
 }
