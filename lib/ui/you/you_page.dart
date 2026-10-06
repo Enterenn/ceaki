@@ -86,8 +86,8 @@ class YouPage extends ConsumerWidget {
             const SizedBox(height: 4),
             Text(
               appVersion.when(
-                loading: () => l10n.appVersionValue('0.1.1'),
-                error: (_, _) => l10n.appVersionValue('0.1.1'),
+                loading: () => l10n.appVersionValue('0.2.0'),
+                error: (_, _) => l10n.appVersionValue('0.2.0'),
                 data: l10n.appVersionValue,
               ),
               style: theme.textTheme.bodyMedium,

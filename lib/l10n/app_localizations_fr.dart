@@ -142,6 +142,53 @@ class AppLocalizationsFr extends AppLocalizations {
   String get searchHint => 'Fortune, société ou marque';
 
   @override
+  String get archiveSearchHint => 'Cherche une marque';
+
+  @override
+  String get archiveBadge => 'Archive';
+
+  @override
+  String get archiveSub => 'Tes marques déjà checkées en rayon.';
+
+  @override
+  String archiveCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'marques',
+      one: 'marque',
+      zero: 'marque',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get archiveLegendFortune => 'Fortune';
+
+  @override
+  String get archiveLegendClear => 'Sans fortune';
+
+  @override
+  String get archiveLegendUnknown => 'Inconnu';
+
+  @override
+  String get archiveEmpty =>
+      'Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.';
+
+  @override
+  String get archiveEmptyCta => 'On checke';
+
+  @override
+  String get archiveSources => 'Sources';
+
+  @override
+  String get archiveUnresolvedBody =>
+      'Cette marque n’est pas encore rattachée dans la bibliothèque documentée.';
+
+  @override
+  String get archiveNoMatch => 'Aucune marque ne correspond.';
+
+  @override
   String get sectorAll => 'Tous';
 
   @override

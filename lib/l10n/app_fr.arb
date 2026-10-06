@@ -50,6 +50,23 @@
   "categoryBook": "Livre",
   "categoryGame": "Jeu de société",
   "searchHint": "Fortune, société ou marque",
+  "archiveSearchHint": "Cherche une marque",
+  "archiveBadge": "Archive",
+  "archiveSub": "Tes marques déjà checkées en rayon.",
+  "archiveCount": "{count} {count, plural, =0{marque} =1{marque} other{marques}}",
+  "@archiveCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "archiveLegendFortune": "Fortune",
+  "archiveLegendClear": "Sans fortune",
+  "archiveLegendUnknown": "Inconnu",
+  "archiveEmpty": "Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.",
+  "archiveEmptyCta": "On checke",
+  "archiveSources": "Sources",
+  "archiveUnresolvedBody": "Cette marque n’est pas encore rattachée dans la bibliothèque documentée.",
+  "archiveNoMatch": "Aucune marque ne correspond.",
   "sectorAll": "Tous",
   "sectionFortunes": "Fortunes",
   "sectionCompanies": "Sociétés",

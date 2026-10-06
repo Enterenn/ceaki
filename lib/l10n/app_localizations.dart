@@ -328,6 +328,78 @@ abstract class AppLocalizations {
   /// **'Fortune, société ou marque'**
   String get searchHint;
 
+  /// No description provided for @archiveSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cherche une marque'**
+  String get archiveSearchHint;
+
+  /// No description provided for @archiveBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archive'**
+  String get archiveBadge;
+
+  /// No description provided for @archiveSub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes marques déjà checkées en rayon.'**
+  String get archiveSub;
+
+  /// No description provided for @archiveCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} {count, plural, =0{marque} =1{marque} other{marques}}'**
+  String archiveCount(int count);
+
+  /// No description provided for @archiveLegendFortune.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fortune'**
+  String get archiveLegendFortune;
+
+  /// No description provided for @archiveLegendClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans fortune'**
+  String get archiveLegendClear;
+
+  /// No description provided for @archiveLegendUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get archiveLegendUnknown;
+
+  /// No description provided for @archiveEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.'**
+  String get archiveEmpty;
+
+  /// No description provided for @archiveEmptyCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'On checke'**
+  String get archiveEmptyCta;
+
+  /// No description provided for @archiveSources.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sources'**
+  String get archiveSources;
+
+  /// No description provided for @archiveUnresolvedBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette marque n’est pas encore rattachée dans la bibliothèque documentée.'**
+  String get archiveUnresolvedBody;
+
+  /// No description provided for @archiveNoMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune marque ne correspond.'**
+  String get archiveNoMatch;
+
   /// No description provided for @sectorAll.
   ///
   /// In fr, this message translates to:

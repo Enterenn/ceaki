@@ -6,6 +6,7 @@ abstract final class TransparenceColors {
   static const paper = Color(0xFFF7F7F2);
   static const lime = Color(0xFFC8FF3D);
   static const coral = Color(0xFFFF3D5A);
+  static const leaf = Color(0xFF12B886);
   static const mist = Color(0xFFE8E8E0);
   static const mute = Color(0xFF5C5C66);
 }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:transparence/application/archive_brands.dart';
+import 'package:transparence/application/shell_tab.dart';
+import 'package:transparence/domain/archive.dart';
 import 'package:transparence/domain/brand_name.dart';
-import 'package:transparence/domain/library.dart';
-import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/library/brand_page.dart';
-import 'package:transparence/ui/library/company_page.dart';
-import 'package:transparence/ui/library/fortune_page.dart';
-import 'package:transparence/ui/library/library_view.dart';
+import 'package:transparence/ui/theme.dart';
 
-class LibraryPage extends StatefulWidget {
+/// Personal archive of brands already met through scans.
+class LibraryPage extends ConsumerStatefulWidget {
   const LibraryPage({super.key});
 
   @override
-  State<LibraryPage> createState() => _LibraryPageState();
+  ConsumerState<LibraryPage> createState() => _LibraryPageState();
 }
 
-class _LibraryPageState extends State<LibraryPage> {
+class _LibraryPageState extends ConsumerState<LibraryPage> {
   final _search = TextEditingController();
-  var _sector = '';
 
   @override
   void dispose() {
@@ -27,184 +27,345 @@ class _LibraryPageState extends State<LibraryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LibraryView(
-      builder: (context, library) {
-        final l10n = AppLocalizations.of(context);
-        final query = _search.text;
+    final l10n = AppLocalizations.of(context);
+    final archive = ref.watch(archiveBrandsProvider);
+    return archive.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (_, _) => Center(child: Text(l10n.libraryError)),
+      data: (entries) {
+        final query = _search.text.trim();
+        final visible = query.isEmpty
+            ? entries
+            : [
+                for (final entry in entries)
+                  if (normalizeBrandName(entry.name).contains(
+                    normalizeBrandName(query),
+                  ))
+                    entry,
+              ];
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            ColoredBox(
+              color: TransparenceColors.ink,
+              child: SafeArea(
+                bottom: false,
+                child: _ArchiveHeader(
+                  title: l10n.navLibrary,
+                  badge: l10n.archiveBadge,
+                  subtitle: l10n.archiveSub,
+                  countLabel: l10n.archiveCount(entries.length),
+                  legendFortune: l10n.archiveLegendFortune,
+                  legendClear: l10n.archiveLegendClear,
+                  legendUnknown: l10n.archiveLegendUnknown,
+                ),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: TextField(
                 controller: _search,
                 decoration: InputDecoration(
-                  hintText: l10n.searchHint,
+                  hintText: l10n.archiveSearchHint,
                   prefixIcon: const Icon(Icons.search),
                 ),
                 onChanged: (_) => setState(() {}),
               ),
             ),
-            if (query.trim().isEmpty)
-              _SectorBar(
-                sectors: library.sectors,
-                selected: _sector,
-                onSelected: (sector) => setState(() => _sector = sector),
-              ),
             Expanded(
-              child: query.trim().isEmpty
-                  ? _FortuneList(library: library, sector: _sector)
-                  : _SearchResults(library: library, query: query),
+              child: entries.isEmpty
+                  ? _EmptyArchive(
+                      message: l10n.archiveEmpty,
+                      cta: l10n.archiveEmptyCta,
+                      onScan: () {
+                        ref.read(shellTabProvider.notifier).select(0);
+                      },
+                    )
+                  : visible.isEmpty
+                  ? Center(
+                      child: Text(
+                        l10n.archiveNoMatch,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(color: TransparenceColors.mute),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+                      itemCount: visible.length,
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
+                      itemBuilder: (context, index) {
+                        final entry = visible[index];
+                        return _ArchiveTile(
+                          entry: entry,
+                          onTap: () => _openEntry(context, entry),
+                        );
+                      },
+                    ),
             ),
           ],
         );
       },
     );
   }
+
+  void _openEntry(BuildContext context, ArchiveEntry entry) {
+    final brandId = entry.brandId;
+    if (brandId == null) {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => UnresolvedBrandPage(name: entry.name),
+        ),
+      );
+      return;
+    }
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => BrandPage(brandId: brandId),
+      ),
+    );
+  }
 }
 
-class _SectorBar extends StatelessWidget {
-  const _SectorBar({
-    required this.sectors,
-    required this.selected,
-    required this.onSelected,
+class _ArchiveHeader extends StatelessWidget {
+  const _ArchiveHeader({
+    required this.title,
+    required this.badge,
+    required this.subtitle,
+    required this.countLabel,
+    required this.legendFortune,
+    required this.legendClear,
+    required this.legendUnknown,
   });
 
-  final List<String> sectors;
-  final String selected;
-  final ValueChanged<String> onSelected;
+  final String title;
+  final String badge;
+  final String subtitle;
+  final String countLabel;
+  final String legendFortune;
+  final String legendClear;
+  final String legendUnknown;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final chips = ['', ...sectors];
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Row(
+    final theme = Theme.of(context);
+    return Container(
+      width: double.infinity,
+      color: TransparenceColors.ink,
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final sector in chips)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: FilterChip(
-                label: Text(
-                  sector.isEmpty ? l10n.sectorAll : sectorLabel(sector),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    color: TransparenceColors.paper,
+                  ),
                 ),
-                selected: selected == sector,
-                onSelected: (_) => onSelected(sector),
               ),
+              Text(
+                countLabel,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: TransparenceColors.mist,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Container(width: 10, height: 10, color: TransparenceColors.lime),
+              const SizedBox(width: 8),
+              Text(
+                badge.toUpperCase(),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: TransparenceColors.lime,
+                  letterSpacing: 1.4,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: TransparenceColors.mist,
             ),
+          ),
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 14,
+            runSpacing: 8,
+            children: [
+              _LegendDot(
+                color: TransparenceColors.coral,
+                label: legendFortune,
+              ),
+              _LegendDot(
+                color: TransparenceColors.leaf,
+                label: legendClear,
+              ),
+              _LegendDot(
+                color: TransparenceColors.mute,
+                label: legendUnknown,
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
 
-class _FortuneList extends StatelessWidget {
-  const _FortuneList({required this.library, required this.sector});
+class _LegendDot extends StatelessWidget {
+  const _LegendDot({required this.color, required this.label});
 
-  final Library library;
-  final String sector;
-
-  @override
-  Widget build(BuildContext context) {
-    final fortunes = [...library.fortunes]
-      ..sort((a, b) => a.name.compareTo(b.name));
-    final visible = fortunes.where((fortune) {
-      if (sector.isEmpty) return true;
-      return descendFromFortune(
-        library,
-        fortune.id,
-      ).brands.any((brand) => brand.sectors.contains(sector));
-    });
-    return ListView(
-      children: [
-        for (final fortune in visible)
-          ListTile(
-            title: Text(fortune.name),
-            subtitle: Text(fortune.summary),
-            onTap: () => _open(context, FortunePage(fortuneId: fortune.id)),
-          ),
-      ],
-    );
-  }
-}
-
-class _SearchResults extends StatelessWidget {
-  const _SearchResults({required this.library, required this.query});
-
-  final Library library;
-  final String query;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final fortunes =
-        library.fortunes
-            .where(
-              (fortune) => _matches(query, [fortune.name, ...fortune.aliases]),
-            )
-            .toList()
-          ..sort((a, b) => a.name.compareTo(b.name));
-    final companies =
-        library.companies
-            .where(
-              (company) => _matches(query, [company.name, ...company.aliases]),
-            )
-            .toList()
-          ..sort((a, b) => a.name.compareTo(b.name));
-    final brands =
-        library.brands
-            .where((brand) => _matches(query, [brand.name, ...brand.aliases]))
-            .toList()
-          ..sort((a, b) => a.name.compareTo(b.name));
-    if (fortunes.isEmpty && companies.isEmpty && brands.isEmpty) {
-      return Center(child: Text(l10n.noResult));
-    }
-    return ListView(
-      children: [
-        if (fortunes.isNotEmpty) _Header(l10n.sectionFortunes),
-        for (final fortune in fortunes)
-          ListTile(
-            title: Text(fortune.name),
-            onTap: () => _open(context, FortunePage(fortuneId: fortune.id)),
-          ),
-        if (companies.isNotEmpty) _Header(l10n.sectionCompanies),
-        for (final company in companies)
-          ListTile(
-            title: Text(company.name),
-            onTap: () => _open(context, CompanyPage(companyId: company.id)),
-          ),
-        if (brands.isNotEmpty) _Header(l10n.sectionBrands),
-        for (final brand in brands)
-          ListTile(
-            title: Text(brand.name),
-            onTap: () => _open(context, BrandPage(brandId: brand.id)),
-          ),
-      ],
-    );
-  }
-
-  bool _matches(String query, List<String> names) {
-    final key = normalizeBrandName(query);
-    if (key.isEmpty) return false;
-    return names.any((name) => normalizeBrandName(name).contains(key));
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header(this.label);
-
+  final Color color;
   final String label;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      child: Text(label, style: Theme.of(context).textTheme.titleMedium),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(width: 8, height: 8, color: color),
+        const SizedBox(width: 6),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: TransparenceColors.mist,
+            letterSpacing: 0.3,
+          ),
+        ),
+      ],
     );
   }
 }
 
-void _open(BuildContext context, Widget page) {
-  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+class _EmptyArchive extends StatelessWidget {
+  const _EmptyArchive({
+    required this.message,
+    required this.cta,
+    required this.onScan,
+  });
+
+  final String message;
+  final String cta;
+  final VoidCallback onScan;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: DecoratedBox(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              left: BorderSide(color: TransparenceColors.lime, width: 6),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  message,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: TransparenceColors.mute,
+                    height: 1.35,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: TransparenceColors.lime,
+                    foregroundColor: TransparenceColors.ink,
+                    minimumSize: const Size.fromHeight(52),
+                  ),
+                  onPressed: onScan,
+                  child: Text(cta),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ArchiveTile extends StatelessWidget {
+  const _ArchiveTile({required this.entry, required this.onTap});
+
+  final ArchiveEntry entry;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = _toneColor(entry.tone);
+    final label = archiveToneLabel(entry.tone);
+    return Material(
+      color: Colors.white,
+      child: InkWell(
+        onTap: onTap,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(left: BorderSide(color: color, width: 6)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(14, 16, 12, 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        entry.name,
+                        style: theme.textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        color: color.withValues(alpha: 0.14),
+                        child: Text(
+                          label,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: color,
+                            letterSpacing: 0.2,
+                            fontVariations: const [FontVariation('wght', 700)],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(Icons.arrow_forward, size: 18, color: color),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color _toneColor(ArchiveTone tone) {
+    return switch (tone) {
+      ArchiveTone.fortune => TransparenceColors.coral,
+      ArchiveTone.clear => TransparenceColors.leaf,
+      ArchiveTone.unknown => TransparenceColors.mute,
+    };
+  }
 }
