@@ -154,6 +154,20 @@ class _ResultBody extends ConsumerWidget {
                     ),
               ),
         ],
+        if (scan.chosenBrandKeys.isNotEmpty && scan.choices.isEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => ref.read(scanBookProvider).clearBrandChoice(
+                      scanId: scanId,
+                      library: library,
+                    ),
+                child: Text(l10n.changeBrandChoice),
+              ),
+            ),
+          ),
 
         // 4. Détail
         if (hasDetail) ...[

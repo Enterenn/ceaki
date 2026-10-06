@@ -20,6 +20,7 @@ final class ScanView {
     required this.chains,
     required this.choices,
     required this.unmatched,
+    required this.chosenBrandKeys,
     required this.fortuneIds,
     required this.fortuneNames,
     required this.choice,
@@ -37,6 +38,9 @@ final class ScanView {
   final List<BrandChain> chains;
   final List<BrandLookup> choices;
   final List<BrandLookup> unmatched;
+
+  /// Homonym keys already remembered for this GTIN.
+  final List<String> chosenBrandKeys;
   final List<String> fortuneIds;
   final List<String> fortuneNames;
   final ScanChoice? choice;
@@ -98,6 +102,7 @@ ScanView describeScan(
   };
   final remembered = choice == ScanChoice.putBack;
   final chains = attachment.resolved.chains;
+  final chosenIds = decodeChoices(scan.chosenBrandIds);
   return ScanView(
     issue: attachment.issue,
     gtin: scan.gtin,
@@ -116,6 +121,7 @@ ScanView describeScan(
     chains: chains,
     choices: attachment.resolved.choices,
     unmatched: attachment.resolved.unmatched,
+    chosenBrandKeys: chosenIds.keys.toList(),
     fortuneIds: remembered
         ? splitFields(scan.signaledFortuneIds)
         : attachment.fortuneIds,

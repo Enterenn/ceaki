@@ -1,4 +1,4 @@
-/// Soft progression on put-backs — paliers 1 / 10 / 50, no XP chrome.
+/// Soft paliers on put-backs — 1 / 10 / 50, named after the gesture.
 final class PlayerRank {
   const PlayerRank({
     required this.level,
@@ -9,6 +9,8 @@ final class PlayerRank {
   });
 
   final int level;
+
+  /// Milestone reached, or empty before the first put-back.
   final String title;
   final int esquives;
   final int scans;
@@ -35,13 +37,16 @@ final class PlayerRank {
   }
 
   bool get isMax => nextAt == null;
+
+  bool get hasMilestone => title.isNotEmpty;
 }
 
+/// Labels name the gesture — not RPG ranks.
 const _titles = [
-  'Curieux',
-  'Observateur',
-  'Attentif',
-  'Fin connaisseur',
+  '',
+  'Premier produit reposé',
+  'Dix produits reposés',
+  'Cinquante produits reposés',
 ];
 
 /// Floors: 0 → first put-back → 10 → 50.

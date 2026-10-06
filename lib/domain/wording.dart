@@ -48,6 +48,11 @@ String sectorLabel(String sector) {
     'presse' => 'presse',
     'jeu' => 'jeu de société',
     'telecom' => 'télécom',
+    'media' => 'média',
+    'alimentaire' => 'alimentaire',
+    'hygiene' => 'hygiène',
+    'distribution' => 'distribution',
+    'luxe' => 'luxe',
     _ => sector,
   };
 }
@@ -126,7 +131,8 @@ String putBackLine(List<String> fortuneNames) {
   final subject = fortuneNames.length == 1
       ? fortuneNames.single
       : '${fortuneNames.sublist(0, fortuneNames.length - 1).join(', ')} et ${fortuneNames.last}';
-  return 'Reposé. $subject — celui-ci reste en rayon.';
+  final verb = fortuneNames.length == 1 ? "n'aura pas" : "n'auront pas";
+  return 'Reposé. $subject $verb celui-ci.';
 }
 
 String _bannerBody(Library library, BrandChain chain, String fortuneId) {
@@ -158,6 +164,9 @@ String _bannerBody(Library library, BrandChain chain, String fortuneId) {
     final suffix = sameDate ? ' (chiffres au ${frenchDate(dates.first)})' : '';
     sentence.write(' ${_joinClauses(rendered)}$suffix.');
   }
+  sentence.write(
+    ' L’achat alimente un groupe lié à cette fortune.',
+  );
   return sentence.toString();
 }
 

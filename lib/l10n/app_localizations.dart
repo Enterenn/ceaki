@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Céaki?'**
+  /// **'Céaki'**
   String get appTitle;
 
   /// No description provided for @navScanner.
@@ -181,7 +181,7 @@ abstract class AppLocalizations {
   /// No description provided for @scannerSub.
   ///
   /// In fr, this message translates to:
-  /// **'On checke un produit et on voit qui tire les ficelles.'**
+  /// **'Scan un code-barres : marque, entreprise, et grande fortune s’il y en a une documentée.'**
   String get scannerSub;
 
   /// No description provided for @scanCta.
@@ -307,26 +307,44 @@ abstract class AppLocalizations {
   /// No description provided for @notebookTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Reposés'**
+  /// **'Ils n’auront pas'**
   String get notebookTitle;
+
+  /// No description provided for @notebookSub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Produits reposés, fortune par fortune.'**
+  String get notebookSub;
 
   /// No description provided for @notebookEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Rien pour l’instant.'**
+  /// **'Rien pour l’instant. Repose un produit rattaché pour commencer.'**
   String get notebookEmpty;
 
   /// No description provided for @notebookLine.
   ///
   /// In fr, this message translates to:
-  /// **'{name} — {count}'**
+  /// **'{name} — {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}'**
   String notebookLine(String name, int count);
 
   /// No description provided for @rankEsquives.
   ///
   /// In fr, this message translates to:
-  /// **'{count} {count, plural, =0{reposés} =1{reposé} other{reposés}}'**
+  /// **'{count} {count, plural, =0{produits reposés} =1{produit reposé} other{produits reposés}}'**
   String rankEsquives(int count);
+
+  /// No description provided for @rankNextAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain palier à {count}'**
+  String rankNextAt(int count);
+
+  /// No description provided for @changeBrandChoice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer ce choix'**
+  String get changeBrandChoice;
 
   /// No description provided for @productUnknown.
   ///
@@ -445,7 +463,7 @@ abstract class AppLocalizations {
   /// No description provided for @archiveLegendClear.
   ///
   /// In fr, this message translates to:
-  /// **'Sans fortune'**
+  /// **'Entreprise'**
   String get archiveLegendClear;
 
   /// No description provided for @archiveLegendUnknown.
@@ -453,6 +471,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Inconnu'**
   String get archiveLegendUnknown;
+
+  /// No description provided for @archiveFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes'**
+  String get archiveFilterAll;
+
+  /// No description provided for @archiveFilterFortune.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fortune'**
+  String get archiveFilterFortune;
+
+  /// No description provided for @archiveFilterClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entreprise'**
+  String get archiveFilterClear;
+
+  /// No description provided for @archiveFilterUnknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get archiveFilterUnknown;
 
   /// No description provided for @archiveEmpty.
   ///
@@ -489,6 +531,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tous'**
   String get sectorAll;
+
+  /// No description provided for @companyRoleCountry.
+  ///
+  /// In fr, this message translates to:
+  /// **'{role} · {country}'**
+  String companyRoleCountry(String role, String country);
 
   /// No description provided for @sectionFortunes.
   ///
@@ -685,7 +733,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPurpose.
   ///
   /// In fr, this message translates to:
-  /// **'On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.'**
+  /// **'On checke un produit pour voir l’entreprise derrière, et une grande fortune documentée s’il y en a une. La suite, c’est toi.'**
   String get aboutPurpose;
 
   /// No description provided for @aboutLimit.

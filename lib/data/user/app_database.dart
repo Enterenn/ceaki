@@ -259,6 +259,16 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
+  Future<void> forgetGtinChoice({
+    required String gtin,
+    required String choiceKey,
+  }) {
+    return (delete(gtinBrandChoices)..where(
+          (row) => row.gtin.equals(gtin) & row.choiceKey.equals(choiceKey),
+        ))
+        .go();
+  }
+
   Future<void> rememberChoice({
     required int id,
     required String chosenBrandIds,

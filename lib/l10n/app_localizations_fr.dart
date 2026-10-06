@@ -10,7 +10,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appTitle => 'Céaki?';
+  String get appTitle => 'Céaki';
 
   @override
   String get navScanner => 'Scan';
@@ -63,7 +63,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scannerSub =>
-      'On checke un produit et on voit qui tire les ficelles.';
+      'Scan un code-barres : marque, entreprise, et grande fortune s’il y en a une documentée.';
 
   @override
   String get scanCta => 'On checke';
@@ -128,18 +128,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buyAnyway => 'Je l’achète quand même';
 
   @override
-  String get notebookTitle => 'Reposés';
+  String get notebookTitle => 'Ils n’auront pas';
 
   @override
-  String get notebookEmpty => 'Rien pour l’instant.';
+  String get notebookSub => 'Produits reposés, fortune par fortune.';
+
+  @override
+  String get notebookEmpty =>
+      'Rien pour l’instant. Repose un produit rattaché pour commencer.';
 
   @override
   String notebookLine(String name, int count) {
-    return '$name — $count';
-  }
-
-  @override
-  String rankEsquives(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
@@ -147,8 +146,28 @@ class AppLocalizationsFr extends AppLocalizations {
       one: 'reposé',
       zero: 'reposés',
     );
+    return '$name — $count $_temp0';
+  }
+
+  @override
+  String rankEsquives(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'produits reposés',
+      one: 'produit reposé',
+      zero: 'produits reposés',
+    );
     return '$count $_temp0';
   }
+
+  @override
+  String rankNextAt(int count) {
+    return 'Prochain palier à $count';
+  }
+
+  @override
+  String get changeBrandChoice => 'Changer ce choix';
 
   @override
   String get productUnknown => 'Ce numéro n’est pas dans les sources.';
@@ -219,10 +238,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archiveLegendFortune => 'Fortune';
 
   @override
-  String get archiveLegendClear => 'Sans fortune';
+  String get archiveLegendClear => 'Entreprise';
 
   @override
   String get archiveLegendUnknown => 'Inconnu';
+
+  @override
+  String get archiveFilterAll => 'Toutes';
+
+  @override
+  String get archiveFilterFortune => 'Fortune';
+
+  @override
+  String get archiveFilterClear => 'Entreprise';
+
+  @override
+  String get archiveFilterUnknown => 'Inconnu';
 
   @override
   String get archiveEmpty =>
@@ -243,6 +274,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sectorAll => 'Tous';
+
+  @override
+  String companyRoleCountry(String role, String country) {
+    return '$role · $country';
+  }
 
   @override
   String get sectionFortunes => 'Fortunes';
@@ -365,7 +401,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutPurpose =>
-      'On checke un produit, on te montre les liens capitalistiques documentés. La suite, c’est toi.';
+      'On checke un produit pour voir l’entreprise derrière, et une grande fortune documentée s’il y en a une. La suite, c’est toi.';
 
   @override
   String get aboutLimit =>
