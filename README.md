@@ -1,14 +1,14 @@
-# Céaki?
+# Céaki
 
-Rendre visible le rattachement d’un produit à une grande fortune — pour pouvoir s’abstenir.
+Rendre visible l’entreprise derrière un produit, et son rattachement éventuel à une grande fortune — pour pouvoir s’abstenir.
 
-## Produit (v0.6)
+## Produit (v0.7)
 
 Trois onglets :
 
 1. **Scan** — identité + CTA « On checke », puis caméra / saisie manuelle.
-2. **Bibliothèque** — **archive personnelle** des marques déjà croisées en scan (pas le référentiel capitalistique).
-3. **Profil** — paliers, historique, données locales, à propos.
+2. **Bibliothèque** — **archive personnelle** des marques déjà croisées en scan (entreprise + label fortune).
+3. **Profil** — carnet « Ils n’auront pas », paliers soft 1/10/50, historique, données locales, à propos.
 
 ### Identification
 
@@ -24,8 +24,8 @@ Trois onglets :
 | Couleur | Condition | Libellé |
 | --- | --- | --- |
 | Rouge | Au moins une fortune sur la chaîne | Rattaché à une grande fortune |
-| Vert | Marque résolue, aucune fortune documentée | Aucune grande fortune documentée |
-| Neutre | Marque inconnue / propriétaire non documenté | Rattachement non documenté |
+| Vert | Marque résolue → entreprise connue, aucune fortune | Entreprise connue — aucune grande fortune |
+| Neutre | Marque absente du noyau | Marque non rattachée |
 
 Le rouge reste vrai même si l’alerte fortune est retirée pour le bandeau au scan : l’exclusion d’alerte n’affecte que le scan, pas l’archive.
 
@@ -40,8 +40,14 @@ Le JSON embarqué (`assets/library/library.json`) reste le **moteur de résoluti
 
 - Flutter, Riverpod, Drift (local), `mobile_scanner`
 - Couches : `ui` → `application` → `domain` ← `data`
-- Identification livres : BnF → Open Library → Google Books ; hors-livre : Open Food Facts
-- Recette appareil : [`docs/recette-android.md`](docs/recette-android.md)
+- Identification livres : BnF → Open Library → Google Books
+- Hors-livre : graines locales (`known_products`) → Open Food Facts
+- Phase 1 : [`docs/recette-android.md`](docs/recette-android.md) · [`docs/phase-1-journal.md`](docs/phase-1-journal.md)
+- Phase 2 : [`docs/phase-2.md`](docs/phase-2.md)
+- Phase 3 : [`docs/phase-3.md`](docs/phase-3.md)
+- Phase 4 : [`docs/phase-4.md`](docs/phase-4.md)
+- Phase 5 : [`docs/phase-5.md`](docs/phase-5.md)
+- Probe : `python tools/phase1_probe.py`
 
 ```bash
 flutter pub get
