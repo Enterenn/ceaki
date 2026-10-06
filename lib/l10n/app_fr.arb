@@ -118,6 +118,8 @@
   "subsidiaries": "Filiales et participations",
   "aliases": "Alias",
   "chain": "Comment ça remonte",
+  "whyDetail": "Pourquoi ?",
+  "whyDetailHide": "Masquer le détail",
   "noScans": "Aucun produit scanné sur cet appareil",
   "scanHistoryTitle": "Scans",
   "scanHistorySub": "Tes checks, du plus récent au plus ancien.",

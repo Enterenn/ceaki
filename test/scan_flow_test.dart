@@ -34,8 +34,18 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('GRANDE FORTUNE'), findsOneWidget);
-      expect(find.textContaining('Grasset y est rattaché'), findsOneWidget);
+      expect(
+        find.textContaining('Acheter ça, c’est nourrir'),
+        findsOneWidget,
+      );
+      expect(find.text('Pourquoi ?'), findsOneWidget);
       expect(find.text("La traversée de l'été : roman"), findsOneWidget);
+      expect(find.text('Je le repose'), findsOneWidget);
+
+      // Decision CTAs sit above the collapsed proof section.
+      final putBackY = tester.getTopLeft(find.text('Je le repose')).dy;
+      final proofY = tester.getTopLeft(find.text('COMMENT ÇA REMONTE')).dy;
+      expect(putBackY < proofY, isTrue);
 
       await tester.tap(find.text('Je le repose'));
       await tester.pumpAndSettle();

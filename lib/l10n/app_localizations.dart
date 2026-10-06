@@ -610,6 +610,18 @@ abstract class AppLocalizations {
   /// **'Comment ça remonte'**
   String get chain;
 
+  /// No description provided for @whyDetail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi ?'**
+  String get whyDetail;
+
+  /// No description provided for @whyDetailHide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer le détail'**
+  String get whyDetailHide;
+
   /// No description provided for @noScans.
   ///
   /// In fr, this message translates to:

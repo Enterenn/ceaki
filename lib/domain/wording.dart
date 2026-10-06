@@ -27,12 +27,20 @@ final class FortuneBanner {
   const FortuneBanner({
     required this.fortuneId,
     required this.title,
-    required this.body,
+    required this.punch,
+    required this.detail,
   });
 
   final String fortuneId;
   final String title;
-  final String body;
+
+  /// Short decision line shown first.
+  final String punch;
+
+  /// Ownership figures, shown under « Pourquoi ? ».
+  final String detail;
+
+  String get body => detail.isEmpty ? punch : '$punch $detail';
 }
 
 String frenchDate(String iso) {
@@ -105,7 +113,8 @@ List<FortuneBanner> bannersFor({
         FortuneBanner(
           fortuneId: fortuneId,
           title: library.fortune(fortuneId).name,
-          body: _bannerBody(library, chain, fortuneId),
+          punch: _bannerPunch(library.fortune(fortuneId).name),
+          detail: _bannerDetail(library, chain, fortuneId),
         ),
   ];
 }
@@ -135,8 +144,11 @@ String putBackLine(List<String> fortuneNames) {
   return 'Reposé. $subject $verb celui-ci.';
 }
 
-String _bannerBody(Library library, BrandChain chain, String fortuneId) {
-  final fortuneName = library.fortune(fortuneId).name;
+String _bannerPunch(String fortuneName) {
+  return 'Acheter ça, c’est nourrir $fortuneName.';
+}
+
+String _bannerDetail(Library library, BrandChain chain, String fortuneId) {
   final hops = pathToFortune(chain.chain, fortuneId).reversed.toList();
   final clauses = <String>[];
   final dates = <String>[];
@@ -153,10 +165,7 @@ String _bannerBody(Library library, BrandChain chain, String fortuneId) {
     dates.add(hop.factDate);
   }
 
-  final sentence = StringBuffer(
-    'Acheter ça, c’est nourrir $fortuneName.',
-  );
-  sentence.write(' ${chain.brand.name} y est rattaché.');
+  final sentence = StringBuffer('${chain.brand.name} y est rattaché.');
   if (clauses.isNotEmpty) {
     final sameDate = dates.toSet().length == 1;
     final rendered = [

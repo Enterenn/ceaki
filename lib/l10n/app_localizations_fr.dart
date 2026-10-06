@@ -316,6 +316,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chain => 'Comment ça remonte';
 
   @override
+  String get whyDetail => 'Pourquoi ?';
+
+  @override
+  String get whyDetailHide => 'Masquer le détail';
+
+  @override
   String get noScans => 'Aucun produit scanné sur cet appareil';
 
   @override
