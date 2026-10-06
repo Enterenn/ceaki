@@ -33,14 +33,15 @@ class FicheSection extends StatelessWidget {
   }
 }
 
-/// Accent panel — left bar + fill. Used on result, archive, and fiches.
+/// Accent panel — left bar + optional stamp lift.
 class FichePanel extends StatelessWidget {
   const FichePanel({
     required this.child,
     this.accent = TransparenceColors.lime,
-    this.color = Colors.white,
+    this.color = TransparenceColors.panel,
     this.padding = const EdgeInsets.fromLTRB(16, 16, 16, 16),
     this.margin = const EdgeInsets.symmetric(horizontal: 16),
+    this.lifted = true,
     super.key,
   });
 
@@ -49,6 +50,7 @@ class FichePanel extends StatelessWidget {
   final Color color;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
+  final bool lifted;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +59,23 @@ class FichePanel extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: color,
-          border: Border(left: BorderSide(color: accent, width: 6)),
+          borderRadius: TransparenceRadii.all,
+          boxShadow: lifted ? TransparenceShadows.stamp : null,
         ),
-        child: Padding(padding: padding, child: child),
+        child: ClipRRect(
+          borderRadius: TransparenceRadii.all,
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ColoredBox(color: accent, child: const SizedBox(width: 6)),
+                Expanded(
+                  child: Padding(padding: padding, child: child),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -84,7 +100,7 @@ class FicheNavRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Material(
-      color: Colors.white,
+      color: TransparenceColors.panel,
       child: InkWell(
         onTap: onTap,
         child: Padding(

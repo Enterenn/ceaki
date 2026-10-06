@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
 
-/// Ink, paper, acid lime — punchy without the usual AI purple/cream look.
+/// A-fun zine tokens — playful sticker energy, not punk tract.
 abstract final class TransparenceColors {
-  static const ink = Color(0xFF0B0B0F);
-  static const paper = Color(0xFFF7F7F2);
+  static const ink = Color(0xFF121214);
+  static const paper = Color(0xFFF3F1E9);
+  static const panel = Color(0xFFFFFDF8);
   static const lime = Color(0xFFC8FF3D);
   static const coral = Color(0xFFFF3D5A);
   static const leaf = Color(0xFF12B886);
-  static const mist = Color(0xFFE8E8E0);
+  static const mist = Color(0xFFE6E4DA);
   static const mute = Color(0xFF5C5C66);
+}
+
+/// Soft square — fun sticker, not pill.
+abstract final class TransparenceRadii {
+  static const double sm = 2;
+  static const BorderRadius all = BorderRadius.all(Radius.circular(sm));
+}
+
+/// Flat offset shadow — sticker lift, no soft blur.
+abstract final class TransparenceShadows {
+  static const List<BoxShadow> stamp = [
+    BoxShadow(
+      color: Color(0x1A121214),
+      offset: Offset(3, 3),
+      blurRadius: 0,
+    ),
+  ];
+
+  static const List<BoxShadow> stampStrong = [
+    BoxShadow(
+      color: Color(0x28121214),
+      offset: Offset(4, 4),
+      blurRadius: 0,
+    ),
+  ];
 }
 
 ThemeData transparenceTheme() {
@@ -25,7 +51,7 @@ ThemeData transparenceTheme() {
     surfaceContainerHighest: TransparenceColors.mist,
     onSurfaceVariant: TransparenceColors.mute,
     outline: Color(0xFF2A2A32),
-    outlineVariant: Color(0xFFC8C8BE),
+    outlineVariant: Color(0xFFC8C6BC),
   );
 
   final display = TextStyle(
@@ -87,6 +113,7 @@ ThemeData transparenceTheme() {
     useMaterial3: true,
     colorScheme: seed,
     scaffoldBackgroundColor: TransparenceColors.paper,
+    cardColor: TransparenceColors.panel,
     textTheme: text,
     appBarTheme: AppBarTheme(
       backgroundColor: TransparenceColors.paper,
@@ -124,7 +151,7 @@ ThemeData transparenceTheme() {
         foregroundColor: TransparenceColors.lime,
         minimumSize: const Size.fromHeight(56),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius: TransparenceRadii.all,
         ),
         textStyle: text.labelLarge,
       ),
@@ -135,7 +162,7 @@ ThemeData transparenceTheme() {
         minimumSize: const Size.fromHeight(52),
         side: const BorderSide(color: TransparenceColors.ink, width: 2),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
+          borderRadius: TransparenceRadii.all,
         ),
         textStyle: text.labelLarge,
       ),
@@ -151,21 +178,21 @@ ThemeData transparenceTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: TransparenceColors.panel,
       border: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: TransparenceRadii.all,
         borderSide: BorderSide(color: TransparenceColors.ink, width: 2),
       ),
       enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: TransparenceRadii.all,
         borderSide: BorderSide(color: TransparenceColors.ink, width: 2),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: TransparenceRadii.all,
         borderSide: BorderSide(color: TransparenceColors.ink, width: 2.5),
       ),
       errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: TransparenceRadii.all,
         borderSide: BorderSide(color: TransparenceColors.coral, width: 2),
       ),
       hintStyle: text.bodyMedium?.copyWith(color: TransparenceColors.mute),
@@ -178,7 +205,7 @@ ThemeData transparenceTheme() {
       secondaryLabelStyle: text.labelMedium!,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: TransparenceRadii.all,
         side: BorderSide(color: TransparenceColors.ink, width: 1.5),
       ),
       side: const BorderSide(color: TransparenceColors.ink, width: 1.5),
@@ -200,7 +227,9 @@ ThemeData transparenceTheme() {
         color: TransparenceColors.lime,
       ),
       behavior: SnackBarBehavior.floating,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(
+        borderRadius: TransparenceRadii.all,
+      ),
     ),
   );
 }

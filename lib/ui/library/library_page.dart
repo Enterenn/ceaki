@@ -179,16 +179,20 @@ class _FilterChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onSelected = color == TransparenceColors.mute
-        ? TransparenceColors.paper
+        ? TransparenceColors.panel
         : Colors.white;
     return Material(
-      color: selected ? color : Colors.white,
+      color: selected ? color : TransparenceColors.panel,
+      borderRadius: TransparenceRadii.all,
       child: InkWell(
         onTap: onTap,
+        borderRadius: TransparenceRadii.all,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
+            borderRadius: TransparenceRadii.all,
             border: Border.all(color: color, width: 1.5),
+            boxShadow: selected ? null : TransparenceShadows.stamp,
           ),
           child: Text(
             label,
