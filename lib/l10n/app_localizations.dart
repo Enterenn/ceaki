@@ -283,8 +283,14 @@ abstract class AppLocalizations {
   /// No description provided for @offlineProduct.
   ///
   /// In fr, this message translates to:
-  /// **'Le produit n’a pas pu être identifié.'**
+  /// **'Hors ligne — les catalogues n’ont pas répondu. Tire pour réessayer.'**
   String get offlineProduct;
+
+  /// No description provided for @refreshHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tirer pour actualiser'**
+  String get refreshHint;
 
   /// No description provided for @brandUnmatched.
   ///
@@ -321,6 +327,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Jeu de société'**
   String get categoryGame;
+
+  /// No description provided for @categoryFood.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alimentaire'**
+  String get categoryFood;
+
+  /// No description provided for @categoryBeauty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Beauté'**
+  String get categoryBeauty;
+
+  /// No description provided for @categoryPet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Animalerie'**
+  String get categoryPet;
+
+  /// No description provided for @categoryProduct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Produit'**
+  String get categoryProduct;
 
   /// No description provided for @searchHint.
   ///

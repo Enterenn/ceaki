@@ -1,11 +1,14 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/scan_view.dart';
 import 'package:transparence/data/products/bnf_catalog.dart';
 import 'package:transparence/data/products/book_record.dart';
-import 'package:transparence/data/products/demo_books.dart';
-import 'package:transparence/data/products/demo_games.dart';
+import 'package:transparence/data/products/google_books_catalog.dart';
+import 'package:transparence/data/products/open_food_facts_catalog.dart';
+import 'package:transparence/data/products/open_library_catalog.dart';
+import 'package:transparence/data/products/product_catalog.dart';
 import 'package:transparence/data/user/app_database.dart';
 import 'package:transparence/data/user/stored_fields.dart';
 import 'package:transparence/domain/gtin.dart';
@@ -17,8 +20,24 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
   return database;
 });
 
-final bookCatalogProvider = Provider<BookCatalog>((ref) {
-  final catalog = BnfBookCatalog();
+/// Book cascade: BnF → Open Library → Google Books.
+final bookCatalogProvider = Provider<ProductCatalog>((ref) {
+  final client = http.Client();
+  final catalog = CascadingCatalog([
+    BnfBookCatalog(client: client),
+    OpenLibraryCatalog(client: client),
+    GoogleBooksCatalog(client: client),
+  ]);
+  ref.onDispose(() {
+    catalog.close();
+    client.close();
+  });
+  return catalog;
+});
+
+/// Non-book products via Open Food Facts (`product_type=all`).
+final otherCatalogProvider = Provider<ProductCatalog>((ref) {
+  final catalog = OpenFoodFactsCatalog();
   ref.onDispose(catalog.close);
   return catalog;
 });
@@ -26,7 +45,8 @@ final bookCatalogProvider = Provider<BookCatalog>((ref) {
 final scanBookProvider = Provider<ScanBook>((ref) {
   return ScanBook(
     database: ref.watch(appDatabaseProvider),
-    catalog: ref.watch(bookCatalogProvider),
+    books: ref.watch(bookCatalogProvider),
+    other: ref.watch(otherCatalogProvider),
   );
 });
 
@@ -69,46 +89,33 @@ final _scanRowProvider = StreamProvider.autoDispose.family<Scan, int>((
 class ScanBook {
   ScanBook({
     required this.database,
-    required this.catalog,
+    required this.books,
+    required this.other,
     DateTime Function()? now,
   }) : _now = now ?? DateTime.now;
 
   final AppDatabase database;
-  final BookCatalog catalog;
+  final ProductCatalog books;
+  final ProductCatalog other;
   final DateTime Function() _now;
 
-  Future<int> open(Gtin gtin, Library library) async {
+  Future<int> open(Gtin gtin, Library library, {bool bypassCache = false}) async {
     final now = _now();
     final excluded = await database.excludedFortuneIds();
-    if (gtin.codeCategory != CodeCategory.livre) {
-      final game = demoGame(gtin.value);
-      return _store(
-        gtin: gtin,
-        library: library,
-        book: game,
-        issue: game == null ? ScanIssue.productUnknown : ScanIssue.resolved,
-        excludedFortuneIds: excluded,
-        now: now,
-      );
-    }
+    final catalog = _catalogFor(gtin);
 
-    final cached = await database.freshProduct(gtin.value, now);
-    if (cached != null) {
-      return _store(
-        gtin: gtin,
-        library: library,
-        book: BookRecord(
-          gtin: cached.gtin,
-          title: cached.productName ?? '',
-          creator: cached.creator,
-          publishers: splitFields(cached.brandNames),
-          source: cached.source,
-          category: cached.category,
-        ),
-        issue: ScanIssue.resolved,
-        excludedFortuneIds: excluded,
-        now: now,
-      );
+    if (!bypassCache) {
+      final cached = await database.freshProduct(gtin.value, now);
+      if (cached != null) {
+        return _store(
+          gtin: gtin,
+          library: library,
+          book: _fromCache(cached),
+          issue: ScanIssue.resolved,
+          excludedFortuneIds: excluded,
+          now: now,
+        );
+      }
     }
 
     BookRecord? book;
@@ -117,11 +124,22 @@ class ScanBook {
       book = await catalog.find(gtin.value);
     } catch (_) {
       offline = true;
+      if (!bypassCache) {
+        final stale = await database.cachedProduct(gtin.value);
+        if (stale != null) {
+          return _store(
+            gtin: gtin,
+            library: library,
+            book: _fromCache(stale),
+            issue: ScanIssue.resolved,
+            excludedFortuneIds: excluded,
+            now: now,
+          );
+        }
+      }
     }
     if (book != null) {
       await database.saveProduct(book, now);
-    } else {
-      book = demoBook(gtin.value);
     }
     return _store(
       gtin: gtin,
@@ -132,6 +150,47 @@ class ScanBook {
           : ScanIssue.resolved,
       excludedFortuneIds: excluded,
       now: now,
+    );
+  }
+
+  /// Re-query catalogues and rewrite the existing scan row (pull-to-refresh).
+  Future<void> refresh(int scanId, Library library) async {
+    final scan = await database.getScan(scanId);
+    final read = readGtin(scan.gtin);
+    if (read is! GtinAccepted) return;
+    final now = _now();
+    final excluded = await database.excludedFortuneIds();
+    await database.evictProduct(read.gtin.value);
+
+    BookRecord? book;
+    var offline = false;
+    try {
+      book = await _catalogFor(read.gtin).find(read.gtin.value);
+    } catch (_) {
+      offline = true;
+    }
+    if (book != null) {
+      await database.saveProduct(book, now);
+    }
+    final names = book?.publishers ?? const <String>[];
+    final attachment = attachmentOf(
+      library: library,
+      names: names,
+      chosenIds: decodeChoices(scan.chosenBrandIds),
+      issue: book == null
+          ? (offline ? ScanIssue.offline : ScanIssue.productUnknown)
+          : ScanIssue.resolved,
+      excludedFortuneIds: excluded,
+    );
+    await database.updateScanProduct(
+      id: scanId,
+      productName: _text(book?.title),
+      creator: _text(book?.creator),
+      category: book?.category,
+      brandNames: joinFields(names),
+      signaledFortuneIds: joinFields(attachment.fortuneIds),
+      signaledFortuneNames: joinFields(attachment.fortuneNames),
+      issue: attachment.issue.name,
     );
   }
 
@@ -175,6 +234,21 @@ class ScanBook {
   }
 
   Future<bool> buyAnyway(int id) => database.buyAnyway(id);
+
+  ProductCatalog _catalogFor(Gtin gtin) {
+    return gtin.codeCategory == CodeCategory.livre ? books : other;
+  }
+
+  BookRecord _fromCache(ProductCacheEntry cached) {
+    return BookRecord(
+      gtin: cached.gtin,
+      title: cached.productName ?? '',
+      creator: cached.creator,
+      publishers: splitFields(cached.brandNames),
+      source: cached.source,
+      category: cached.category,
+    );
+  }
 
   Future<int> _store({
     required Gtin gtin,

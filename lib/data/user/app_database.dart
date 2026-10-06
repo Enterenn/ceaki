@@ -68,13 +68,23 @@ class AppDatabase extends _$AppDatabase {
   );
 
   Future<ProductCacheEntry?> freshProduct(String gtin, DateTime now) async {
-    final row = await (select(
-      productCacheEntries,
-    )..where((entry) => entry.gtin.equals(gtin))).getSingleOrNull();
+    final row = await cachedProduct(gtin);
     if (row == null) return null;
     final age = now.difference(row.fetchedAt);
     if (age.isNegative || age >= productCacheFor) return null;
     return row;
+  }
+
+  Future<ProductCacheEntry?> cachedProduct(String gtin) {
+    return (select(
+      productCacheEntries,
+    )..where((entry) => entry.gtin.equals(gtin))).getSingleOrNull();
+  }
+
+  Future<void> evictProduct(String gtin) {
+    return (delete(
+      productCacheEntries,
+    )..where((entry) => entry.gtin.equals(gtin))).go();
   }
 
   Future<void> saveProduct(BookRecord book, DateTime fetchedAt) {
@@ -87,6 +97,29 @@ class AppDatabase extends _$AppDatabase {
         brandNames: joinFields(book.publishers),
         fetchedAt: fetchedAt,
         source: book.source,
+      ),
+    );
+  }
+
+  Future<void> updateScanProduct({
+    required int id,
+    required String? productName,
+    required String? creator,
+    required String? category,
+    required String brandNames,
+    required String signaledFortuneIds,
+    required String signaledFortuneNames,
+    required String issue,
+  }) {
+    return (update(scans)..where((row) => row.id.equals(id))).write(
+      ScansCompanion(
+        productName: Value(productName),
+        creator: Value(creator),
+        category: Value(category),
+        brandNames: Value(brandNames),
+        signaledFortuneIds: Value(signaledFortuneIds),
+        signaledFortuneNames: Value(signaledFortuneNames),
+        issue: Value(issue),
       ),
     );
   }

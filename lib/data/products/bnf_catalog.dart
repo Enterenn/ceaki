@@ -1,16 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'package:transparence/data/products/book_record.dart';
+import 'package:transparence/data/products/product_catalog.dart';
 import 'package:transparence/domain/brand_name.dart';
 import 'package:xml/xml.dart';
 
-const catalogUserAgent =
-    'Ceaki/0.3.0 (https://github.com/Enterenn/ceaki)';
-
-abstract class BookCatalog {
-  Future<BookRecord?> find(String gtin);
-}
-
-class BnfBookCatalog implements BookCatalog {
+class BnfBookCatalog implements ProductCatalog {
   BnfBookCatalog({http.Client? client})
     : _client = client ?? http.Client(),
       _ownsClient = client == null;
@@ -18,6 +12,7 @@ class BnfBookCatalog implements BookCatalog {
   final http.Client _client;
   final bool _ownsClient;
 
+  @override
   void close() {
     if (_ownsClient) _client.close();
   }
@@ -31,11 +26,13 @@ class BnfBookCatalog implements BookCatalog {
       'recordSchema': 'dublincore',
       'maximumRecords': '5',
     });
-    final response = await _client
-        .get(uri, headers: const {'User-Agent': catalogUserAgent})
-        .timeout(const Duration(seconds: 8));
+    final response = await catalogGet(
+      _client,
+      uri,
+      accept: 'application/xml, text/xml, */*',
+    );
     if (response.statusCode != 200) {
-      throw StateError('${response.statusCode}');
+      throw StateError('bnf ${response.statusCode}');
     }
     return parseBnfDc(response.body, gtin);
   }

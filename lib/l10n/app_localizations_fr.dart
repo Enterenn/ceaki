@@ -117,7 +117,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get productUnknown => 'Ce numéro n’est pas dans les sources.';
 
   @override
-  String get offlineProduct => 'Le produit n’a pas pu être identifié.';
+  String get offlineProduct =>
+      'Hors ligne — les catalogues n’ont pas répondu. Tire pour réessayer.';
+
+  @override
+  String get refreshHint => 'Tirer pour actualiser';
 
   @override
   String get brandUnmatched =>
@@ -137,6 +141,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get categoryGame => 'Jeu de société';
+
+  @override
+  String get categoryFood => 'Alimentaire';
+
+  @override
+  String get categoryBeauty => 'Beauté';
+
+  @override
+  String get categoryPet => 'Animalerie';
+
+  @override
+  String get categoryProduct => 'Produit';
 
   @override
   String get searchHint => 'Fortune, société ou marque';

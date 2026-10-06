@@ -74,7 +74,13 @@ class _ResultBody extends ConsumerWidget {
         scan.sources.isNotEmpty ||
         scan.unmatched.isNotEmpty;
 
-    return ListView(
+    return RefreshIndicator(
+      onRefresh: () async {
+        final library = ref.read(capitalLibraryProvider).requireValue;
+        await ref.read(scanBookProvider).refresh(scanId, library);
+      },
+      child: ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
       children: [
         // 1. Alerte / état
@@ -228,6 +234,7 @@ class _ResultBody extends ConsumerWidget {
           ],
         ],
       ],
+    ),
     );
   }
 }
@@ -304,6 +311,10 @@ class _ProductBlock extends StatelessWidget {
     final category = switch (scan.category) {
       'jeu' => l10n.categoryGame,
       'livre' => l10n.categoryBook,
+      'alimentaire' => l10n.categoryFood,
+      'beaute' => l10n.categoryBeauty,
+      'animalerie' => l10n.categoryPet,
+      'produit' || 'autre' => l10n.categoryProduct,
       _ => null,
     };
 

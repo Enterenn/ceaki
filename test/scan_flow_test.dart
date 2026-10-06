@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/scan_book.dart';
-import 'package:transparence/data/products/bnf_catalog.dart';
 import 'package:transparence/data/products/book_record.dart';
+import 'package:transparence/data/products/demo_books.dart';
+import 'package:transparence/data/products/product_catalog.dart';
 import 'package:transparence/data/user/app_database.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/ui/scanner/scanner_page.dart';
@@ -75,7 +76,8 @@ Widget _app(AppDatabase database) {
   return ProviderScope(
     overrides: [
       appDatabaseProvider.overrideWith((ref) => database),
-      bookCatalogProvider.overrideWith((ref) => _OfflineCatalog()),
+      bookCatalogProvider.overrideWith((ref) => _FixtureCatalog()),
+      otherCatalogProvider.overrideWith((ref) => _EmptyCatalog()),
       capitalLibraryProvider.overrideWith((ref) async => _library),
     ],
     child: const TransparenceApp(),
@@ -88,9 +90,18 @@ Future<void> _closeApp(WidgetTester tester, AppDatabase database) async {
   await database.close();
 }
 
-class _OfflineCatalog implements BookCatalog {
+class _FixtureCatalog implements ProductCatalog {
   @override
-  Future<BookRecord?> find(String gtin) {
-    throw StateError('offline');
-  }
+  Future<BookRecord?> find(String gtin) async => demoBook(gtin);
+
+  @override
+  void close() {}
+}
+
+class _EmptyCatalog implements ProductCatalog {
+  @override
+  Future<BookRecord?> find(String gtin) async => null;
+
+  @override
+  void close() {}
 }

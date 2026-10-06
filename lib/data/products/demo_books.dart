@@ -1,5 +1,6 @@
 import 'package:transparence/data/products/book_record.dart';
 
+/// Test / offline fixtures only — production lookup uses live catalogues.
 BookRecord? demoBook(String gtin) {
   return switch (gtin) {
     '9782246807230' => const BookRecord(
