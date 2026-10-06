@@ -487,17 +487,26 @@ class _DecisionActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        FilledButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: TransparenceColors.lime,
-            foregroundColor: TransparenceColors.ink,
-            minimumSize: const Size.fromHeight(58),
+        DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: TransparenceRadii.all,
+            boxShadow: TransparenceShadows.stampStrong,
           ),
-          onPressed: onPutBack,
-          child: Text(
-            putBackLabel,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: TransparenceColors.ink,
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: TransparenceColors.lime,
+              foregroundColor: TransparenceColors.ink,
+              minimumSize: const Size.fromHeight(58),
+              shape: const RoundedRectangleBorder(
+                borderRadius: TransparenceRadii.all,
+              ),
+            ),
+            onPressed: onPutBack,
+            child: Text(
+              putBackLabel,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: TransparenceColors.ink,
+              ),
             ),
           ),
         ),
@@ -507,6 +516,9 @@ class _DecisionActions extends StatelessWidget {
             foregroundColor: TransparenceColors.ink,
             minimumSize: const Size.fromHeight(52),
             side: const BorderSide(color: TransparenceColors.ink, width: 2),
+            shape: const RoundedRectangleBorder(
+              borderRadius: TransparenceRadii.all,
+            ),
           ),
           onPressed: onBuy,
           child: Text(buyLabel),

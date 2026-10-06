@@ -4,7 +4,7 @@ import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/theme.dart';
 
-/// Soft confirmation after a put-back — ink win strip with a short entrance.
+/// Put-back win — lime sticker card with a short entrance.
 class EsquiveBurst extends StatefulWidget {
   const EsquiveBurst({
     required this.line,
@@ -41,10 +41,10 @@ class _EsquiveBurstState extends State<EsquiveBurst>
     );
     _fade = curve;
     _slide = Tween<Offset>(
-      begin: const Offset(0, 0.12),
+      begin: const Offset(0, 0.1),
       end: Offset.zero,
     ).animate(curve);
-    _scale = Tween<double>(begin: 0.94, end: 1).animate(curve);
+    _scale = Tween<double>(begin: 0.96, end: 1).animate(curve);
     _controller.forward();
   }
 
@@ -68,8 +68,10 @@ class _EsquiveBurstState extends State<EsquiveBurst>
           scale: _scale,
           alignment: Alignment.topCenter,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: TransparenceColors.ink,
+            decoration: BoxDecoration(
+              color: TransparenceColors.lime,
+              borderRadius: TransparenceRadii.all,
+              boxShadow: TransparenceShadows.stampStrong,
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
@@ -84,28 +86,30 @@ class _EsquiveBurstState extends State<EsquiveBurst>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 8,
-                              height: 8,
-                              color: TransparenceColors.lime,
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: TransparenceColors.ink,
+                            borderRadius: TransparenceRadii.all,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
                             ),
-                            const SizedBox(width: 8),
-                            Text(
+                            child: Text(
                               l10n.esquiveBadge.toUpperCase(),
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: TransparenceColors.lime,
-                                letterSpacing: 1.4,
+                                letterSpacing: 1.2,
                               ),
                             ),
-                          ],
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           widget.line,
                           style: theme.textTheme.titleMedium?.copyWith(
-                            color: TransparenceColors.paper,
+                            color: TransparenceColors.ink,
                             fontVariations: const [
                               FontVariation('wght', 700),
                             ],
@@ -116,7 +120,9 @@ class _EsquiveBurstState extends State<EsquiveBurst>
                           Text(
                             rank,
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color: TransparenceColors.mist,
+                              color: TransparenceColors.ink.withValues(
+                                alpha: 0.65,
+                              ),
                             ),
                           ),
                         ],
