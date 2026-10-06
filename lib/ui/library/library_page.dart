@@ -237,14 +237,23 @@ class _EmptyArchive extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: TransparenceColors.lime,
-                foregroundColor: TransparenceColors.ink,
-                minimumSize: const Size.fromHeight(52),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: TransparenceRadii.all,
+                boxShadow: TransparenceShadows.stampStrong,
               ),
-              onPressed: onScan,
-              child: Text(cta),
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: TransparenceColors.lime,
+                  foregroundColor: TransparenceColors.ink,
+                  minimumSize: const Size.fromHeight(52),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: TransparenceRadii.all,
+                  ),
+                ),
+                onPressed: onScan,
+                child: Text(cta),
+              ),
             ),
           ],
         ),
@@ -302,18 +311,29 @@ class _ArchiveTile extends StatelessWidget {
                       ),
                     ],
                     const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.12),
+                        borderRadius: TransparenceRadii.all,
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.4),
+                          width: 1,
+                        ),
                       ),
-                      color: color.withValues(alpha: 0.14),
-                      child: Text(
-                        label,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: color,
-                          letterSpacing: 0.2,
-                          fontVariations: const [FontVariation('wght', 700)],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          label,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: color,
+                            letterSpacing: 0.2,
+                            fontVariations: const [
+                              FontVariation('wght', 700),
+                            ],
+                          ),
                         ),
                       ),
                     ),

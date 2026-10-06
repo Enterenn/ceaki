@@ -5,6 +5,7 @@ import 'package:transparence/application/notebook_lines.dart';
 import 'package:transparence/application/player_stats.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/game/rank_card.dart';
+import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
@@ -55,44 +56,53 @@ class YouPage extends ConsumerWidget {
                   error: (_, _) => const SizedBox.shrink(),
                   data: (lines) {
                     if (lines.isEmpty) {
-                      return Text(
-                        l10n.notebookEmpty,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: TransparenceColors.mute,
+                      return FichePanel(
+                        margin: EdgeInsets.zero,
+                        accent: TransparenceColors.mist,
+                        color: TransparenceColors.mist,
+                        lifted: false,
+                        child: Text(
+                          l10n.notebookEmpty,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: TransparenceColors.mute,
+                          ),
                         ),
                       );
                     }
                     return Column(
                       children: [
-                        for (final line in lines)
+                        for (final line in lines) ...[
                           _NotebookRow(
                             countLabel:
                                 l10n.notebookLine(line.name, line.count),
+                            count: line.count,
                             onTap: () => _open(
                               context,
                               FortunePage(fortuneId: line.fortuneId),
                             ),
                           ),
+                          const SizedBox(height: 10),
+                        ],
                       ],
                     );
                   },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 28, 16, 0),
+                padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
                 child: Column(
                   children: [
-                    _ProfileLink(
+                    FicheNavRow(
                       title: l10n.scanHistoryTitle,
                       subtitle: l10n.profileHistorySub,
                       onTap: () => _open(context, const HistoryPage()),
                     ),
-                    _ProfileLink(
+                    FicheNavRow(
                       title: l10n.profileDataTitle,
                       subtitle: l10n.profileDataSub,
                       onTap: () => _open(context, const DataPage()),
                     ),
-                    _ProfileLink(
+                    FicheNavRow(
                       title: l10n.profileAboutTitle,
                       subtitle: l10n.profileAboutSub,
                       onTap: () => _open(context, const AboutPage()),
@@ -131,74 +141,61 @@ class YouPage extends ConsumerWidget {
 class _NotebookRow extends StatelessWidget {
   const _NotebookRow({
     required this.countLabel,
+    required this.count,
     required this.onTap,
   });
 
   final String countLabel;
+  final int count;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            Container(width: 6, height: 28, color: TransparenceColors.coral),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(countLabel, style: theme.textTheme.titleMedium),
-            ),
-            const Icon(Icons.chevron_right, color: TransparenceColors.mute),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ProfileLink extends StatelessWidget {
-  const _ProfileLink({
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: TransparenceColors.mute,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: TransparenceRadii.all,
+        child: FichePanel(
+          accent: TransparenceColors.coral,
+          margin: EdgeInsets.zero,
+          padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(countLabel, style: theme.textTheme.titleMedium),
+              ),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: TransparenceColors.coral.withValues(alpha: 0.12),
+                  borderRadius: TransparenceRadii.all,
+                  border: Border.all(
+                    color: TransparenceColors.coral.withValues(alpha: 0.4),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: Text(
+                    '$count',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: TransparenceColors.coral,
+                      fontVariations: const [FontVariation('wght', 700)],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-            const Icon(
-              Icons.chevron_right,
-              color: TransparenceColors.mute,
-            ),
-          ],
+              const SizedBox(width: 8),
+              const Icon(
+                Icons.arrow_forward,
+                size: 18,
+                color: TransparenceColors.mute,
+              ),
+            ],
+          ),
         ),
       ),
     );
