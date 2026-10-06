@@ -42,7 +42,7 @@ void main() {
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Bibliothèque').last);
+      await tester.tap(find.text('Terrain').last);
       await tester.pumpAndSettle();
 
       expect(find.text('Asmodee'), findsOneWidget);

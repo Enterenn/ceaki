@@ -16,10 +16,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navScanner => 'Scan';
 
   @override
-  String get navLibrary => 'Bibliothèque';
+  String get navLibrary => 'Terrain';
 
   @override
-  String get navYou => 'Profil';
+  String get navYou => 'Carnet';
 
   @override
   String get profileHistorySub => 'Tes checks, recherchables';
@@ -63,7 +63,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scannerSub =>
-      'Scan un code-barres : marque, entreprise, et grande fortune s’il y en a une documentée.';
+      'Checke en rayon. On te dit qui tient la marque et si une grande fortune est derrière.';
 
   @override
   String get scanCta => 'On checke';
@@ -107,7 +107,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get codeHint => 'Code-barres';
 
   @override
-  String get seeAttachment => 'Voir le rattachement';
+  String get seeAttachment => 'Voir qui tient';
 
   @override
   String get codeEmpty => 'Saisis un code.';
@@ -131,11 +131,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notebookTitle => 'Ils n’auront pas';
 
   @override
-  String get notebookSub => 'Produits reposés, fortune par fortune.';
+  String get notebookSub => 'Ce qu’ils n’ont pas eu, fortune par fortune.';
 
   @override
   String get notebookEmpty =>
-      'Rien pour l’instant. Repose un produit rattaché pour commencer.';
+      'Vide. Repose un produit rattaché, ça s’écrit ici.';
 
   @override
   String notebookLine(String name, int count) {
@@ -146,7 +146,7 @@ class AppLocalizationsFr extends AppLocalizations {
       one: 'reposé',
       zero: 'reposés',
     );
-    return '$name — $count $_temp0';
+    return '$name, $count $_temp0';
   }
 
   @override
@@ -154,16 +154,16 @@ class AppLocalizationsFr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'produits reposés',
-      one: 'produit reposé',
-      zero: 'produits reposés',
+      other: 'esquives',
+      one: 'esquive',
+      zero: 'esquives',
     );
     return '$count $_temp0';
   }
 
   @override
   String rankNextAt(int count) {
-    return 'Prochain palier à $count';
+    return 'Encore jusqu’à $count';
   }
 
   @override
@@ -174,14 +174,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get offlineProduct =>
-      'Hors ligne — les catalogues n’ont pas répondu. Tire pour réessayer.';
+      'Hors ligne, les catalogues n’ont pas répondu. Tire pour réessayer.';
 
   @override
   String get refreshHint => 'Tirer pour actualiser';
 
   @override
   String get brandUnmatched =>
-      'La marque est identifiée, le rattachement capitalistique ne l’est pas.';
+      'Marque vue, on ne sait pas encore qui tient derrière.';
 
   @override
   String get gs1Prefix => 'préfixe GS1, titulaire non identifié';
@@ -217,10 +217,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archiveSearchHint => 'Cherche une marque';
 
   @override
-  String get archiveBadge => 'Archive';
+  String get archiveBadge => 'Terrain';
 
   @override
-  String get archiveSub => 'Tes marques déjà checkées en rayon.';
+  String get archiveSub => 'Ce que t’as déjà croisé.';
 
   @override
   String archiveCount(int count) {
@@ -257,7 +257,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get archiveEmpty =>
-      'Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.';
+      'Ton terrain est vide.\nPremier check → ça commence.';
 
   @override
   String get archiveEmptyCta => 'On checke';
@@ -266,8 +266,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archiveSources => 'Sources';
 
   @override
-  String get archiveUnresolvedBody =>
-      'Cette marque n’est pas encore rattachée dans la bibliothèque documentée.';
+  String get archiveUnresolvedBody => 'Pas encore rattaché dans notre base.';
 
   @override
   String get archiveNoMatch => 'Aucune marque ne correspond.';
@@ -314,7 +313,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aliases => 'Alias';
 
   @override
-  String get chain => 'Chaîne';
+  String get chain => 'Comment ça remonte';
 
   @override
   String get noScans => 'Aucun produit scanné sur cet appareil';
@@ -401,11 +400,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutPurpose =>
-      'On checke un produit pour voir l’entreprise derrière, et une grande fortune documentée s’il y en a une. La suite, c’est toi.';
+      'On checke un produit pour voir l’entreprise derrière et une grande fortune documentée s’il y en a une. La suite, c’est toi.';
 
   @override
-  String get aboutLimit =>
-      'Pas de grande fortune documentée ≠ petite entreprise.';
+  String get aboutLimit => 'Pas de grande fortune repérée ≠ petite entreprise.';
 
   @override
   String get aboutSources =>

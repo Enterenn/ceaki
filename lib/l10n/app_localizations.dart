@@ -109,13 +109,13 @@ abstract class AppLocalizations {
   /// No description provided for @navLibrary.
   ///
   /// In fr, this message translates to:
-  /// **'Bibliothèque'**
+  /// **'Terrain'**
   String get navLibrary;
 
   /// No description provided for @navYou.
   ///
   /// In fr, this message translates to:
-  /// **'Profil'**
+  /// **'Carnet'**
   String get navYou;
 
   /// No description provided for @profileHistorySub.
@@ -181,7 +181,7 @@ abstract class AppLocalizations {
   /// No description provided for @scannerSub.
   ///
   /// In fr, this message translates to:
-  /// **'Scan un code-barres : marque, entreprise, et grande fortune s’il y en a une documentée.'**
+  /// **'Checke en rayon. On te dit qui tient la marque et si une grande fortune est derrière.'**
   String get scannerSub;
 
   /// No description provided for @scanCta.
@@ -265,7 +265,7 @@ abstract class AppLocalizations {
   /// No description provided for @seeAttachment.
   ///
   /// In fr, this message translates to:
-  /// **'Voir le rattachement'**
+  /// **'Voir qui tient'**
   String get seeAttachment;
 
   /// No description provided for @codeEmpty.
@@ -313,31 +313,31 @@ abstract class AppLocalizations {
   /// No description provided for @notebookSub.
   ///
   /// In fr, this message translates to:
-  /// **'Produits reposés, fortune par fortune.'**
+  /// **'Ce qu’ils n’ont pas eu, fortune par fortune.'**
   String get notebookSub;
 
   /// No description provided for @notebookEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Rien pour l’instant. Repose un produit rattaché pour commencer.'**
+  /// **'Vide. Repose un produit rattaché, ça s’écrit ici.'**
   String get notebookEmpty;
 
   /// No description provided for @notebookLine.
   ///
   /// In fr, this message translates to:
-  /// **'{name} — {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}'**
+  /// **'{name}, {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}'**
   String notebookLine(String name, int count);
 
   /// No description provided for @rankEsquives.
   ///
   /// In fr, this message translates to:
-  /// **'{count} {count, plural, =0{produits reposés} =1{produit reposé} other{produits reposés}}'**
+  /// **'{count} {count, plural, =0{esquives} =1{esquive} other{esquives}}'**
   String rankEsquives(int count);
 
   /// No description provided for @rankNextAt.
   ///
   /// In fr, this message translates to:
-  /// **'Prochain palier à {count}'**
+  /// **'Encore jusqu’à {count}'**
   String rankNextAt(int count);
 
   /// No description provided for @changeBrandChoice.
@@ -355,7 +355,7 @@ abstract class AppLocalizations {
   /// No description provided for @offlineProduct.
   ///
   /// In fr, this message translates to:
-  /// **'Hors ligne — les catalogues n’ont pas répondu. Tire pour réessayer.'**
+  /// **'Hors ligne, les catalogues n’ont pas répondu. Tire pour réessayer.'**
   String get offlineProduct;
 
   /// No description provided for @refreshHint.
@@ -367,7 +367,7 @@ abstract class AppLocalizations {
   /// No description provided for @brandUnmatched.
   ///
   /// In fr, this message translates to:
-  /// **'La marque est identifiée, le rattachement capitalistique ne l’est pas.'**
+  /// **'Marque vue, on ne sait pas encore qui tient derrière.'**
   String get brandUnmatched;
 
   /// No description provided for @gs1Prefix.
@@ -439,13 +439,13 @@ abstract class AppLocalizations {
   /// No description provided for @archiveBadge.
   ///
   /// In fr, this message translates to:
-  /// **'Archive'**
+  /// **'Terrain'**
   String get archiveBadge;
 
   /// No description provided for @archiveSub.
   ///
   /// In fr, this message translates to:
-  /// **'Tes marques déjà checkées en rayon.'**
+  /// **'Ce que t’as déjà croisé.'**
   String get archiveSub;
 
   /// No description provided for @archiveCount.
@@ -499,7 +499,7 @@ abstract class AppLocalizations {
   /// No description provided for @archiveEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.'**
+  /// **'Ton terrain est vide.\nPremier check → ça commence.'**
   String get archiveEmpty;
 
   /// No description provided for @archiveEmptyCta.
@@ -517,7 +517,7 @@ abstract class AppLocalizations {
   /// No description provided for @archiveUnresolvedBody.
   ///
   /// In fr, this message translates to:
-  /// **'Cette marque n’est pas encore rattachée dans la bibliothèque documentée.'**
+  /// **'Pas encore rattaché dans notre base.'**
   String get archiveUnresolvedBody;
 
   /// No description provided for @archiveNoMatch.
@@ -607,7 +607,7 @@ abstract class AppLocalizations {
   /// No description provided for @chain.
   ///
   /// In fr, this message translates to:
-  /// **'Chaîne'**
+  /// **'Comment ça remonte'**
   String get chain;
 
   /// No description provided for @noScans.
@@ -733,13 +733,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPurpose.
   ///
   /// In fr, this message translates to:
-  /// **'On checke un produit pour voir l’entreprise derrière, et une grande fortune documentée s’il y en a une. La suite, c’est toi.'**
+  /// **'On checke un produit pour voir l’entreprise derrière et une grande fortune documentée s’il y en a une. La suite, c’est toi.'**
   String get aboutPurpose;
 
   /// No description provided for @aboutLimit.
   ///
   /// In fr, this message translates to:
-  /// **'Pas de grande fortune documentée ≠ petite entreprise.'**
+  /// **'Pas de grande fortune repérée ≠ petite entreprise.'**
   String get aboutLimit;
 
   /// No description provided for @aboutSources.

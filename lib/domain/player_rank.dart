@@ -44,9 +44,9 @@ final class PlayerRank {
 /// Labels name the gesture — not RPG ranks.
 const _titles = [
   '',
-  'Premier produit reposé',
-  'Dix produits reposés',
-  'Cinquante produits reposés',
+  'Première esquive',
+  'Dix esquives',
+  'Cinquante esquives',
 ];
 
 /// Floors: 0 → first put-back → 10 → 50.

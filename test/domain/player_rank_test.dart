@@ -8,14 +8,14 @@ void main() {
     expect(zero.nextAt, 1);
     expect(zero.hasMilestone, isFalse);
 
-    expect(playerRank(esquives: 1, scans: 3).title, 'Premier produit reposé');
+    expect(playerRank(esquives: 1, scans: 3).title, 'Première esquive');
     expect(playerRank(esquives: 1, scans: 3).nextAt, 10);
 
-    expect(playerRank(esquives: 10, scans: 12).title, 'Dix produits reposés');
+    expect(playerRank(esquives: 10, scans: 12).title, 'Dix esquives');
     expect(playerRank(esquives: 10, scans: 12).nextAt, 50);
 
     final max = playerRank(esquives: 50, scans: 60);
-    expect(max.title, 'Cinquante produits reposés');
+    expect(max.title, 'Cinquante esquives');
     expect(max.isMax, isTrue);
     expect(max.nextAt, isNull);
   });

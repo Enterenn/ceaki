@@ -45,7 +45,7 @@ void main() {
 
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Profil').last);
+      await tester.tap(find.text('Carnet').last);
       await tester.pumpAndSettle();
 
       expect(find.textContaining('1 reposé'), findsOneWidget);

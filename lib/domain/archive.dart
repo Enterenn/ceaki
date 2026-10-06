@@ -14,9 +14,9 @@ enum ArchiveTone {
   unknown,
 }
 
-const archiveFortuneLabel = 'Rattaché à une grande fortune';
-const archiveClearLabel = 'Entreprise connue — aucune grande fortune';
-const archiveUnknownLabel = 'Marque non rattachée';
+const archiveFortuneLabel = 'Chez une fortune';
+const archiveClearLabel = 'Entreprise, pas de fortune';
+const archiveUnknownLabel = 'Pas encore rattaché';
 
 String archiveToneLabel(ArchiveTone tone) {
   return switch (tone) {

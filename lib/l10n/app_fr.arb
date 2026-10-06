@@ -2,8 +2,8 @@
   "@@locale": "fr",
   "appTitle": "Céaki",
   "navScanner": "Scan",
-  "navLibrary": "Bibliothèque",
-  "navYou": "Profil",
+  "navLibrary": "Terrain",
+  "navYou": "Carnet",
   "profileHistorySub": "Tes checks, recherchables",
   "profileDataTitle": "Données locales",
   "profileDataSub": "Historique et cache produit",
@@ -19,7 +19,7 @@
     }
   },
   "scannerHeadline": "Qui est derrière ?",
-  "scannerSub": "Scan un code-barres : marque, entreprise, et grande fortune s’il y en a une documentée.",
+  "scannerSub": "Checke en rayon. On te dit qui tient la marque et si une grande fortune est derrière.",
   "scanCta": "On checke",
   "scanTitle": "Scanner",
   "scanHint": "Cadre le code-barres",
@@ -33,7 +33,7 @@
   "alertRemove": "Retirer l’alerte",
   "alertRestore": "Rétablir l’alerte",
   "codeHint": "Code-barres",
-  "seeAttachment": "Voir le rattachement",
+  "seeAttachment": "Voir qui tient",
   "codeEmpty": "Saisis un code.",
   "codeUnrecognized": "Ce code n’est pas un code produit.",
   "codeInvalidCheck": "Le chiffre de contrôle est faux.",
@@ -41,22 +41,22 @@
   "putBack": "Je le repose",
   "buyAnyway": "Je l’achète quand même",
   "notebookTitle": "Ils n’auront pas",
-  "notebookSub": "Produits reposés, fortune par fortune.",
-  "notebookEmpty": "Rien pour l’instant. Repose un produit rattaché pour commencer.",
-  "notebookLine": "{name} — {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}",
+  "notebookSub": "Ce qu’ils n’ont pas eu, fortune par fortune.",
+  "notebookEmpty": "Vide. Repose un produit rattaché, ça s’écrit ici.",
+  "notebookLine": "{name}, {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}",
   "@notebookLine": {
     "placeholders": {
       "name": {"type": "String"},
       "count": {"type": "int"}
     }
   },
-  "rankEsquives": "{count} {count, plural, =0{produits reposés} =1{produit reposé} other{produits reposés}}",
+  "rankEsquives": "{count} {count, plural, =0{esquives} =1{esquive} other{esquives}}",
   "@rankEsquives": {
     "placeholders": {
       "count": {"type": "int"}
     }
   },
-  "rankNextAt": "Prochain palier à {count}",
+  "rankNextAt": "Encore jusqu’à {count}",
   "@rankNextAt": {
     "placeholders": {
       "count": {"type": "int"}
@@ -64,9 +64,9 @@
   },
   "changeBrandChoice": "Changer ce choix",
   "productUnknown": "Ce numéro n’est pas dans les sources.",
-  "offlineProduct": "Hors ligne — les catalogues n’ont pas répondu. Tire pour réessayer.",
+  "offlineProduct": "Hors ligne, les catalogues n’ont pas répondu. Tire pour réessayer.",
   "refreshHint": "Tirer pour actualiser",
-  "brandUnmatched": "La marque est identifiée, le rattachement capitalistique ne l’est pas.",
+  "brandUnmatched": "Marque vue, on ne sait pas encore qui tient derrière.",
   "gs1Prefix": "préfixe GS1, titulaire non identifié",
   "otherShareholders": "Voir les autres actionnaires",
   "chooseBrand": "Quelle maison est-ce ?",
@@ -78,8 +78,8 @@
   "categoryProduct": "Produit",
   "searchHint": "Fortune, société ou marque",
   "archiveSearchHint": "Cherche une marque",
-  "archiveBadge": "Archive",
-  "archiveSub": "Tes marques déjà checkées en rayon.",
+  "archiveBadge": "Terrain",
+  "archiveSub": "Ce que t’as déjà croisé.",
   "archiveCount": "{count} {count, plural, =0{marque} =1{marque} other{marques}}",
   "@archiveCount": {
     "placeholders": {
@@ -93,10 +93,10 @@
   "archiveFilterFortune": "Fortune",
   "archiveFilterClear": "Entreprise",
   "archiveFilterUnknown": "Inconnu",
-  "archiveEmpty": "Rien ici pour l’instant.\nChecke un produit : les marques croisées s’archivent.",
+  "archiveEmpty": "Ton terrain est vide.\nPremier check → ça commence.",
   "archiveEmptyCta": "On checke",
   "archiveSources": "Sources",
-  "archiveUnresolvedBody": "Cette marque n’est pas encore rattachée dans la bibliothèque documentée.",
+  "archiveUnresolvedBody": "Pas encore rattaché dans notre base.",
   "archiveNoMatch": "Aucune marque ne correspond.",
   "sectorAll": "Tous",
   "companyRoleCountry": "{role} · {country}",
@@ -117,7 +117,7 @@
   "shareholders": "Actionnaires",
   "subsidiaries": "Filiales et participations",
   "aliases": "Alias",
-  "chain": "Chaîne",
+  "chain": "Comment ça remonte",
   "noScans": "Aucun produit scanné sur cet appareil",
   "scanHistoryTitle": "Scans",
   "scanHistorySub": "Tes checks, du plus récent au plus ancien.",
@@ -159,8 +159,8 @@
       "date": {"type": "String"}
     }
   },
-  "aboutPurpose": "On checke un produit pour voir l’entreprise derrière, et une grande fortune documentée s’il y en a une. La suite, c’est toi.",
-  "aboutLimit": "Pas de grande fortune documentée ≠ petite entreprise.",
+  "aboutPurpose": "On checke un produit pour voir l’entreprise derrière et une grande fortune documentée s’il y en a une. La suite, c’est toi.",
+  "aboutLimit": "Pas de grande fortune repérée ≠ petite entreprise.",
   "aboutSources": "Identification : BnF, Open Library, Google Books, Open Food Facts. Données capitalistiques embarquées, mises à jour avec l’app.",
   "aboutAccount": "Pas de compte en ligne pour l’instant : tout reste sur cet appareil. Un compte facultatif, s’il arrive, sera après la pré-v1.",
   "libraryError": "La bibliothèque n’a pas pu être lue.",

@@ -4,7 +4,7 @@ import 'package:transparence/domain/resolve.dart';
 
 const grandeFortuneTitle = 'Grande fortune';
 
-const noDocumentedFortuneLabel = 'Aucune grande fortune documentée';
+const noDocumentedFortuneLabel = 'Pas de grande fortune repérée';
 
 const currentOwnerUndocumentedLabel = 'Propriétaire actuel non documenté';
 
@@ -136,6 +136,7 @@ String putBackLine(List<String> fortuneNames) {
 }
 
 String _bannerBody(Library library, BrandChain chain, String fortuneId) {
+  final fortuneName = library.fortune(fortuneId).name;
   final hops = pathToFortune(chain.chain, fortuneId).reversed.toList();
   final clauses = <String>[];
   final dates = <String>[];
@@ -152,7 +153,10 @@ String _bannerBody(Library library, BrandChain chain, String fortuneId) {
     dates.add(hop.factDate);
   }
 
-  final sentence = StringBuffer('${chain.brand.name} y est rattaché.');
+  final sentence = StringBuffer(
+    'Acheter ça, c’est nourrir $fortuneName.',
+  );
+  sentence.write(' ${chain.brand.name} y est rattaché.');
   if (clauses.isNotEmpty) {
     final sameDate = dates.toSet().length == 1;
     final rendered = [
@@ -164,9 +168,6 @@ String _bannerBody(Library library, BrandChain chain, String fortuneId) {
     final suffix = sameDate ? ' (chiffres au ${frenchDate(dates.first)})' : '';
     sentence.write(' ${_joinClauses(rendered)}$suffix.');
   }
-  sentence.write(
-    ' L’achat alimente un groupe lié à cette fortune.',
-  );
   return sentence.toString();
 }
 
