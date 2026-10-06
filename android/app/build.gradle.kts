@@ -6,7 +6,8 @@ plugins {
 
 android {
     namespace = "app.transparence.transparence"
-    compileSdk = flutter.compileSdkVersion
+    // permission_handler_android requires API 37; Flutter defaults to 36 today.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

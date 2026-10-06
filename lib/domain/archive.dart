@@ -1,3 +1,4 @@
+import 'package:transparence/domain/brand_name.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/domain/resolve.dart';
 
@@ -96,7 +97,7 @@ List<ArchiveEntry> buildArchive({
         byKey,
         ArchiveEntry(
           key: 'name:${pending.key}',
-          name: pending.rawName,
+          name: displayBrandName(pending.rawName),
           tone: ArchiveTone.unknown,
           lastSeenAt: scan.scannedAt,
         ),

@@ -10,6 +10,7 @@ import 'package:transparence/domain/notebook.dart';
 import 'package:transparence/domain/resolve.dart';
 import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/game/esquive_burst.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/company_page.dart';
@@ -91,7 +92,12 @@ class _ResultBody extends ConsumerWidget {
         // 2. Produit
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-          child: _ProductBlock(scan: scan, l10n: l10n, theme: theme),
+          child: _ProductBlock(
+            scan: scan,
+            brands: [for (final chain in scan.chains) chain.brand],
+            l10n: l10n,
+            theme: theme,
+          ),
         ),
 
         // 3. Actions
@@ -102,6 +108,7 @@ class _ResultBody extends ConsumerWidget {
             child: EsquiveBurst(
               line: putBackLine(scan.fortuneNames),
               rankTitle: ref.watch(playerRankProvider).asData?.value.title,
+              brands: [for (final chain in scan.chains) chain.brand],
             ),
           )
         else if (scan.choice == null &&
@@ -282,11 +289,13 @@ class _StatusStrip extends StatelessWidget {
 class _ProductBlock extends StatelessWidget {
   const _ProductBlock({
     required this.scan,
+    required this.brands,
     required this.l10n,
     required this.theme,
   });
 
   final ScanView scan;
+  final List<Brand> brands;
   final AppLocalizations l10n;
   final ThemeData theme;
 
@@ -335,13 +344,40 @@ class _ProductBlock extends StatelessWidget {
                 ),
               ),
             ],
-            if (scan.brandLabel != null) ...[
-              const SizedBox(height: 10),
-              Text(
-                scan.brandLabel!,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontVariations: const [FontVariation('wght', 700)],
+            if (brands.isNotEmpty) ...[
+              const SizedBox(height: 14),
+              for (final brand in brands) ...[
+                Row(
+                  children: [
+                    BrandMark.forBrand(brand, size: 44),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        brand.name,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontVariations: const [FontVariation('wght', 700)],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+                if (brand != brands.last) const SizedBox(height: 10),
+              ],
+            ] else if (scan.brandLabel != null) ...[
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  BrandMark(name: scan.brandLabel!, size: 44),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      scan.brandLabel!,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontVariations: const [FontVariation('wght', 700)],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
             const SizedBox(height: 10),

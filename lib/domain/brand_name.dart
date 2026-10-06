@@ -34,9 +34,18 @@ const _folded = <int, String>{
   0x00E6: 'ae',
 };
 
+/// Removes catalogue parentheticals for display: "Gallimard Jeunesse (Paris)" → "Gallimard Jeunesse".
+String displayBrandName(String value) {
+  return value
+      .replaceAll(RegExp(r'\s*\([^)]*\)'), '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+}
+
 String normalizeBrandName(String value) {
+  final cleaned = displayBrandName(value);
   final folded = StringBuffer();
-  for (final rune in value.toLowerCase().runes) {
+  for (final rune in cleaned.toLowerCase().runes) {
     final mapped = _folded[rune];
     if (mapped != null) {
       folded.write(mapped);

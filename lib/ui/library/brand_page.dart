@@ -4,6 +4,7 @@ import 'package:transparence/domain/library.dart';
 import 'package:transparence/domain/resolve.dart';
 import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/company_page.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/holding_list.dart';
@@ -40,8 +41,25 @@ class BrandPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: _ToneBanner(tone: tone),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BrandMark.forBrand(brand, size: 72),
+                    const SizedBox(width: 16),
+                    Expanded(child: _ToneBanner(tone: tone)),
+                  ],
+                ),
               ),
+              if (brand.logoSource != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Text(
+                    brand.logoSource!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: TransparenceColors.mute,
+                    ),
+                  ),
+                ),
               if (brand.aliases.isNotEmpty) ...[
                 _Section(l10n.aliases),
                 for (final alias in brand.aliases)
@@ -144,7 +162,14 @@ class UnresolvedBrandPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const _ToneBanner(tone: ArchiveTone.unknown),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BrandMark(name: name, size: 64),
+              const SizedBox(width: 14),
+              const Expanded(child: _ToneBanner(tone: ArchiveTone.unknown)),
+            ],
+          ),
           const SizedBox(height: 20),
           Text(
             l10n.archiveUnresolvedBody,

@@ -1,7 +1,12 @@
 {
   "version": "2026.10.1",
   "updatedOn": "2026-10-06",
-  "sectors": ["edition", "presse", "jeu", "telecom"],
+  "sectors": [
+    "edition",
+    "presse",
+    "jeu",
+    "telecom"
+  ],
   "sources": [
     {
       "id": "source.bollore-deu-2025",
@@ -38,19 +43,27 @@
     {
       "id": "fortune.bollore",
       "name": "famille Bolloré",
-      "aliases": ["famille Bolloré", "Bolloré"],
+      "aliases": [
+        "famille Bolloré",
+        "Bolloré"
+      ],
       "summary": "Le groupe Bolloré est contrôlé majoritairement par la famille Bolloré."
     },
     {
       "id": "fortune.bouygues",
       "name": "famille Bouygues",
-      "aliases": ["Martin Bouygues", "Olivier Bouygues"],
+      "aliases": [
+        "Martin Bouygues",
+        "Olivier Bouygues"
+      ],
       "summary": "Martin Bouygues, Olivier Bouygues et leurs familles contrôlent SCDM, actionnaire de référence de Bouygues."
     },
     {
       "id": "fortune.niel",
       "name": "Xavier Niel",
-      "aliases": ["groupe familial Xavier Niel"],
+      "aliases": [
+        "groupe familial Xavier Niel"
+      ],
       "summary": "Le groupe familial Xavier Niel contrôle iliad Holding, qui contrôle iliad."
     }
   ],
@@ -58,7 +71,9 @@
     {
       "id": "company.bollore-se",
       "name": "Bolloré SE",
-      "aliases": ["Bolloré SE"],
+      "aliases": [
+        "Bolloré SE"
+      ],
       "country": "FR",
       "siren": null,
       "role": "holding"
@@ -66,7 +81,9 @@
     {
       "id": "company.louis-hachette-group",
       "name": "Louis Hachette Group",
-      "aliases": ["Louis Hachette Group"],
+      "aliases": [
+        "Louis Hachette Group"
+      ],
       "country": "FR",
       "siren": null,
       "role": "holding"
@@ -74,7 +91,9 @@
     {
       "id": "company.lagardere-sa",
       "name": "Lagardère SA",
-      "aliases": ["Lagardère"],
+      "aliases": [
+        "Lagardère"
+      ],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -82,7 +101,9 @@
     {
       "id": "company.prisma-media",
       "name": "Prisma Media",
-      "aliases": ["Prisma Media"],
+      "aliases": [
+        "Prisma Media"
+      ],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -90,7 +111,10 @@
     {
       "id": "company.odet",
       "name": "Compagnie de l'Odet",
-      "aliases": ["Compagnie de l'Odet", "Odet"],
+      "aliases": [
+        "Compagnie de l'Odet",
+        "Odet"
+      ],
       "country": "FR",
       "siren": null,
       "role": "holding"
@@ -98,7 +122,9 @@
     {
       "id": "company.vivendi-se",
       "name": "Vivendi SE",
-      "aliases": ["Vivendi"],
+      "aliases": [
+        "Vivendi"
+      ],
       "country": "FR",
       "siren": null,
       "role": "holding"
@@ -106,7 +132,9 @@
     {
       "id": "company.editis",
       "name": "Editis",
-      "aliases": ["Editis"],
+      "aliases": [
+        "Editis"
+      ],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -114,7 +142,9 @@
     {
       "id": "company.asmodee",
       "name": "Asmodee Group",
-      "aliases": ["Asmodee"],
+      "aliases": [
+        "Asmodee"
+      ],
       "country": "SE",
       "siren": null,
       "role": "groupe opérationnel"
@@ -146,7 +176,9 @@
     {
       "id": "company.bouygues",
       "name": "Bouygues",
-      "aliases": ["Bouygues SA"],
+      "aliases": [
+        "Bouygues SA"
+      ],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -162,7 +194,9 @@
     {
       "id": "company.iliad",
       "name": "iliad",
-      "aliases": ["iliad S.A."],
+      "aliases": [
+        "iliad S.A."
+      ],
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
@@ -176,108 +210,170 @@
         "Éditions Grasset",
         "Grasset & Fasquelle",
         "Éditions Grasset & Fasquelle",
-        "Bernard Grasset",
-        "Bernard Grasset (Paris)"
+        "Bernard Grasset"
       ],
-      "sectors": ["edition"],
-      "companyId": "company.lagardere-sa"
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/grasset.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.fayard",
       "name": "Fayard",
-      "aliases": ["Librairie Arthème Fayard", "Éditions Fayard"],
-      "sectors": ["edition"],
-      "companyId": "company.lagardere-sa"
+      "aliases": [
+        "Librairie Arthème Fayard",
+        "Éditions Fayard"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.lagardere-sa",
+      "logoAsset": "assets/logos/fayard.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.calmann-levy",
       "name": "Calmann-Lévy",
-      "aliases": ["Calmann Lévy"],
-      "sectors": ["edition"],
+      "aliases": [
+        "Calmann Lévy"
+      ],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.larousse",
       "name": "Larousse",
       "aliases": [],
-      "sectors": ["edition"],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.livre-de-poche",
       "name": "Le Livre de Poche",
-      "aliases": ["Livre de Poche"],
-      "sectors": ["edition"],
+      "aliases": [
+        "Livre de Poche"
+      ],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.lgf",
       "name": "LGF",
-      "aliases": ["Librairie Générale Française"],
-      "sectors": ["edition"],
+      "aliases": [
+        "Librairie Générale Française"
+      ],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.hachette-livre",
       "name": "Hachette Livre",
       "aliases": [],
-      "sectors": ["edition"],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.stock",
       "name": "Stock",
-      "aliases": ["Éditions Stock"],
-      "sectors": ["edition"],
+      "aliases": [
+        "Éditions Stock"
+      ],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.jc-lattes",
       "name": "JC Lattès",
-      "aliases": ["Jean-Claude Lattès"],
-      "sectors": ["edition"],
+      "aliases": [
+        "Jean-Claude Lattès"
+      ],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.lagardere-sa"
     },
     {
       "id": "brand.plon",
       "name": "Plon",
-      "aliases": ["Éditions Plon", "Plon (Paris)"],
-      "sectors": ["edition"],
-      "companyId": "company.editis"
+      "aliases": [
+        "Éditions Plon"
+      ],
+      "sectors": [
+        "edition"
+      ],
+      "companyId": "company.editis",
+      "logoAsset": "assets/logos/plon.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.editis",
       "name": "Editis",
       "aliases": [],
-      "sectors": ["edition"],
+      "sectors": [
+        "edition"
+      ],
       "companyId": "company.editis"
     },
     {
       "id": "brand.asmodee",
       "name": "Asmodee",
-      "aliases": ["Asmodee France", "Asmodee Group"],
-      "sectors": ["jeu"],
-      "companyId": "company.asmodee"
+      "aliases": [
+        "Asmodee France",
+        "Asmodee Group"
+      ],
+      "sectors": [
+        "jeu"
+      ],
+      "companyId": "company.asmodee",
+      "logoAsset": "assets/logos/asmodee.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.dobble",
       "name": "Dobble",
-      "aliases": ["Dobble classique"],
-      "sectors": ["jeu"],
-      "companyId": "company.asmodee"
+      "aliases": [
+        "Dobble classique"
+      ],
+      "sectors": [
+        "jeu"
+      ],
+      "companyId": "company.asmodee",
+      "logoAsset": "assets/logos/dobble.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     },
     {
       "id": "brand.free",
       "name": "Free",
       "aliases": [],
-      "sectors": ["telecom"],
-      "companyId": "company.iliad"
+      "sectors": [
+        "telecom"
+      ],
+      "companyId": "company.iliad",
+      "logoAsset": "assets/logos/free.png",
+      "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
     }
   ],
   "ownerships": [
     {
       "ownedCompanyId": "company.bollore-se",
-      "owner": { "type": "fortune", "id": "fortune.bollore" },
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.bollore"
+      },
       "capitalPercent": null,
       "votingPercent": null,
       "linkType": "control",
@@ -288,7 +384,10 @@
     },
     {
       "ownedCompanyId": "company.louis-hachette-group",
-      "owner": { "type": "company", "id": "company.bollore-se" },
+      "owner": {
+        "type": "company",
+        "id": "company.bollore-se"
+      },
       "capitalPercent": "30.4",
       "votingPercent": "30.4",
       "linkType": "reference_shareholder",
@@ -299,7 +398,10 @@
     },
     {
       "ownedCompanyId": "company.lagardere-sa",
-      "owner": { "type": "company", "id": "company.louis-hachette-group" },
+      "owner": {
+        "type": "company",
+        "id": "company.louis-hachette-group"
+      },
       "capitalPercent": "66.3",
       "votingPercent": null,
       "linkType": "control",
@@ -310,7 +412,10 @@
     },
     {
       "ownedCompanyId": "company.prisma-media",
-      "owner": { "type": "company", "id": "company.louis-hachette-group" },
+      "owner": {
+        "type": "company",
+        "id": "company.louis-hachette-group"
+      },
       "capitalPercent": "100",
       "votingPercent": null,
       "linkType": "subsidiary",
@@ -321,7 +426,10 @@
     },
     {
       "ownedCompanyId": "company.editis",
-      "owner": { "type": "company", "id": "company.vivendi-se" },
+      "owner": {
+        "type": "company",
+        "id": "company.vivendi-se"
+      },
       "capitalPercent": null,
       "votingPercent": null,
       "linkType": "control",
@@ -332,7 +440,10 @@
     },
     {
       "ownedCompanyId": "company.asmodee",
-      "owner": { "type": "company", "id": "company.lars-wingefors-ab" },
+      "owner": {
+        "type": "company",
+        "id": "company.lars-wingefors-ab"
+      },
       "capitalPercent": "16.9",
       "votingPercent": "38.09",
       "linkType": "reference_shareholder",
@@ -343,7 +454,10 @@
     },
     {
       "ownedCompanyId": "company.asmodee",
-      "owner": { "type": "company", "id": "company.savvy-gaming-group" },
+      "owner": {
+        "type": "company",
+        "id": "company.savvy-gaming-group"
+      },
       "capitalPercent": "7.03",
       "votingPercent": "5.24",
       "linkType": "stake",
@@ -354,7 +468,10 @@
     },
     {
       "ownedCompanyId": "company.scdm",
-      "owner": { "type": "fortune", "id": "fortune.bouygues" },
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.bouygues"
+      },
       "capitalPercent": null,
       "votingPercent": null,
       "linkType": "control",
@@ -365,7 +482,10 @@
     },
     {
       "ownedCompanyId": "company.bouygues",
-      "owner": { "type": "company", "id": "company.scdm" },
+      "owner": {
+        "type": "company",
+        "id": "company.scdm"
+      },
       "capitalPercent": "28.3",
       "votingPercent": "29.3",
       "linkType": "reference_shareholder",
@@ -376,7 +496,10 @@
     },
     {
       "ownedCompanyId": "company.iliad-holding",
-      "owner": { "type": "fortune", "id": "fortune.niel" },
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.niel"
+      },
       "capitalPercent": null,
       "votingPercent": null,
       "linkType": "control",
@@ -387,7 +510,10 @@
     },
     {
       "ownedCompanyId": "company.iliad",
-      "owner": { "type": "company", "id": "company.iliad-holding" },
+      "owner": {
+        "type": "company",
+        "id": "company.iliad-holding"
+      },
       "capitalPercent": null,
       "votingPercent": null,
       "linkType": "control",

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparence/application/archive_brands.dart';
+import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/shell_tab.dart';
 import 'package:transparence/domain/archive.dart';
 import 'package:transparence/domain/brand_name.dart';
+import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/theme.dart';
 
@@ -29,6 +32,7 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final archive = ref.watch(archiveBrandsProvider);
+    final library = ref.watch(capitalLibraryProvider).asData?.value;
     return archive.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (_, _) => Center(child: Text(l10n.libraryError)),
@@ -97,6 +101,7 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
                         final entry = visible[index];
                         return _ArchiveTile(
                           entry: entry,
+                          brand: _brandOf(library, entry.brandId),
                           onTap: () => _openEntry(context, entry),
                         );
                       },
@@ -124,6 +129,14 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
       ),
     );
   }
+}
+
+Brand? _brandOf(Library? library, String? brandId) {
+  if (library == null || brandId == null) return null;
+  for (final brand in library.brands) {
+    if (brand.id == brandId) return brand;
+  }
+  return null;
 }
 
 class _ArchiveHeader extends StatelessWidget {
@@ -302,9 +315,14 @@ class _EmptyArchive extends StatelessWidget {
 }
 
 class _ArchiveTile extends StatelessWidget {
-  const _ArchiveTile({required this.entry, required this.onTap});
+  const _ArchiveTile({
+    required this.entry,
+    required this.brand,
+    required this.onTap,
+  });
 
   final ArchiveEntry entry;
+  final Brand? brand;
   final VoidCallback onTap;
 
   @override
@@ -321,9 +339,14 @@ class _ArchiveTile extends StatelessWidget {
             border: Border(left: BorderSide(color: color, width: 6)),
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(14, 16, 12, 16),
+            padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
             child: Row(
               children: [
+                if (brand != null)
+                  BrandMark.forBrand(brand!, size: 52)
+                else
+                  BrandMark(name: entry.name, size: 52),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

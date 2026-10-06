@@ -24,7 +24,7 @@ void main() {
     expect(book, isNotNull);
     expect(book!.title, "La traversée de l'été : roman");
     expect(book.creator, 'Capote, Truman (1924-1984)');
-    expect(book.publishers, ['Bernard Grasset (Paris)']);
+    expect(book.publishers, ['Bernard Grasset']);
     expect(book.source, 'bnf');
   });
 }

@@ -2,7 +2,7 @@
 
 Rendre visible le rattachement d’un produit à une grande fortune — pour pouvoir s’abstenir.
 
-## Produit (v0.2)
+## Produit (v0.3)
 
 Trois onglets :
 
@@ -19,6 +19,11 @@ Trois onglets :
 | Neutre | Marque inconnue / propriétaire non documenté | Rattachement non documenté |
 
 Le rouge reste vrai même si l’alerte fortune est retirée pour le bandeau au scan : l’exclusion d’alerte n’affecte que le scan, pas l’archive.
+
+### Logos
+
+Chaque marque peut avoir `logoAsset` (fichier local) et/ou `logoUrl` (https, cache disque local, sans tracking).  
+Le noyau embarque des **monogrammes géométriques** (`assets/logos/`) — pas des reproductions de marques déposées. Voir `assets/logos/README.md`.
 
 Le JSON embarqué (`assets/library/library.json`) reste le **moteur de résolution**. Les fiches fortune / société restent accessibles **depuis la fiche marque**, plus comme contenu principal de l’onglet.
 

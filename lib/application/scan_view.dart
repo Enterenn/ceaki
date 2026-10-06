@@ -1,5 +1,6 @@
 import 'package:transparence/data/user/app_database.dart';
 import 'package:transparence/data/user/stored_fields.dart';
+import 'package:transparence/domain/brand_name.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/domain/notebook.dart';
 import 'package:transparence/domain/resolve.dart';
@@ -175,7 +176,7 @@ String? _brandLabel(List<BrandChain> chains, List<String> names) {
     return chains.map((chain) => chain.brand.name).join(', ');
   }
   if (names.isEmpty) return null;
-  return names.join(', ');
+  return names.map(displayBrandName).where((name) => name.isNotEmpty).join(', ');
 }
 
 List<Source> _sources(Library library, List<BrandChain> chains) {

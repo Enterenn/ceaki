@@ -1,9 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'package:transparence/data/products/book_record.dart';
+import 'package:transparence/domain/brand_name.dart';
 import 'package:xml/xml.dart';
 
 const catalogUserAgent =
-    'Ceaki/0.2.0 (https://github.com/Enterenn/ceaki)';
+    'Ceaki/0.3.0 (https://github.com/Enterenn/ceaki)';
 
 abstract class BookCatalog {
   Future<BookRecord?> find(String gtin);
@@ -52,7 +53,8 @@ BookRecord? parseBnfDc(String body, String gtin) {
       if (text.isEmpty) continue;
       switch (node.name.local) {
         case 'publisher':
-          publishers.add(text);
+          final cleaned = displayBrandName(text);
+          if (cleaned.isNotEmpty) publishers.add(cleaned);
         case 'title' when title == null:
           title = text.split(' / ').first.trim();
         case 'creator' when creator == null:

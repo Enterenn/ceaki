@@ -69,6 +69,9 @@ final class Brand {
     required this.aliases,
     required this.sectors,
     required this.companyId,
+    this.logoAsset,
+    this.logoUrl,
+    this.logoSource,
   });
 
   final String id;
@@ -76,6 +79,15 @@ final class Brand {
   final List<String> aliases;
   final List<String> sectors;
   final String companyId;
+
+  /// Local asset path, e.g. `assets/logos/grasset.png`.
+  final String? logoAsset;
+
+  /// Optional remote logo (https only); cached locally, never tracked.
+  final String? logoUrl;
+
+  /// Licence / provenance note for an embedded or remote logo.
+  final String? logoSource;
 }
 
 final class Ownership {
@@ -269,6 +281,17 @@ List<String> schemaIssues(Library library) {
         issues.add('secteur inconnu : $sector');
       }
     }
+    final asset = brand.logoAsset;
+    if (asset != null && !asset.startsWith('assets/logos/')) {
+      issues.add('logoAsset hors assets/logos : ${brand.id}');
+    }
+    final url = brand.logoUrl;
+    if (url != null) {
+      final uri = Uri.tryParse(url);
+      if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
+        issues.add('logoUrl non https : ${brand.id}');
+      }
+    }
   }
 
   for (final link in library.ownerships) {
@@ -361,6 +384,17 @@ String? _optionalString(Map<String, dynamic> map, String key) {
   throw FormatException(key);
 }
 
+/// Optional field that may be omitted from JSON entirely.
+String? _maybeString(Map<String, dynamic> map, String key) {
+  if (!map.containsKey(key)) return null;
+  final value = map[key];
+  if (value == null) return null;
+  if (value is String) {
+    return value.isEmpty ? null : value;
+  }
+  throw FormatException(key);
+}
+
 List<String> _stringList(Object? value, String path) {
   if (value is! List) throw FormatException(path);
   return [
@@ -415,6 +449,9 @@ Brand _brand(Map<String, dynamic> json) {
     aliases: _stringList(json['aliases'], 'aliases'),
     sectors: _stringList(json['sectors'], 'sectors'),
     companyId: _string(json, 'companyId'),
+    logoAsset: _maybeString(json, 'logoAsset'),
+    logoUrl: _maybeString(json, 'logoUrl'),
+    logoSource: _maybeString(json, 'logoSource'),
   );
 }
 

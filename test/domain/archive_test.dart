@@ -58,6 +58,24 @@ void main() {
     expect(archiveToneLabel(entries.single.tone), archiveUnknownLabel);
   });
 
+  test('unmatched catalogue names hide the place parenthetical', () {
+    final entries = buildArchive(
+      library: library,
+      scans: [
+        ScanBrandInput(
+          scannedAt: DateTime.utc(2026, 10, 6, 12),
+          brandNames: const ['Crunchyroll (Paris)', 'Gallimard Jeunesse (Paris)'],
+        ),
+      ],
+    );
+
+    expect(entries.map((entry) => entry.name).toList(), [
+      'Crunchyroll',
+      'Gallimard Jeunesse',
+    ]);
+    expect(entries.every((entry) => entry.tone == ArchiveTone.unknown), isTrue);
+  });
+
   test('brands are deduplicated and ordered by last seen', () {
     final entries = buildArchive(
       library: library,
