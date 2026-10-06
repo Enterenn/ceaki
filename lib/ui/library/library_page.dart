@@ -8,6 +8,7 @@ import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
+import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
 /// Personal archive of brands already met through scans.
@@ -45,23 +46,31 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ColoredBox(
-              color: TransparenceColors.ink,
-              child: SafeArea(
-                bottom: false,
-                child: _ArchiveHeader(
-                  title: l10n.navLibrary,
-                  badge: l10n.archiveBadge,
-                  subtitle: l10n.archiveSub,
-                  countLabel: l10n.archiveCount(entries.length),
-                  legendFortune: l10n.archiveLegendFortune,
-                  legendClear: l10n.archiveLegendClear,
-                  legendUnknown: l10n.archiveLegendUnknown,
-                ),
+            HubHeader(
+              title: l10n.navLibrary,
+              subtitle: l10n.archiveSub,
+              trailing: l10n.archiveCount(entries.length),
+              bottom: Wrap(
+                spacing: 14,
+                runSpacing: 8,
+                children: [
+                  _LegendDot(
+                    color: TransparenceColors.coral,
+                    label: l10n.archiveLegendFortune,
+                  ),
+                  _LegendDot(
+                    color: TransparenceColors.leaf,
+                    label: l10n.archiveLegendClear,
+                  ),
+                  _LegendDot(
+                    color: TransparenceColors.mute,
+                    label: l10n.archiveLegendUnknown,
+                  ),
+                ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: TextField(
                 controller: _search,
                 decoration: InputDecoration(
@@ -208,100 +217,6 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
-class _ArchiveHeader extends StatelessWidget {
-  const _ArchiveHeader({
-    required this.title,
-    required this.badge,
-    required this.subtitle,
-    required this.countLabel,
-    required this.legendFortune,
-    required this.legendClear,
-    required this.legendUnknown,
-  });
-
-  final String title;
-  final String badge;
-  final String subtitle;
-  final String countLabel;
-  final String legendFortune;
-  final String legendClear;
-  final String legendUnknown;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      color: TransparenceColors.ink,
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    color: TransparenceColors.paper,
-                  ),
-                ),
-              ),
-              Text(
-                countLabel,
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: TransparenceColors.mist,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Container(width: 10, height: 10, color: TransparenceColors.lime),
-              const SizedBox(width: 8),
-              Text(
-                badge.toUpperCase(),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: TransparenceColors.lime,
-                  letterSpacing: 1.4,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: TransparenceColors.mist,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Wrap(
-            spacing: 14,
-            runSpacing: 8,
-            children: [
-              _LegendDot(
-                color: TransparenceColors.coral,
-                label: legendFortune,
-              ),
-              _LegendDot(
-                color: TransparenceColors.leaf,
-                label: legendClear,
-              ),
-              _LegendDot(
-                color: TransparenceColors.mute,
-                label: legendUnknown,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _LegendDot extends StatelessWidget {
   const _LegendDot({required this.color, required this.label});
 
@@ -318,7 +233,7 @@ class _LegendDot extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: TransparenceColors.mist,
+            color: TransparenceColors.mute,
             letterSpacing: 0.3,
           ),
         ),

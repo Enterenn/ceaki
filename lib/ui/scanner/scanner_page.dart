@@ -7,6 +7,7 @@ import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/ceaki_mark.dart';
 import 'package:transparence/ui/result/result_page.dart';
 import 'package:transparence/ui/scanner/camera_scan_page.dart';
+import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
 /// Branded Scan home: identity first, then a dominant CTA into the camera.
@@ -50,11 +51,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                 const SizedBox(height: 12),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 72,
-                    height: 8,
-                    color: TransparenceColors.lime,
-                  ),
+                  child: HubHeader.limeBar,
                 ),
                 const Spacer(),
                 Text(

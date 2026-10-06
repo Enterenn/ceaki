@@ -27,12 +27,15 @@ class AppShell extends ConsumerWidget {
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.document_scanner_outlined),
-            selectedIcon: const Icon(Icons.document_scanner),
+            selectedIcon: const Icon(
+              Icons.document_scanner,
+              color: TransparenceColors.ink,
+            ),
             label: l10n.navScanner,
           ),
           NavigationDestination(
             icon: const Icon(Icons.grid_view_outlined),
-            selectedIcon: Icon(
+            selectedIcon: const Icon(
               Icons.grid_view,
               color: TransparenceColors.ink,
             ),
@@ -40,7 +43,7 @@ class AppShell extends ConsumerWidget {
           ),
           NavigationDestination(
             icon: const Icon(Icons.person_outline),
-            selectedIcon: Icon(
+            selectedIcon: const Icon(
               Icons.person,
               color: TransparenceColors.ink,
             ),
