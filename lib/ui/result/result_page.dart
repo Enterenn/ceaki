@@ -14,6 +14,7 @@ import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/game/esquive_burst.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/company_page.dart';
+import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/link_tile.dart';
 import 'package:transparence/ui/result/fortune_banner.dart';
@@ -93,13 +94,13 @@ class _ResultBody extends ConsumerWidget {
             FortuneBannerView(banner: banner),
           if (scan.banners.isEmpty && scan.state != null)
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              padding: const EdgeInsets.only(top: 16),
               child: _StatusStrip(scan: scan, library: library, l10n: l10n),
             ),
 
           // 2. Produit compact
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            padding: const EdgeInsets.only(top: 16),
             child: _ProductBlock(
               scan: scan,
               brands: [for (final chain in scan.chains) chain.brand],
@@ -135,11 +136,13 @@ class _ResultBody extends ConsumerWidget {
             ),
 
           if (scan.choices.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            _SectionLabel(l10n.chooseBrand),
+            FicheSection(
+              l10n.chooseBrand,
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 6),
+            ),
             for (final choice in scan.choices)
               for (final brand in choice.brands)
-                _NavRow(
+                FicheNavRow(
                   title: brand.name,
                   subtitle:
                       '${brand.sectors.map(sectorLabel).join(', ')} · ${library.company(brand.companyId).name}',
@@ -218,13 +221,13 @@ class _ResultBody extends ConsumerWidget {
                         link: link,
                         source: _source(library, link.sourceId),
                       ),
-                    _NavRow(
+                    FicheNavRow(
                       title: chain.brand.name,
                       subtitle: l10n.sectionBrands,
                       onTap: () =>
                           _open(context, BrandPage(brandId: chain.brand.id)),
                     ),
-                    _NavRow(
+                    FicheNavRow(
                       title: library.company(chain.chain.companyId).name,
                       subtitle: l10n.sectionCompanies,
                       onTap: () => _open(
@@ -234,7 +237,7 @@ class _ResultBody extends ConsumerWidget {
                     ),
                   ],
                   for (final id in scan.fortuneIds)
-                    _NavRow(
+                    FicheNavRow(
                       title: library.fortune(id).name,
                       subtitle: l10n.sectionFortunes,
                       onTap: () =>
@@ -328,30 +331,25 @@ class _StatusStrip extends StatelessWidget {
     };
     final owners = documentedOwnerNames(library, scan.chains);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: TransparenceColors.mist,
-        border: Border(left: BorderSide(color: accent, width: 6)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (label != null)
-              Text(
-                label.toUpperCase(),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: accent,
-                  letterSpacing: 1.1,
-                ),
+    return FichePanel(
+      accent: accent,
+      color: TransparenceColors.mist,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (label != null)
+            Text(
+              label.toUpperCase(),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: accent,
+                letterSpacing: 1.1,
               ),
-            for (final name in owners) ...[
-              if (label != null) const SizedBox(height: 8),
-              Text(name, style: theme.textTheme.titleLarge),
-            ],
+            ),
+          for (final name in owners) ...[
+            if (label != null) const SizedBox(height: 8),
+            Text(name, style: theme.textTheme.titleLarge),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -382,71 +380,46 @@ class _ProductBlock extends StatelessWidget {
       _ => null,
     };
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          left: BorderSide(color: TransparenceColors.lime, width: 6),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (category != null) ...[
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                color: TransparenceColors.lime,
-                child: Text(
-                  category.toUpperCase(),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: TransparenceColors.ink,
-                    letterSpacing: 0.8,
-                  ),
+    return FichePanel(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (category != null) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              color: TransparenceColors.lime,
+              child: Text(
+                category.toUpperCase(),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: TransparenceColors.ink,
+                  letterSpacing: 0.8,
                 ),
               ),
-              const SizedBox(height: 10),
-            ],
-            if (scan.title != null)
-              Text(scan.title!, style: theme.textTheme.titleLarge),
-            if (scan.creator != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                scan.creator!,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: TransparenceColors.mute,
-                ),
+            ),
+            const SizedBox(height: 10),
+          ],
+          if (scan.title != null)
+            Text(scan.title!, style: theme.textTheme.titleLarge),
+          if (scan.creator != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              scan.creator!,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: TransparenceColors.mute,
               ),
-            ],
-            if (brands.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              for (final brand in brands) ...[
-                Row(
-                  children: [
-                    BrandMark.forBrand(brand, size: 40),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        brand.name,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontVariations: const [FontVariation('wght', 700)],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                if (brand != brands.last) const SizedBox(height: 8),
-              ],
-            ] else if (scan.brandLabel != null) ...[
-              const SizedBox(height: 10),
+            ),
+          ],
+          if (brands.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            for (final brand in brands) ...[
               Row(
                 children: [
-                  BrandMark(name: scan.brandLabel!, size: 40),
+                  BrandMark.forBrand(brand, size: 40),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      scan.brandLabel!,
+                      brand.name,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontVariations: const [FontVariation('wght', 700)],
                       ),
@@ -454,25 +427,42 @@ class _ProductBlock extends StatelessWidget {
                   ),
                 ],
               ),
+              if (brand != brands.last) const SizedBox(height: 8),
             ],
-            const SizedBox(height: 8),
-            Text(
-              scan.gtin,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: TransparenceColors.mute,
-                letterSpacing: 0.4,
-              ),
+          ] else if (scan.brandLabel != null) ...[
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                BrandMark(name: scan.brandLabel!, size: 40),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    scan.brandLabel!,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontVariations: const [FontVariation('wght', 700)],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            if (scan.issue == ScanIssue.productUnknown) ...[
-              const SizedBox(height: 8),
-              Text(l10n.productUnknown),
-            ],
-            if (scan.issue == ScanIssue.offline) ...[
-              const SizedBox(height: 8),
-              Text(l10n.offlineProduct),
-            ],
           ],
-        ),
+          const SizedBox(height: 8),
+          Text(
+            scan.gtin,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: TransparenceColors.mute,
+              letterSpacing: 0.4,
+            ),
+          ),
+          if (scan.issue == ScanIssue.productUnknown) ...[
+            const SizedBox(height: 8),
+            Text(l10n.productUnknown),
+          ],
+          if (scan.issue == ScanIssue.offline) ...[
+            const SizedBox(height: 8),
+            Text(l10n.offlineProduct),
+          ],
+        ],
       ),
     );
   }
@@ -522,88 +512,6 @@ class _DecisionActions extends StatelessWidget {
           child: Text(buyLabel),
         ),
       ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-      child: Row(
-        children: [
-          Container(width: 10, height: 10, color: TransparenceColors.lime),
-          const SizedBox(width: 10),
-          Text(
-            label.toUpperCase(),
-            style: theme.textTheme.labelMedium?.copyWith(
-              letterSpacing: 1.2,
-              color: TransparenceColors.mute,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NavRow extends StatelessWidget {
-  const _NavRow({
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: TransparenceColors.mist, width: 2),
-            ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: theme.textTheme.titleMedium),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: TransparenceColors.mute,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.arrow_forward,
-                size: 18,
-                color: TransparenceColors.ink,
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

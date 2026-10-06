@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:transparence/ui/theme.dart';
 
-/// Shared section header for brand / company / fortune sheets.
+/// Shared section header — lime square + uppercase label.
 class FicheSection extends StatelessWidget {
-  const FicheSection(this.label, {super.key});
+  const FicheSection(
+    this.label, {
+    this.padding = const EdgeInsets.fromLTRB(16, 24, 16, 6),
+    super.key,
+  });
 
   final String label;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 6),
+      padding: padding,
       child: Row(
         children: [
           Container(width: 10, height: 10, color: TransparenceColors.lime),
@@ -28,26 +33,30 @@ class FicheSection extends StatelessWidget {
   }
 }
 
-/// White block with a left accent — matches Scan / Archive tiles.
+/// Accent panel — left bar + fill. Used on result, archive, and fiches.
 class FichePanel extends StatelessWidget {
   const FichePanel({
     required this.child,
     this.accent = TransparenceColors.lime,
+    this.color = Colors.white,
     this.padding = const EdgeInsets.fromLTRB(16, 16, 16, 16),
+    this.margin = const EdgeInsets.symmetric(horizontal: 16),
     super.key,
   });
 
   final Widget child;
   final Color accent;
-  final EdgeInsets padding;
+  final Color color;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry margin;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      padding: margin,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color,
           border: Border(left: BorderSide(color: accent, width: 6)),
         ),
         child: Padding(padding: padding, child: child),
@@ -56,6 +65,7 @@ class FichePanel extends StatelessWidget {
   }
 }
 
+/// Tappable title / subtitle row into a fiche or action.
 class FicheNavRow extends StatelessWidget {
   const FicheNavRow({
     required this.title,

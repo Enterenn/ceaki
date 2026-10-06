@@ -8,6 +8,7 @@ import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
+import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
@@ -217,41 +218,31 @@ class _EmptyArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(28),
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              left: BorderSide(color: TransparenceColors.lime, width: 6),
+      child: FichePanel(
+        margin: const EdgeInsets.all(28),
+        padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              message,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: TransparenceColors.mute,
+                height: 1.35,
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  message,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: TransparenceColors.mute,
-                    height: 1.35,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: TransparenceColors.lime,
-                    foregroundColor: TransparenceColors.ink,
-                    minimumSize: const Size.fromHeight(52),
-                  ),
-                  onPressed: onScan,
-                  child: Text(cta),
-                ),
-              ],
+            const SizedBox(height: 20),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: TransparenceColors.lime,
+                foregroundColor: TransparenceColors.ink,
+                minimumSize: const Size.fromHeight(52),
+              ),
+              onPressed: onScan,
+              child: Text(cta),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -275,62 +266,59 @@ class _ArchiveTile extends StatelessWidget {
     final color = _toneColor(entry.tone);
     final label = archiveToneLabel(entry.tone);
     return Material(
-      color: Colors.white,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: color, width: 6)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
-            child: Row(
-              children: [
-                if (brand != null)
-                  BrandMark.forBrand(brand!, size: 52)
-                else
-                  BrandMark(name: entry.name, size: 52),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+        child: FichePanel(
+          accent: color,
+          margin: EdgeInsets.zero,
+          padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
+          child: Row(
+            children: [
+              if (brand != null)
+                BrandMark.forBrand(brand!, size: 52)
+              else
+                BrandMark(name: entry.name, size: 52),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.name,
+                      style: theme.textTheme.titleLarge,
+                    ),
+                    if (entry.companyName != null) ...[
+                      const SizedBox(height: 4),
                       Text(
-                        entry.name,
-                        style: theme.textTheme.titleLarge,
-                      ),
-                      if (entry.companyName != null) ...[
-                        const SizedBox(height: 4),
-                        Text(
-                          entry.companyName!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: TransparenceColors.mute,
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        color: color.withValues(alpha: 0.14),
-                        child: Text(
-                          label,
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: color,
-                            letterSpacing: 0.2,
-                            fontVariations: const [FontVariation('wght', 700)],
-                          ),
+                        entry.companyName!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: TransparenceColors.mute,
                         ),
                       ),
                     ],
-                  ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      color: color.withValues(alpha: 0.14),
+                      child: Text(
+                        label,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: color,
+                          letterSpacing: 0.2,
+                          fontVariations: const [FontVariation('wght', 700)],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Icon(Icons.arrow_forward, size: 18, color: color),
-              ],
-            ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.arrow_forward, size: 18, color: color),
+            ],
           ),
         ),
       ),
