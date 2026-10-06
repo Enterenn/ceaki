@@ -7,7 +7,6 @@ import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/ceaki_mark.dart';
 import 'package:transparence/ui/result/result_page.dart';
 import 'package:transparence/ui/scanner/camera_scan_page.dart';
-import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
 /// Branded Scan home: identity first, then a dominant CTA into the camera.
@@ -38,39 +37,57 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return Stack(
-      children: [
-        const Positioned.fill(child: _HomeBackdrop()),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const CeakiMark(size: 44),
-                const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: HubHeader.limeBar,
-                ),
-                const Spacer(),
-                Text(
-                  l10n.scannerHeadline,
-                  style: theme.textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  l10n.scannerSub,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: TransparenceColors.mute,
+    return ColoredBox(
+      color: TransparenceColors.paper,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const CeakiMark(size: 48),
+              const SizedBox(height: 14),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: TransparenceColors.lime,
+                    borderRadius: TransparenceRadii.all,
+                    boxShadow: TransparenceShadows.stamp,
                   ),
+                  child: const SizedBox(width: 64, height: 8),
                 ),
-                const SizedBox(height: 40),
-                FilledButton(
+              ),
+              const Spacer(flex: 2),
+              Text(
+                l10n.scannerHeadline,
+                style: theme.textTheme.displaySmall?.copyWith(
+                  fontSize: 34,
+                  height: 1.05,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                l10n.scannerSub,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: TransparenceColors.mute,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 36),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: TransparenceRadii.all,
+                  boxShadow: TransparenceShadows.stampStrong,
+                ),
+                child: FilledButton(
                   style: FilledButton.styleFrom(
                     backgroundColor: TransparenceColors.lime,
                     foregroundColor: TransparenceColors.ink,
                     minimumSize: const Size.fromHeight(64),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: TransparenceRadii.all,
+                    ),
                   ),
                   onPressed: _busy ? null : _openCamera,
                   child: Row(
@@ -87,44 +104,44 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    key: ScannerPage.manualToggle,
-                    onPressed: () => setState(() => _manual = !_manual),
-                    child: Text(
-                      _manual ? l10n.manualHide : l10n.manualShow,
-                    ),
+              ),
+              const SizedBox(height: 18),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  key: ScannerPage.manualToggle,
+                  onPressed: () => setState(() => _manual = !_manual),
+                  child: Text(
+                    _manual ? l10n.manualHide : l10n.manualShow,
                   ),
                 ),
-                if (_manual) ...[
-                  const SizedBox(height: 8),
-                  TextField(
-                    key: ScannerPage.codeField,
-                    controller: _code,
-                    enabled: !_busy,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      hintText: l10n.codeHint,
-                      errorText: _error,
-                    ),
-                    onSubmitted: (_) => _submit(),
+              ),
+              if (_manual) ...[
+                const SizedBox(height: 8),
+                TextField(
+                  key: ScannerPage.codeField,
+                  controller: _code,
+                  enabled: !_busy,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    hintText: l10n.codeHint,
+                    errorText: _error,
                   ),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    key: ScannerPage.submitButton,
-                    onPressed: _busy ? null : _submit,
-                    child: Text(_busy ? l10n.searching : l10n.seeAttachment),
-                  ),
-                ],
-                const Spacer(),
+                  onSubmitted: (_) => _submit(),
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  key: ScannerPage.submitButton,
+                  onPressed: _busy ? null : _submit,
+                  child: Text(_busy ? l10n.searching : l10n.seeAttachment),
+                ),
               ],
-            ),
+              const Spacer(flex: 1),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -174,42 +191,4 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
       GtinReject.invalidCheck => l10n.codeInvalidCheck,
     };
   }
-}
-
-class _HomeBackdrop extends StatelessWidget {
-  const _HomeBackdrop();
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(painter: _StripePainter());
-  }
-}
-
-class _StripePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final base = Paint()..color = TransparenceColors.paper;
-    canvas.drawRect(Offset.zero & size, base);
-    final lime = Paint()
-      ..color = TransparenceColors.lime.withValues(alpha: 0.35);
-    final ink = Paint()..color = TransparenceColors.ink.withValues(alpha: 0.04);
-    canvas.drawRect(
-      Rect.fromLTWH(size.width * 0.62, 0, size.width * 0.38, size.height * 0.34),
-      lime,
-    );
-    canvas.drawRect(
-      Rect.fromLTWH(0, size.height * 0.72, size.width * 0.28, size.height * 0.28),
-      ink,
-    );
-    final line = Paint()
-      ..color = TransparenceColors.ink.withValues(alpha: 0.08)
-      ..strokeWidth = 1.5;
-    for (var i = 0; i < 8; i++) {
-      final y = size.height * 0.4 + i * 18.0;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y + 40), line);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
