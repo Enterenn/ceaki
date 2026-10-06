@@ -4,7 +4,6 @@ import 'package:transparence/application/archive_brands.dart';
 import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/shell_tab.dart';
 import 'package:transparence/domain/archive.dart';
-import 'package:transparence/domain/brand_name.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
@@ -21,6 +20,7 @@ class LibraryPage extends ConsumerStatefulWidget {
 
 class _LibraryPageState extends ConsumerState<LibraryPage> {
   final _search = TextEditingController();
+  ArchiveTone? _tone;
 
   @override
   void dispose() {
@@ -37,16 +37,11 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (_, _) => Center(child: Text(l10n.libraryError)),
       data: (entries) {
-        final query = _search.text.trim();
-        final visible = query.isEmpty
-            ? entries
-            : [
-                for (final entry in entries)
-                  if (normalizeBrandName(entry.name).contains(
-                    normalizeBrandName(query),
-                  ))
-                    entry,
-              ];
+        final visible = filterArchive(
+          entries,
+          query: _search.text,
+          tone: _tone,
+        );
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -76,6 +71,42 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
                 onChanged: (_) => setState(() {}),
               ),
             ),
+            if (entries.isNotEmpty)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                child: Row(
+                  children: [
+                    _FilterChip(
+                      label: l10n.archiveFilterAll,
+                      selected: _tone == null,
+                      color: TransparenceColors.ink,
+                      onTap: () => setState(() => _tone = null),
+                    ),
+                    const SizedBox(width: 8),
+                    _FilterChip(
+                      label: l10n.archiveFilterFortune,
+                      selected: _tone == ArchiveTone.fortune,
+                      color: TransparenceColors.coral,
+                      onTap: () => setState(() => _tone = ArchiveTone.fortune),
+                    ),
+                    const SizedBox(width: 8),
+                    _FilterChip(
+                      label: l10n.archiveFilterClear,
+                      selected: _tone == ArchiveTone.clear,
+                      color: TransparenceColors.leaf,
+                      onTap: () => setState(() => _tone = ArchiveTone.clear),
+                    ),
+                    const SizedBox(width: 8),
+                    _FilterChip(
+                      label: l10n.archiveFilterUnknown,
+                      selected: _tone == ArchiveTone.unknown,
+                      color: TransparenceColors.mute,
+                      onTap: () => setState(() => _tone = ArchiveTone.unknown),
+                    ),
+                  ],
+                ),
+              ),
             Expanded(
               child: entries.isEmpty
                   ? _EmptyArchive(
@@ -137,6 +168,44 @@ Brand? _brandOf(Library? library, String? brandId) {
     if (brand.id == brandId) return brand;
   }
   return null;
+}
+
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({
+    required this.label,
+    required this.selected,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Material(
+      color: selected ? color : Colors.white,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            border: Border.all(color: color, width: 1.5),
+          ),
+          child: Text(
+            label,
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: selected ? Colors.white : color,
+              fontVariations: const [FontVariation('wght', 700)],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _ArchiveHeader extends StatelessWidget {
@@ -355,6 +424,15 @@ class _ArchiveTile extends StatelessWidget {
                         entry.name,
                         style: theme.textTheme.titleLarge,
                       ),
+                      if (entry.companyName != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          entry.companyName!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: TransparenceColors.mute,
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(

@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparence/application/scan_book.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/company_page.dart';
+import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/library_view.dart';
 import 'package:transparence/ui/library/link_tile.dart';
+import 'package:transparence/ui/theme.dart';
 
 class FortunePage extends ConsumerWidget {
   const FortunePage({required this.fortuneId, super.key});
@@ -20,6 +23,7 @@ class FortunePage extends ConsumerWidget {
     return LibraryView(
       builder: (context, library) {
         final l10n = AppLocalizations.of(context);
+        final theme = Theme.of(context);
         final fortune = library.fortuneOrNull(fortuneId);
         if (fortune == null) {
           return Scaffold(
@@ -42,25 +46,51 @@ class FortunePage extends ConsumerWidget {
         return Scaffold(
           appBar: AppBar(title: Text(fortune.name)),
           body: ListView(
+            padding: const EdgeInsets.only(bottom: 32),
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(fortune.summary),
-              ),
-              ListTile(
-                title: Text(
-                  off ? l10n.alertOff : l10n.alertOn,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: off ? null : const Color(0xFFFF3D5A),
-                  ),
+              const SizedBox(height: 12),
+              FichePanel(
+                accent: off ? TransparenceColors.mute : TransparenceColors.coral,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      (off ? l10n.alertOff : l10n.alertOn).toUpperCase(),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        letterSpacing: 1.1,
+                        color: off
+                            ? TransparenceColors.mute
+                            : TransparenceColors.coral,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(fortune.summary, style: theme.textTheme.bodyLarge),
+                    if (fortune.aliases.isNotEmpty) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        fortune.aliases.join(' · '),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: TransparenceColors.mute,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(52),
+                    foregroundColor: off
+                        ? TransparenceColors.ink
+                        : TransparenceColors.coral,
+                    side: BorderSide(
+                      color: off
+                          ? TransparenceColors.ink
+                          : TransparenceColors.coral,
+                      width: 2,
+                    ),
                   ),
                   onPressed: () {
                     final database = ref.read(appDatabaseProvider);
@@ -77,7 +107,7 @@ class FortunePage extends ConsumerWidget {
                   child: Text(off ? l10n.alertRestore : l10n.alertRemove),
                 ),
               ),
-              _Section(l10n.participations),
+              FicheSection(l10n.participations),
               for (final link in active)
                 LinkTile(
                   title: library.company(link.ownedCompanyId).name,
@@ -88,15 +118,24 @@ class FortunePage extends ConsumerWidget {
                     CompanyPage(companyId: link.ownedCompanyId),
                   ),
                 ),
-              _Section(l10n.brandsReached),
+              FicheSection(l10n.brandsReached),
               for (final brand in portfolio.brands)
-                ListTile(
-                  title: Text(brand.name),
+                FicheNavRow(
+                  title: brand.name,
+                  leading: BrandMark.forBrand(brand, size: 40),
                   onTap: () => _open(context, BrandPage(brandId: brand.id)),
                 ),
-              _Section(l10n.history),
+              FicheSection(l10n.history),
               if (historical.isEmpty)
-                ListTile(title: Text(l10n.noHistory))
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Text(
+                    l10n.noHistory,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: TransparenceColors.mute,
+                    ),
+                  ),
+                )
               else
                 for (final link in historical)
                   LinkTile(
@@ -108,20 +147,6 @@ class FortunePage extends ConsumerWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  const _Section(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      child: Text(label, style: Theme.of(context).textTheme.titleMedium),
     );
   }
 }

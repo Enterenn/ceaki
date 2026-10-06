@@ -26,8 +26,8 @@ class AppShell extends ConsumerWidget {
         },
         destinations: [
           NavigationDestination(
-            icon: const Icon(Icons.qr_code_scanner),
-            selectedIcon: const Icon(Icons.qr_code_scanner),
+            icon: const Icon(Icons.document_scanner_outlined),
+            selectedIcon: const Icon(Icons.document_scanner),
             label: l10n.navScanner,
           ),
           NavigationDestination(

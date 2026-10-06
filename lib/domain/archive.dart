@@ -15,8 +15,8 @@ enum ArchiveTone {
 }
 
 const archiveFortuneLabel = 'Rattaché à une grande fortune';
-const archiveClearLabel = 'Aucune grande fortune documentée';
-const archiveUnknownLabel = 'Rattachement non documenté';
+const archiveClearLabel = 'Entreprise connue — aucune grande fortune';
+const archiveUnknownLabel = 'Marque non rattachée';
 
 String archiveToneLabel(ArchiveTone tone) {
   return switch (tone) {
@@ -46,19 +46,23 @@ final class ArchiveEntry {
     required this.tone,
     required this.lastSeenAt,
     this.brandId,
+    this.companyName,
   });
 
   /// Stable key: brand id, or `name:<normalized>` for unmatched.
   final String key;
   final String? brandId;
   final String name;
+
+  /// Operating company when the brand resolved in the nucleus.
+  final String? companyName;
   final ArchiveTone tone;
   final DateTime lastSeenAt;
 }
 
+/// Resolved brand ⇒ company known. Fortune only when the active chain reaches one.
 ArchiveTone archiveToneFor(CompanyChain chain) {
   if (chain.fortuneIds.isNotEmpty) return ArchiveTone.fortune;
-  if (!chain.hasActiveOwner) return ArchiveTone.unknown;
   return ArchiveTone.clear;
 }
 
@@ -86,6 +90,7 @@ List<ArchiveEntry> buildArchive({
           key: chain.brand.id,
           brandId: chain.brand.id,
           name: chain.brand.name,
+          companyName: library.company(chain.brand.companyId).name,
           tone: archiveToneFor(chain.chain),
           lastSeenAt: scan.scannedAt,
         ),
@@ -114,6 +119,23 @@ List<ArchiveEntry> buildArchive({
   return entries;
 }
 
+/// Search + optional tone filter for the archive list.
+List<ArchiveEntry> filterArchive(
+  Iterable<ArchiveEntry> entries, {
+  String query = '',
+  ArchiveTone? tone,
+}) {
+  final needle = normalizeBrandName(query.trim());
+  return [
+    for (final entry in entries)
+      if ((tone == null || entry.tone == tone) &&
+          (needle.isEmpty ||
+              normalizeBrandName(entry.name).contains(needle) ||
+              normalizeBrandName(entry.companyName ?? '').contains(needle)))
+        entry,
+  ];
+}
+
 void _put(Map<String, ArchiveEntry> byKey, ArchiveEntry next) {
   final previous = byKey[next.key];
   if (previous == null) {
@@ -124,6 +146,7 @@ void _put(Map<String, ArchiveEntry> byKey, ArchiveEntry next) {
     key: next.key,
     brandId: next.brandId ?? previous.brandId,
     name: next.brandId != null ? next.name : previous.name,
+    companyName: next.companyName ?? previous.companyName,
     tone: next.tone,
     lastSeenAt: next.lastSeenAt.isAfter(previous.lastSeenAt)
         ? next.lastSeenAt

@@ -53,7 +53,7 @@ void main() {
       await tester.tap(find.text('Grasset'));
       await tester.pumpAndSettle();
       expect(find.text(archiveFortuneLabel), findsWidgets);
-      expect(find.text('Éditions Grasset & Fasquelle'), findsOneWidget);
+      expect(find.text('Lagardère SA'), findsOneWidget);
     } finally {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(const Duration(milliseconds: 1));

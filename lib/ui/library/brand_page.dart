@@ -6,6 +6,7 @@ import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/company_page.dart';
+import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/holding_list.dart';
 import 'package:transparence/ui/library/library_view.dart';
@@ -61,9 +62,16 @@ class BrandPage extends StatelessWidget {
                   ),
                 ),
               if (brand.aliases.isNotEmpty) ...[
-                _Section(l10n.aliases),
-                for (final alias in brand.aliases)
-                  ListTile(title: Text(alias)),
+                FicheSection(l10n.aliases),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                  child: Text(
+                    brand.aliases.join(' · '),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: TransparenceColors.mute,
+                    ),
+                  ),
+                ),
               ],
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -87,11 +95,10 @@ class BrandPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
-              ListTile(
-                title: Text(company.name),
-                subtitle: Text(company.role),
-                trailing: const Icon(Icons.arrow_forward, size: 18),
+              const SizedBox(height: 12),
+              FicheNavRow(
+                title: company.name,
+                subtitle: company.role,
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
@@ -100,7 +107,7 @@ class BrandPage extends StatelessWidget {
                   );
                 },
               ),
-              _Section(l10n.chain),
+              FicheSection(l10n.chain),
               HoldingList(library: library, holdings: chain.chain.owners),
               for (final link in chain.chain.historical)
                 LinkTile(
@@ -111,12 +118,11 @@ class BrandPage extends StatelessWidget {
                       : library.sourceOrNull(link.sourceId!),
                 ),
               if (fortuneIds.isNotEmpty) ...[
-                _Section(l10n.sectionFortunes),
+                FicheSection(l10n.sectionFortunes),
                 for (final id in fortuneIds)
-                  ListTile(
-                    title: Text(library.fortune(id).name),
-                    subtitle: Text(l10n.sectionFortunes),
-                    trailing: const Icon(Icons.arrow_forward, size: 18),
+                  FicheNavRow(
+                    title: library.fortune(id).name,
+                    subtitle: l10n.sectionFortunes,
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
@@ -127,7 +133,7 @@ class BrandPage extends StatelessWidget {
                   ),
               ],
               if (sources.isNotEmpty) ...[
-                _Section(l10n.archiveSources),
+                FicheSection(l10n.archiveSources),
                 for (final source in sources)
                   Align(
                     alignment: Alignment.centerLeft,
@@ -251,28 +257,3 @@ String _ownerName(Library library, OwnerRef owner) {
   };
 }
 
-class _Section extends StatelessWidget {
-  const _Section(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
-      child: Row(
-        children: [
-          Container(width: 10, height: 10, color: TransparenceColors.lime),
-          const SizedBox(width: 10),
-          Text(
-            label.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              letterSpacing: 1.2,
-              color: TransparenceColors.mute,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
