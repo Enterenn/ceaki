@@ -5,7 +5,7 @@ import 'package:transparence/domain/notebook.dart';
 import 'package:transparence/domain/resolve.dart';
 import 'package:transparence/domain/wording.dart';
 
-enum ScanIssue { resolved, brandUnknown, productUnknown, offline, notABook }
+enum ScanIssue { resolved, brandUnknown, productUnknown, offline }
 
 final class ScanView {
   const ScanView({
@@ -81,7 +81,7 @@ ScanView describeScan(
   Scan scan, {
   required Set<String> excludedFortuneIds,
 }) {
-  final stored = ScanIssue.values.byName(scan.issue);
+  final stored = _storedIssue(scan.issue);
   final names = splitFields(scan.brandNames);
   final attachment = attachmentOf(
     library: library,
@@ -125,6 +125,11 @@ ScanView describeScan(
     sources: _sources(library, chains),
     state: _state(chains, excludedFortuneIds),
   );
+}
+
+ScanIssue _storedIssue(String name) {
+  if (name == 'notABook') return ScanIssue.productUnknown;
+  return ScanIssue.values.byName(name);
 }
 
 ScanIssue _issue(ScanIssue issue, ResolvedNames resolved, List<String> names) {

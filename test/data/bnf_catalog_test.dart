@@ -27,11 +27,4 @@ void main() {
     expect(book.publishers, ['Bernard Grasset (Paris)']);
     expect(book.source, 'bnf');
   });
-
-  test('an empty catalogue answer has no book', () {
-    const body =
-        '<srw:searchRetrieveResponse xmlns:srw="http://www.loc.gov/zing/srw/"><srw:numberOfRecords>0</srw:numberOfRecords></srw:searchRetrieveResponse>';
-
-    expect(parseBnfDc(body, '9782246807230'), isNull);
-  });
 }

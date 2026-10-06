@@ -12,6 +12,7 @@ class FortuneBannerView extends StatelessWidget {
     final theme = Theme.of(context);
     return Semantics(
       container: true,
+      label: '$grandeFortuneTitle. ${banner.title}. ${banner.body}',
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: TransparenceColors.coral,
@@ -24,16 +25,14 @@ class FortuneBannerView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (banner.title != grandeFortuneTitle) ...[
-                Text(
-                  grandeFortuneTitle.toUpperCase(),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.85),
-                    letterSpacing: 1.2,
-                  ),
+              Text(
+                grandeFortuneTitle.toUpperCase(),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  letterSpacing: 1.2,
                 ),
-                const SizedBox(height: 6),
-              ],
+              ),
+              const SizedBox(height: 6),
               Text(
                 banner.title,
                 style: theme.textTheme.headlineSmall?.copyWith(

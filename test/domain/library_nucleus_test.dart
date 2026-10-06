@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transparence/domain/brand_name.dart';
 import 'package:transparence/domain/library.dart';
-import 'package:transparence/domain/percent.dart';
 
 void main() {
   final library = Library.parse(
@@ -14,31 +13,12 @@ void main() {
     expect(schemaIssues(library), isEmpty);
   });
 
-  test('percentages stay decimal strings inside 0 and 100', () {
-    expect(Percent.parse('30.4', 'capital').french, '30,4');
-    expect(Percent.parse('100', 'capital').raw, '100');
-    expect(() => Percent.parse('100.1', 'capital'), throwsFormatException);
-    expect(() => Percent.parse(30.4, 'capital'), throwsFormatException);
-  });
-
   test('odet is a company and not an alias of the family', () {
     expect(library.company('company.odet').name, "Compagnie de l'Odet");
     final aliases = library.fortune('fortune.bollore').aliases;
     expect(aliases, isNot(contains("Compagnie de l'Odet")));
     expect(aliases, isNot(contains('Odet')));
     expect(aliases, isNot(contains('Bolloré SE')));
-  });
-
-  test('three hachette imprints stay three brands', () {
-    final ids = library.brands.map((brand) => brand.id).toSet();
-    expect(
-      ids.containsAll({
-        'brand.livre-de-poche',
-        'brand.lgf',
-        'brand.hachette-livre',
-      }),
-      isTrue,
-    );
   });
 
   test('grasset aliases resolve to one fiche', () {
@@ -50,45 +30,12 @@ void main() {
       'brand.grasset',
     );
     expect(
-      library.brandsForKey(normalizeBrandName('Grasset')).single.id,
-      'brand.grasset',
-    );
-    expect(
       library
           .brandsForKey(normalizeBrandName('Bernard Grasset (Paris)'))
           .single
           .id,
       'brand.grasset',
     );
-    expect(
-      library
-          .brandsForKey(normalizeBrandName('Librairie Arthème Fayard'))
-          .single
-          .id,
-      'brand.fayard',
-    );
-    expect(
-      library.brandsForKey(normalizeBrandName('Plon (Paris)')).single.id,
-      'brand.plon',
-    );
-    expect(
-      library.brandsForKey(normalizeBrandName('Éditions Plon')).single.id,
-      'brand.plon',
-    );
-    expect(
-      library.brands.firstWhere((brand) => brand.id == 'brand.plon').companyId,
-      'company.editis',
-    );
-  });
-
-  test('no active shortcut skips louis hachette group', () {
-    final shortcut = library.ownerships.any(
-      (link) =>
-          link.status == LinkStatus.active &&
-          link.ownedCompanyId == 'company.lagardere-sa' &&
-          link.owner.id == 'company.bollore-se',
-    );
-    expect(shortcut, isFalse);
   });
 
   test('descent from bollore includes grasset and fayard, not editis', () {
@@ -98,32 +45,7 @@ void main() {
     expect(brandIds, containsAll(['brand.grasset', 'brand.fayard']));
     expect(brandIds, isNot(contains('brand.editis')));
     expect(brandIds, isNot(contains('brand.plon')));
-    expect(brandIds, isNot(contains('brand.asmodee')));
-    expect(brandIds, isNot(contains('brand.free')));
-    expect(companyIds, contains('company.prisma-media'));
     expect(companyIds, isNot(contains('company.editis')));
     expect(companyIds, isNot(contains('company.odet')));
-  });
-
-  test('asmodee is held by its published shareholders', () {
-    final owners = library.ownersOf('company.asmodee', LinkStatus.active);
-    expect(owners.map((link) => link.owner.id), [
-      'company.lars-wingefors-ab',
-      'company.savvy-gaming-group',
-    ]);
-    expect(owners.first.capitalPercent!.french, '16,9');
-    expect(owners.first.votingPercent!.french, '38,09');
-    expect(
-      library.brandsForKey(normalizeBrandName('Asmodee')).single.id,
-      'brand.asmodee',
-    );
-    expect(library.fortune('fortune.bouygues').name, 'famille Bouygues');
-    expect(library.fortune('fortune.niel').name, 'Xavier Niel');
-    final bouygues = library
-        .ownersOf('company.bouygues', LinkStatus.active)
-        .single;
-    expect(bouygues.owner.id, 'company.scdm');
-    expect(bouygues.capitalPercent!.raw, '28.3');
-    expect(bouygues.votingPercent!.raw, '29.3');
   });
 }

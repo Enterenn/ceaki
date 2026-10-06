@@ -61,10 +61,12 @@ class _CameraScanPageState extends ConsumerState<CameraScanPage>
       _openCamera();
       return;
     }
-    // On Android, status alone can't prove a permanent denial — only request can.
-    if (_phase != _Phase.ask) {
-      setState(() => _phase = _Phase.ask);
+    if (status.isPermanentlyDenied) {
+      setState(() => _phase = _Phase.denied);
+      return;
     }
+    // CTA « Scanne » already means intent — go straight to the OS prompt.
+    await _allow();
   }
 
   Future<PermissionStatus> _cameraStatus() async {
@@ -91,7 +93,6 @@ class _CameraScanPageState extends ConsumerState<CameraScanPage>
         _openCamera();
         return;
       }
-      // Only a permanent refusal is final; a simple deny can be asked again.
       if (status.isPermanentlyDenied) {
         setState(() => _phase = _Phase.denied);
         return;
@@ -99,11 +100,9 @@ class _CameraScanPageState extends ConsumerState<CameraScanPage>
       setState(() => _phase = _Phase.ask);
     } on TimeoutException {
       if (!mounted) return;
-      // Dialog may still be up; don't brand it as a refusal.
       setState(() => _phase = _Phase.ask);
     } catch (_) {
       if (!mounted) return;
-      // If the plugin glitches, let mobile_scanner prompt instead.
       _openCamera();
     } finally {
       _requesting = false;

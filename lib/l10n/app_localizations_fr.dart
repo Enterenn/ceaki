@@ -26,16 +26,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get scannerSub =>
-      'Scanne un produit et découvre qui tire les ficelles.';
+      'On checke un produit et on voit qui tire les ficelles.';
 
   @override
-  String get scanCta => 'Scannez';
+  String get scanCta => 'On checke';
 
   @override
   String get scanTitle => 'Scanner';
 
   @override
-  String get scanHint => 'Cadrez le code-barres';
+  String get scanHint => 'Cadre le code-barres';
 
   @override
   String get manualShow => 'Code illisible ?';
@@ -73,7 +73,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get seeAttachment => 'Voir le rattachement';
 
   @override
-  String get codeEmpty => 'Saisissez un code.';
+  String get codeEmpty => 'Saisis un code.';
 
   @override
   String get codeUnrecognized => 'Ce code n’est pas un code produit.';
@@ -115,10 +115,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get productUnknown => 'Ce numéro n’est pas dans les sources.';
-
-  @override
-  String get notABook =>
-      'Les livres sont lus pour l’instant. Ce code n’en est pas un.';
 
   @override
   String get offlineProduct => 'Le produit n’a pas pu être identifié.';

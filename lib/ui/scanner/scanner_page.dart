@@ -9,6 +9,7 @@ import 'package:transparence/ui/result/result_page.dart';
 import 'package:transparence/ui/scanner/camera_scan_page.dart';
 import 'package:transparence/ui/theme.dart';
 
+/// Branded Scan home: identity first, then a dominant CTA into the camera.
 class ScannerPage extends ConsumerStatefulWidget {
   const ScannerPage({super.key});
 
@@ -40,85 +41,89 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
       children: [
         const Positioned.fill(child: _HomeBackdrop()),
         SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-              const CeakiMark(size: 44),
-              const SizedBox(height: 12),
-              Container(
-                width: 72,
-                height: 8,
-                color: TransparenceColors.lime,
-              ),
-              const SizedBox(height: 28),
-              Text(
-                l10n.scannerHeadline,
-                style: theme.textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l10n.scannerSub,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: TransparenceColors.mute,
-                ),
-              ),
-              const SizedBox(height: 40),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: TransparenceColors.lime,
-                  foregroundColor: TransparenceColors.ink,
-                  minimumSize: const Size.fromHeight(64),
-                ),
-                onPressed: _busy ? null : _openCamera,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.qr_code_scanner, size: 26),
-                    const SizedBox(width: 12),
-                    Text(
-                      l10n.scanCta,
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: TransparenceColors.ink,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  key: ScannerPage.manualToggle,
-                  onPressed: () => setState(() => _manual = !_manual),
-                  child: Text(
-                    _manual ? l10n.manualHide : l10n.manualShow,
+                const CeakiMark(size: 44),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 72,
+                    height: 8,
+                    color: TransparenceColors.lime,
                   ),
                 ),
-              ),
-              if (_manual) ...[
-                const SizedBox(height: 8),
-                TextField(
-                  key: ScannerPage.codeField,
-                  controller: _code,
-                  enabled: !_busy,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: l10n.codeHint,
-                    errorText: _error,
-                  ),
-                  onSubmitted: (_) => _submit(),
+                const Spacer(),
+                Text(
+                  l10n.scannerHeadline,
+                  style: theme.textTheme.headlineMedium,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
+                Text(
+                  l10n.scannerSub,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: TransparenceColors.mute,
+                  ),
+                ),
+                const SizedBox(height: 40),
                 FilledButton(
-                  key: ScannerPage.submitButton,
-                  onPressed: _busy ? null : _submit,
-                  child: Text(_busy ? l10n.searching : l10n.seeAttachment),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: TransparenceColors.lime,
+                    foregroundColor: TransparenceColors.ink,
+                    minimumSize: const Size.fromHeight(64),
+                  ),
+                  onPressed: _busy ? null : _openCamera,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.qr_code_scanner, size: 26),
+                      const SizedBox(width: 12),
+                      Text(
+                        l10n.scanCta,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: TransparenceColors.ink,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    key: ScannerPage.manualToggle,
+                    onPressed: () => setState(() => _manual = !_manual),
+                    child: Text(
+                      _manual ? l10n.manualHide : l10n.manualShow,
+                    ),
+                  ),
+                ),
+                if (_manual) ...[
+                  const SizedBox(height: 8),
+                  TextField(
+                    key: ScannerPage.codeField,
+                    controller: _code,
+                    enabled: !_busy,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      hintText: l10n.codeHint,
+                      errorText: _error,
+                    ),
+                    onSubmitted: (_) => _submit(),
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton(
+                    key: ScannerPage.submitButton,
+                    onPressed: _busy ? null : _submit,
+                    child: Text(_busy ? l10n.searching : l10n.seeAttachment),
+                  ),
+                ],
+                const Spacer(),
               ],
-            ],
             ),
           ),
         ),

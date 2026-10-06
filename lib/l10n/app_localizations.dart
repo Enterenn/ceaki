@@ -127,13 +127,13 @@ abstract class AppLocalizations {
   /// No description provided for @scannerSub.
   ///
   /// In fr, this message translates to:
-  /// **'Scanne un produit et découvre qui tire les ficelles.'**
+  /// **'On checke un produit et on voit qui tire les ficelles.'**
   String get scannerSub;
 
   /// No description provided for @scanCta.
   ///
   /// In fr, this message translates to:
-  /// **'Scannez'**
+  /// **'On checke'**
   String get scanCta;
 
   /// No description provided for @scanTitle.
@@ -145,7 +145,7 @@ abstract class AppLocalizations {
   /// No description provided for @scanHint.
   ///
   /// In fr, this message translates to:
-  /// **'Cadrez le code-barres'**
+  /// **'Cadre le code-barres'**
   String get scanHint;
 
   /// No description provided for @manualShow.
@@ -217,7 +217,7 @@ abstract class AppLocalizations {
   /// No description provided for @codeEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Saisissez un code.'**
+  /// **'Saisis un code.'**
   String get codeEmpty;
 
   /// No description provided for @codeUnrecognized.
@@ -279,12 +279,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ce numéro n’est pas dans les sources.'**
   String get productUnknown;
-
-  /// No description provided for @notABook.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les livres sont lus pour l’instant. Ce code n’en est pas un.'**
-  String get notABook;
 
   /// No description provided for @offlineProduct.
   ///

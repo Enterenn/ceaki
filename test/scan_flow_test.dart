@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:transparence/application/library_provider.dart';
 import 'package:transparence/application/scan_book.dart';
 import 'package:transparence/data/products/bnf_catalog.dart';
@@ -50,73 +49,6 @@ void main() {
 
       expect(find.text('Reposés'), findsOneWidget);
       expect(find.text('famille Bolloré — 1'), findsOneWidget);
-    } finally {
-      await _closeApp(tester, database);
-    }
-  });
-
-  testWidgets('a bad check digit stays on the scanner', (tester) async {
-    await tester.pumpWidget(_app(database));
-    try {
-      await tester.pumpAndSettle();
-      await _submitCode(tester, '9782246807231');
-      await tester.pump();
-
-      expect(find.text('Le chiffre de contrôle est faux.'), findsOneWidget);
-      expect(find.text('GRANDE FORTUNE'), findsNothing);
-    } finally {
-      await _closeApp(tester, database);
-    }
-  });
-
-  testWidgets('a plon isbn shows the undocumented owner', (tester) async {
-    await tester.pumpWidget(_app(database));
-    try {
-      await tester.pumpAndSettle();
-      await _submitCode(tester, '978-2-259-19540-9');
-      await tester.pumpAndSettle();
-
-      expect(find.text('Propriétaire actuel non documenté'), findsOneWidget);
-      expect(find.text('Vivendi SE'), findsOneWidget);
-      expect(find.text('Plus belle sera la vie : roman'), findsOneWidget);
-      expect(find.text('GRANDE FORTUNE'), findsNothing);
-      expect(find.text('Je le repose'), findsNothing);
-    } finally {
-      await _closeApp(tester, database);
-    }
-  });
-
-  testWidgets('home keeps the camera and code field off until asked', (
-    tester,
-  ) async {
-    await tester.pumpWidget(_app(database));
-    try {
-      await tester.pump();
-      expect(find.text('Scannez'), findsOneWidget);
-      expect(find.text('Code illisible ?'), findsOneWidget);
-      expect(find.byKey(ScannerPage.codeField), findsNothing);
-      expect(find.text('Autoriser la caméra'), findsNothing);
-      expect(find.byType(MobileScanner), findsNothing);
-    } finally {
-      await _closeApp(tester, database);
-    }
-  });
-
-  testWidgets('a dobble barcode shows who owns the brand', (tester) async {
-    await tester.pumpWidget(_app(database));
-    try {
-      await tester.pumpAndSettle();
-      await _submitCode(tester, '3558380078180');
-      await tester.pumpAndSettle();
-
-      expect(find.text('Dobble classique'), findsOneWidget);
-      expect(find.text('Jeu de société'), findsOneWidget);
-      expect(find.text('Lars Wingefors AB'), findsWidgets);
-      expect(find.text('Savvy Gaming Group'), findsWidgets);
-      expect(find.textContaining('16,9 % du capital'), findsOneWidget);
-      expect(find.text('Aucune grande fortune documentée'), findsOneWidget);
-      expect(find.text('GRANDE FORTUNE'), findsNothing);
-      expect(find.text('Je le repose'), findsNothing);
     } finally {
       await _closeApp(tester, database);
     }

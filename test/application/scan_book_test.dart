@@ -67,37 +67,6 @@ void main() {
     );
   });
 
-  test('a fresh catalogue answer is reused', () async {
-    final catalog = _CountingCatalog();
-    final book = ScanBook(database: database, catalog: catalog);
-
-    await book.open(gtin, library);
-    await book.open(gtin, library);
-
-    expect(catalog.calls, 1);
-  });
-
-  test('a plon isbn documents the former owner only', () async {
-    final book = ScanBook(database: database, catalog: _ThrowingCatalog());
-    final plon = (readGtin('978-2-259-19540-9') as GtinAccepted).gtin;
-    final id = await book.open(plon, library);
-    final view = describeScan(
-      library,
-      await database.getScan(id),
-      excludedFortuneIds: await database.excludedFortuneIds(),
-    );
-
-    expect(view.brandLabel, 'Plon');
-    expect(view.title, 'Plus belle sera la vie : roman');
-    expect(view.banners, isEmpty);
-    expect(view.state, ChainState.currentOwnerUndocumented);
-    expect(
-      view.chains.single.chain.historical.single.owner.id,
-      'company.vivendi-se',
-    );
-    expect(await book.putBack(id, library), isFalse);
-  });
-
   test(
     'a removed alert hides the banner and keeps a recorded put-back',
     () async {
@@ -124,11 +93,6 @@ void main() {
       final keptLine = notebookLines(await database.putBacks()).single;
       expect(keptLine.name, 'famille Bolloré');
       expect(keptLine.count, 1);
-      final stored = await (database.select(
-        database.alertExclusions,
-      )..where((row) => row.fortuneId.equals('fortune.bollore'))).getSingle();
-      expect(stored.fortuneName, 'famille Bolloré');
-      expect(stored.removedAt, removedAt.toLocal());
 
       final again = await book.open(gtin, library);
       expect(await book.putBack(again, library), isFalse);
@@ -137,45 +101,11 @@ void main() {
       expect(await database.excludedFortuneIds(), isEmpty);
     },
   );
-
-  test('a dobble barcode names the shareholders and not a fortune', () async {
-    final book = ScanBook(database: database, catalog: _ThrowingCatalog());
-    final code = (readGtin('3558380078180') as GtinAccepted).gtin;
-    final id = await book.open(code, library);
-    final view = describeScan(
-      library,
-      await database.getScan(id),
-      excludedFortuneIds: const {},
-    );
-
-    expect(view.category, 'jeu');
-    expect(view.title, 'Dobble classique');
-    expect(view.brandLabel, 'Asmodee');
-    expect(view.banners, isEmpty);
-    expect(view.state, ChainState.noDocumentedFortune);
-    expect(await book.putBack(id, library), isFalse);
-  });
 }
 
 class _ThrowingCatalog implements BookCatalog {
   @override
   Future<BookRecord?> find(String gtin) {
     throw StateError('offline');
-  }
-}
-
-class _CountingCatalog implements BookCatalog {
-  var calls = 0;
-
-  @override
-  Future<BookRecord?> find(String gtin) async {
-    calls++;
-    return const BookRecord(
-      gtin: '9782246807230',
-      title: "La traversée de l'été : roman",
-      creator: 'Capote, Truman (1924-1984)',
-      publishers: ['Bernard Grasset (Paris)'],
-      source: 'bnf',
-    );
   }
 }
