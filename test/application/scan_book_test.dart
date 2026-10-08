@@ -68,7 +68,7 @@ void main() {
           excludedFortuneIds: const {},
         ).fortuneNames,
       ),
-      "Reposé. famille Bolloré n'aura pas celui-ci.",
+      "Reposé. la famille Bolloré n'aura pas celui-ci.",
     );
   });
 

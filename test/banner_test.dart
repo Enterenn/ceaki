@@ -9,7 +9,7 @@ void main() {
     const banner = FortuneBanner(
       fortuneId: 'fortune.bollore',
       title: 'famille Bolloré',
-      punch: 'Acheter ça, c’est nourrir famille Bolloré.',
+      punch: 'Acheter ça, c’est mettre des sous dans la poche de la famille Bolloré.',
       detail: 'Grasset y est rattaché. Bolloré SE détient 30,4 % du capital.',
     );
 
@@ -25,7 +25,9 @@ void main() {
     expect(find.text('GRANDE FORTUNE'), findsOneWidget);
     expect(find.text('famille Bolloré'), findsOneWidget);
     expect(
-      find.text('Acheter ça, c’est nourrir famille Bolloré.'),
+      find.text(
+        'Acheter ça, c’est mettre des sous dans la poche de la famille Bolloré.',
+      ),
       findsOneWidget,
     );
     expect(find.text('Pourquoi ?'), findsOneWidget);

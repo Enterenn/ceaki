@@ -50,7 +50,10 @@ void main() {
       expect(find.text(archiveFortuneLabel), findsOneWidget);
       expect(find.text(archiveClearLabel), findsOneWidget);
 
-      await tester.tap(find.text('Grasset'));
+      final grasset = find.text('Grasset');
+      await tester.ensureVisible(grasset);
+      await tester.pumpAndSettle();
+      await tester.tap(grasset);
       await tester.pumpAndSettle();
       expect(find.text(archiveFortuneLabel), findsWidgets);
       expect(find.text('Lagardère SA'), findsOneWidget);

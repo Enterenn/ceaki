@@ -8,8 +8,8 @@ import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
 import 'package:transparence/ui/library/brand_page.dart';
-import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/motion/entrance.dart';
+import 'package:transparence/ui/motion/press_scale.dart';
 import 'package:transparence/ui/shell/hub_header.dart';
 import 'package:transparence/ui/theme.dart';
 
@@ -131,10 +131,16 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
                             ?.copyWith(color: TransparenceColors.mute),
                       ),
                     )
-                  : ListView.separated(
+                  : GridView.builder(
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 0.92,
+                          ),
                       itemCount: visible.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 10),
                       itemBuilder: (context, index) {
                         final entry = visible[index];
                         final stagger = index.clamp(0, 7) * 45;
@@ -245,43 +251,85 @@ class _EmptyArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Center(
-      child: FichePanel(
-        margin: const EdgeInsets.all(28),
-        padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              message,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: TransparenceColors.mute,
-                height: 1.35,
-              ),
-            ),
-            const SizedBox(height: 20),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: TransparenceRadii.all,
-                boxShadow: TransparenceShadows.stampStrong,
-              ),
-              child: FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: TransparenceColors.lime,
-                  foregroundColor: TransparenceColors.ink,
-                  minimumSize: const Size.fromHeight(52),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: TransparenceRadii.all,
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: CustomPaint(
+          painter: _DashBorderPainter(
+            color: TransparenceColors.ink,
+            radius: TransparenceRadii.lg,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(22, 28, 22, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Icon(Icons.add, size: 36, color: TransparenceColors.ink),
+                const SizedBox(height: 14),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: TransparenceColors.mute,
+                    height: 1.35,
                   ),
                 ),
-                onPressed: onScan,
-                child: Text(cta),
-              ),
+                  const SizedBox(height: 20),
+                  PressScale(
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: TransparenceColors.ink,
+                        foregroundColor: TransparenceColors.lime,
+                        minimumSize: const Size.fromHeight(52),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: TransparenceRadii.all,
+                        ),
+                      ),
+                      onPressed: onScan,
+                      child: Text(cta),
+                    ),
+                  ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+}
+
+class _DashBorderPainter extends CustomPainter {
+  _DashBorderPainter({required this.color, required this.radius});
+
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    final rrect = RRect.fromRectAndRadius(
+      Offset.zero & size,
+      Radius.circular(radius),
+    );
+    final path = Path()..addRRect(rrect);
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      const dash = 7.0;
+      const gap = 5.0;
+      while (distance < metric.length) {
+        final next = (distance + dash).clamp(0.0, metric.length);
+        canvas.drawPath(metric.extractPath(distance, next), paint);
+        distance = next + gap;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashBorderPainter oldDelegate) {
+    return oldDelegate.color != color || oldDelegate.radius != radius;
   }
 }
 
@@ -299,84 +347,83 @@ class _ArchiveTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = _toneColor(entry.tone);
+    final fill = _tileFill(entry.tone);
+    final onFill = _onTile(entry.tone);
     final label = archiveToneLabel(entry.tone);
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        child: FichePanel(
-          accent: color,
-          margin: EdgeInsets.zero,
-          padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
-          child: Row(
-            children: [
-              if (brand != null)
-                BrandMark.forBrand(brand!, size: 52)
-              else
-                BrandMark(name: entry.name, size: 52),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      entry.name,
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    if (entry.companyName != null) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        entry.companyName!,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: TransparenceColors.mute,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 8),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.12),
-                        borderRadius: TransparenceRadii.all,
-                        border: Border.all(
-                          color: color.withValues(alpha: 0.4),
-                          width: 1,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        child: Text(
-                          label,
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: color,
-                            letterSpacing: 0.2,
-                            fontVariations: const [
-                              FontVariation('wght', 700),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        borderRadius: TransparenceRadii.tile,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: fill,
+            borderRadius: TransparenceRadii.tile,
+            boxShadow: TransparenceShadows.stamp,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (brand != null)
+                  BrandMark.forBrand(brand!, size: 44)
+                else
+                  BrandMark(name: entry.name, size: 44),
+                const Spacer(),
+                Text(
+                  entry.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: onFill,
+                    fontVariations: const [FontVariation('wght', 800)],
+                    height: 1.15,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Icon(Icons.arrow_forward, size: 18, color: color),
-            ],
+                if (entry.companyName != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    entry.companyName!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: onFill.withValues(alpha: 0.72),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 10),
+                Text(
+                  label,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: onFill,
+                    letterSpacing: 0.2,
+                    fontVariations: const [FontVariation('wght', 700)],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Color _toneColor(ArchiveTone tone) {
+  Color _tileFill(ArchiveTone tone) {
     return switch (tone) {
-      ArchiveTone.fortune => TransparenceColors.coral,
-      ArchiveTone.clear => TransparenceColors.leaf,
-      ArchiveTone.unknown => TransparenceColors.mute,
+      ArchiveTone.fortune => TransparenceTiles.fortune,
+      ArchiveTone.clear => TransparenceTiles.clear,
+      ArchiveTone.unknown => TransparenceTiles.unknown,
+    };
+  }
+
+  Color _onTile(ArchiveTone tone) {
+    return switch (tone) {
+      ArchiveTone.fortune => Colors.white,
+      ArchiveTone.clear => TransparenceColors.ink,
+      ArchiveTone.unknown => TransparenceColors.ink,
     };
   }
 }

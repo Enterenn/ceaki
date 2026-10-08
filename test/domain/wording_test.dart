@@ -23,9 +23,9 @@ void main() {
 
     expect(banners.single.title, 'famille Bolloré');
     final body = banners.single.body;
-    expect(body.contains('Acheter ça, c’est nourrir famille Bolloré'), isTrue);
+    expect(body.contains('Acheter ça, c’est mettre des sous dans la poche de la famille Bolloré'), isTrue);
     expect(body.contains('Grasset y est rattaché'), isTrue);
-    expect(banners.single.punch.contains('Acheter ça, c’est nourrir'), isTrue);
+    expect(banners.single.punch.contains('mettre des sous dans la poche'), isTrue);
     expect(banners.single.detail.contains('Grasset y est rattaché'), isTrue);
     expect(banners.single.detail.contains('30,4 % du capital'), isTrue);
     expect(body.contains('des droits de vote'), isFalse);

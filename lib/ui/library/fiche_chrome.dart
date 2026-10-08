@@ -18,7 +18,14 @@ class FicheSection extends StatelessWidget {
       padding: padding,
       child: Row(
         children: [
-          Container(width: 10, height: 10, color: TransparenceColors.lime),
+          Container(
+            width: 10,
+            height: 10,
+            decoration: const BoxDecoration(
+              color: TransparenceColors.lime,
+              borderRadius: BorderRadius.all(Radius.circular(3)),
+            ),
+          ),
           const SizedBox(width: 10),
           Text(
             label.toUpperCase(),

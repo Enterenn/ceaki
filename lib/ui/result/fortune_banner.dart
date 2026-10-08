@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
+import 'package:transparence/ui/chrome/stamp_tag.dart';
 import 'package:transparence/ui/theme.dart';
 
 class FortuneBannerView extends StatefulWidget {
@@ -26,33 +27,35 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
       container: true,
       label: '$grandeFortuneTitle. ${banner.title}. ${banner.body}',
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: TransparenceColors.coral,
-            borderRadius: TransparenceRadii.all,
+            color: TransparenceScenes.solidCoral,
+            borderRadius: TransparenceRadii.tile,
             boxShadow: TransparenceShadows.stampStrong,
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(18, 20, 18, 18),
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  grandeFortuneTitle.toUpperCase(),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
-                    letterSpacing: 1.2,
-                  ),
+                StampTag(
+                  label: grandeFortuneTitle,
+                  background: TransparenceColors.ink,
+                  foreground: Colors.white,
+                  tilt: -0.045,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 Text(
                   banner.title,
-                  style: theme.textTheme.headlineSmall?.copyWith(
+                  style: theme.textTheme.headlineMedium?.copyWith(
                     color: Colors.white,
+                    fontSize: 28,
+                    height: 1.05,
+                    letterSpacing: -0.6,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 Text(
                   banner.punch,
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -62,7 +65,7 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
                   ),
                 ),
                 if (hasDetail) ...[
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
                   InkWell(
                     onTap: () => setState(() => _open = !_open),
                     child: Row(

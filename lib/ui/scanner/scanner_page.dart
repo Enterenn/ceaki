@@ -6,11 +6,12 @@ import 'package:transparence/domain/gtin.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/ceaki_mark.dart';
 import 'package:transparence/ui/motion/entrance.dart';
+import 'package:transparence/ui/motion/press_scale.dart';
 import 'package:transparence/ui/result/result_page.dart';
 import 'package:transparence/ui/scanner/camera_scan_page.dart';
 import 'package:transparence/ui/theme.dart';
 
-/// Branded Scan home: identity first, then a dominant CTA into the camera.
+/// Branded Scan home: Z scene — identity, punch title, lime stage CTA.
 class ScannerPage extends ConsumerStatefulWidget {
   const ScannerPage({super.key});
 
@@ -41,126 +42,150 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
     return ColoredBox(
       color: TransparenceColors.paper,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Entrance(
-                child: CeakiMark(size: 48),
-              ),
-              const SizedBox(height: 14),
-              Entrance(
-                delay: const Duration(milliseconds: 60),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: TransparenceColors.lime,
-                      borderRadius: TransparenceRadii.all,
-                      boxShadow: TransparenceShadows.stamp,
-                    ),
-                    child: const SizedBox(width: 64, height: 8),
-                  ),
-                ),
-              ),
-              const Spacer(flex: 2),
-              Entrance(
-                delay: const Duration(milliseconds: 120),
-                slide: 0.08,
-                child: Text(
-                  l10n.scannerHeadline,
-                  style: theme.textTheme.displaySmall?.copyWith(
-                    fontSize: 34,
-                    height: 1.05,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              Entrance(
-                delay: const Duration(milliseconds: 180),
-                child: Text(
-                  l10n.scannerSub,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: TransparenceColors.mute,
-                    height: 1.4,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 36),
-              Entrance(
-                delay: const Duration(milliseconds: 260),
-                slide: 0.1,
-                scaleFrom: 0.94,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: TransparenceRadii.all,
-                    boxShadow: TransparenceShadows.stampStrong,
-                  ),
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: TransparenceColors.lime,
-                      foregroundColor: TransparenceColors.ink,
-                      minimumSize: const Size.fromHeight(64),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: TransparenceRadii.all,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Entrance(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const CeakiMark(size: 48),
+                            const SizedBox(width: 14),
+                            DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: TransparenceColors.lime,
+                              ),
+                              child: const SizedBox(width: 72, height: 10),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    onPressed: _busy ? null : _openCamera,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.qr_code_scanner, size: 26),
-                        const SizedBox(width: 12),
-                        Text(
-                          l10n.scanCta,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: TransparenceColors.ink,
+                      const Spacer(flex: 2),
+                      Entrance(
+                        delay: const Duration(milliseconds: 120),
+                        slide: 0.08,
+                        child: Text(
+                          l10n.scannerHeadline,
+                          style: theme.textTheme.displayMedium?.copyWith(
+                            fontSize: 40,
+                            height: 1.02,
+                            letterSpacing: -1,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      Entrance(
+                        delay: const Duration(milliseconds: 180),
+                        child: Text(
+                          l10n.scannerSub,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            color: TransparenceColors.mute,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 28),
+                      Entrance(
+                        delay: const Duration(milliseconds: 260),
+                        slide: 0.1,
+                        scaleFrom: 0.94,
+                        child: PressScale(
+                          enabled: !_busy,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: TransparenceScenes.lime,
+                              borderRadius: TransparenceRadii.tile,
+                              boxShadow: TransparenceShadows.stampStrong,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+                              child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: TransparenceColors.ink,
+                                  foregroundColor: TransparenceColors.lime,
+                                  minimumSize: const Size.fromHeight(64),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: TransparenceRadii.all,
+                                  ),
+                                ),
+                                onPressed: _busy ? null : _openCamera,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.qr_code_scanner,
+                                      size: 26,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Text(
+                                      l10n.scanCta,
+                                      style: theme.textTheme.titleLarge
+                                          ?.copyWith(
+                                        color: TransparenceColors.lime,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      Entrance(
+                        delay: const Duration(milliseconds: 320),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                            key: ScannerPage.manualToggle,
+                            onPressed: () =>
+                                setState(() => _manual = !_manual),
+                            child: Text(
+                              _manual ? l10n.manualHide : l10n.manualShow,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (_manual) ...[
+                        const SizedBox(height: 8),
+                        TextField(
+                          key: ScannerPage.codeField,
+                          controller: _code,
+                          enabled: !_busy,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            hintText: l10n.codeHint,
+                            errorText: _error,
+                          ),
+                          onSubmitted: (_) => _submit(),
+                        ),
+                        const SizedBox(height: 16),
+                        PressScale(
+                          enabled: !_busy,
+                          child: FilledButton(
+                            key: ScannerPage.submitButton,
+                            onPressed: _busy ? null : _submit,
+                            child: Text(
+                              _busy ? l10n.searching : l10n.seeAttachment,
+                            ),
                           ),
                         ),
                       ],
-                    ),
+                      const Spacer(flex: 1),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 18),
-              Entrance(
-                delay: const Duration(milliseconds: 320),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    key: ScannerPage.manualToggle,
-                    onPressed: () => setState(() => _manual = !_manual),
-                    child: Text(
-                      _manual ? l10n.manualHide : l10n.manualShow,
-                    ),
-                  ),
-                ),
-              ),
-              if (_manual) ...[
-                const SizedBox(height: 8),
-                TextField(
-                  key: ScannerPage.codeField,
-                  controller: _code,
-                  enabled: !_busy,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: l10n.codeHint,
-                    errorText: _error,
-                  ),
-                  onSubmitted: (_) => _submit(),
-                ),
-                const SizedBox(height: 16),
-                FilledButton(
-                  key: ScannerPage.submitButton,
-                  onPressed: _busy ? null : _submit,
-                  child: Text(_busy ? l10n.searching : l10n.seeAttachment),
-                ),
-              ],
-              const Spacer(flex: 1),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

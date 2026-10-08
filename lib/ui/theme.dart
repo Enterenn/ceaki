@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A-fun zine tokens — playful sticker energy, not punk tract.
+/// ZB tokens — zine scenes (Z) + bento tiles (B), fun resistance not punk.
 abstract final class TransparenceColors {
   static const ink = Color(0xFF121214);
   static const paper = Color(0xFFF3F1E9);
@@ -12,10 +12,28 @@ abstract final class TransparenceColors {
   static const mute = Color(0xFF5C5C66);
 }
 
-/// Soft square — fun sticker, not pill.
+/// Soft washes behind Z moments (Scan CTA, alert backdrop).
+abstract final class TransparenceScenes {
+  static const lime = Color(0xFFDCEFA0);
+  static const coral = Color(0xFFFFC2CC);
+  static const solidLime = TransparenceColors.lime;
+  static const solidCoral = TransparenceColors.coral;
+}
+
+/// Saturated fills for B hub tiles (Terrain / Carnet).
+abstract final class TransparenceTiles {
+  static const fortune = TransparenceColors.coral;
+  static const clear = Color(0xFFC5F5DF);
+  static const unknown = TransparenceColors.mist;
+  static const rank = TransparenceColors.lime;
+}
+
+/// Friendly sticker — open a notch from razor square, not social pill.
 abstract final class TransparenceRadii {
-  static const double sm = 2;
+  static const double sm = 10;
+  static const double lg = 16;
   static const BorderRadius all = BorderRadius.all(Radius.circular(sm));
+  static const BorderRadius tile = BorderRadius.all(Radius.circular(lg));
 }
 
 /// Flat offset shadow — sticker lift, no soft blur.

@@ -313,13 +313,13 @@ abstract class AppLocalizations {
   /// No description provided for @notebookTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Ils n’auront pas'**
+  /// **'Reposes'**
   String get notebookTitle;
 
   /// No description provided for @notebookSub.
   ///
   /// In fr, this message translates to:
-  /// **'Ce qu’ils n’ont pas eu, fortune par fortune.'**
+  /// **'Ce que tu as laissé en rayon, fortune par fortune.'**
   String get notebookSub;
 
   /// No description provided for @notebookEmpty.

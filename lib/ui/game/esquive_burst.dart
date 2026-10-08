@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:transparence/domain/library.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
+import 'package:transparence/ui/chrome/stamp_tag.dart';
 import 'package:transparence/ui/theme.dart';
 
-/// Put-back win — lime sticker card with a short entrance.
+/// Put-back win — full lime Z scene.
 class EsquiveBurst extends StatefulWidget {
   const EsquiveBurst({
     required this.line,
@@ -72,54 +73,41 @@ class _EsquiveBurstState extends State<EsquiveBurst>
           alignment: Alignment.topCenter,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: TransparenceColors.lime,
-              borderRadius: TransparenceRadii.all,
+              color: TransparenceScenes.solidLime,
+              borderRadius: TransparenceRadii.tile,
               boxShadow: TransparenceShadows.stampStrong,
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
+              padding: const EdgeInsets.fromLTRB(18, 18, 16, 18),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.brands.isNotEmpty) ...[
-                    BrandMark.forBrand(widget.brands.first, size: 44),
-                    const SizedBox(width: 12),
+                    BrandMark.forBrand(widget.brands.first, size: 48),
+                    const SizedBox(width: 14),
                   ],
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: TransparenceColors.ink,
-                            borderRadius: TransparenceRadii.all,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            child: Text(
-                              l10n.esquiveBadge.toUpperCase(),
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: TransparenceColors.lime,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                          ),
+                        StampTag(
+                          label: l10n.esquiveBadge,
+                          background: TransparenceColors.ink,
+                          foreground: TransparenceColors.lime,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 12),
                         Text(
                           widget.line,
-                          style: theme.textTheme.titleMedium?.copyWith(
+                          style: theme.textTheme.titleLarge?.copyWith(
                             color: TransparenceColors.ink,
                             fontVariations: const [
-                              FontVariation('wght', 700),
+                              FontVariation('wght', 800),
                             ],
+                            height: 1.15,
                           ),
                         ),
                         if (rank != null && rank.isNotEmpty) ...[
-                          const SizedBox(height: 6),
+                          const SizedBox(height: 8),
                           Text(
                             rank,
                             style: theme.textTheme.bodySmall?.copyWith(

@@ -35,16 +35,23 @@ void main() {
 
       expect(find.text('GRANDE FORTUNE'), findsOneWidget);
       expect(
-        find.textContaining('Acheter ça, c’est nourrir'),
+        find.textContaining('mettre des sous dans la poche'),
         findsOneWidget,
       );
       expect(find.text('Pourquoi ?'), findsOneWidget);
       expect(find.text("La traversée de l'été : roman"), findsOneWidget);
       expect(find.text('Je le repose'), findsOneWidget);
 
-      // Decision CTAs sit above the collapsed proof section.
+      // Proof sits below the fold on short surfaces (lazy ListView).
+      final proof = find.text('COMMENT ÇA REMONTE');
+      await tester.scrollUntilVisible(
+        proof,
+        200,
+        scrollable: find.byType(Scrollable).last,
+      );
+      await tester.pumpAndSettle();
       final putBackY = tester.getTopLeft(find.text('Je le repose')).dy;
-      final proofY = tester.getTopLeft(find.text('COMMENT ÇA REMONTE')).dy;
+      final proofY = tester.getTopLeft(proof).dy;
       expect(putBackY < proofY, isTrue);
 
       await tester.tap(find.text('Je le repose'));

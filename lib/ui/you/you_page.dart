@@ -69,34 +69,48 @@ class YouPage extends ConsumerWidget {
                     error: (_, _) => const SizedBox.shrink(),
                     data: (lines) {
                       if (lines.isEmpty) {
-                        return FichePanel(
-                          margin: EdgeInsets.zero,
-                          accent: TransparenceColors.mist,
-                          color: TransparenceColors.mist,
-                          lifted: false,
-                          child: Text(
-                            l10n.notebookEmpty,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: TransparenceColors.mute,
+                        return CustomPaint(
+                          painter: _DashBorderPainter(
+                            color: TransparenceColors.ink,
+                            radius: TransparenceRadii.lg,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+                            child: Text(
+                              l10n.notebookEmpty,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: TransparenceColors.mute,
+                              ),
                             ),
                           ),
                         );
                       }
-                      return Column(
-                        children: [
-                          for (final line in lines) ...[
-                            _NotebookRow(
-                              countLabel:
-                                  l10n.notebookLine(line.name, line.count),
-                              count: line.count,
-                              onTap: () => _open(
-                                context,
-                                FortunePage(fortuneId: line.fortuneId),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                          ],
-                        ],
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          final width = (constraints.maxWidth - 12) / 2;
+                          return Wrap(
+                            spacing: 12,
+                            runSpacing: 12,
+                            children: [
+                              for (final line in lines)
+                                SizedBox(
+                                  width: width,
+                                  child: _FortuneTile(
+                                    name: line.name,
+                                    countLabel: l10n.notebookLine(
+                                      line.name,
+                                      line.count,
+                                    ),
+                                    count: line.count,
+                                    onTap: () => _open(
+                                      context,
+                                      FortunePage(fortuneId: line.fortuneId),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
                       );
                     },
                   ),
@@ -155,13 +169,15 @@ class YouPage extends ConsumerWidget {
   }
 }
 
-class _NotebookRow extends StatelessWidget {
-  const _NotebookRow({
+class _FortuneTile extends StatelessWidget {
+  const _FortuneTile({
+    required this.name,
     required this.countLabel,
     required this.count,
     required this.onTap,
   });
 
+  final String name;
   final String countLabel;
   final int count;
   final VoidCallback onTap;
@@ -169,52 +185,92 @@ class _NotebookRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final progress = (count / 10).clamp(0.08, 1.0);
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: TransparenceRadii.all,
-        child: FichePanel(
-          accent: TransparenceColors.coral,
-          margin: EdgeInsets.zero,
-          padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(countLabel, style: theme.textTheme.titleMedium),
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: TransparenceColors.coral.withValues(alpha: 0.12),
+        borderRadius: TransparenceRadii.tile,
+        child: Ink(
+          decoration: BoxDecoration(
+            color: TransparenceTiles.fortune,
+            borderRadius: TransparenceRadii.tile,
+            boxShadow: TransparenceShadows.stamp,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontVariations: const [FontVariation('wght', 800)],
+                    height: 1.15,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  countLabel,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.9),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ClipRRect(
                   borderRadius: TransparenceRadii.all,
-                  border: Border.all(
-                    color: TransparenceColors.coral.withValues(alpha: 0.4),
+                  child: LinearProgressIndicator(
+                    value: progress,
+                    minHeight: 8,
+                    backgroundColor: Colors.white.withValues(alpha: 0.28),
+                    color: Colors.white,
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  child: Text(
-                    '$count',
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: TransparenceColors.coral,
-                      fontVariations: const [FontVariation('wght', 700)],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.arrow_forward,
-                size: 18,
-                color: TransparenceColors.mute,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _DashBorderPainter extends CustomPainter {
+  _DashBorderPainter({required this.color, required this.radius});
+
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    final rrect = RRect.fromRectAndRadius(
+      Offset.zero & size,
+      Radius.circular(radius),
+    );
+    final path = Path()..addRRect(rrect);
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      const dash = 7.0;
+      const gap = 5.0;
+      while (distance < metric.length) {
+        final next = (distance + dash).clamp(0.0, metric.length);
+        canvas.drawPath(metric.extractPath(distance, next), paint);
+        distance = next + gap;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashBorderPainter oldDelegate) {
+    return oldDelegate.color != color || oldDelegate.radius != radius;
   }
 }

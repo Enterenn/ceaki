@@ -11,6 +11,7 @@ import 'package:transparence/domain/resolve.dart';
 import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/brand/brand_mark.dart';
+import 'package:transparence/ui/chrome/stamp_tag.dart';
 import 'package:transparence/ui/game/esquive_burst.dart';
 import 'package:transparence/ui/library/brand_page.dart';
 import 'package:transparence/ui/library/company_page.dart';
@@ -18,6 +19,7 @@ import 'package:transparence/ui/library/fiche_chrome.dart';
 import 'package:transparence/ui/library/fortune_page.dart';
 import 'package:transparence/ui/library/link_tile.dart';
 import 'package:transparence/ui/motion/entrance.dart';
+import 'package:transparence/ui/motion/press_scale.dart';
 import 'package:transparence/ui/result/fortune_banner.dart';
 import 'package:transparence/ui/result/path_chain.dart';
 import 'package:transparence/ui/theme.dart';
@@ -409,16 +411,10 @@ class _ProductBlock extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (category != null) ...[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              color: TransparenceColors.lime,
-              child: Text(
-                category.toUpperCase(),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: TransparenceColors.ink,
-                  letterSpacing: 0.8,
-                ),
-              ),
+            StampTag(
+              label: category,
+              background: TransparenceColors.lime,
+              foreground: TransparenceColors.ink,
             ),
             const SizedBox(height: 10),
           ],
@@ -510,41 +506,50 @@ class _DecisionActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: TransparenceRadii.all,
-            boxShadow: TransparenceShadows.stampStrong,
-          ),
-          child: FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: TransparenceColors.lime,
-              foregroundColor: TransparenceColors.ink,
-              minimumSize: const Size.fromHeight(58),
-              shape: const RoundedRectangleBorder(
-                borderRadius: TransparenceRadii.all,
-              ),
+        PressScale(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: TransparenceScenes.lime,
+              borderRadius: TransparenceRadii.tile,
+              boxShadow: TransparenceShadows.stampStrong,
             ),
-            onPressed: onPutBack,
-            child: Text(
-              putBackLabel,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: TransparenceColors.ink,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: TransparenceColors.ink,
+                  foregroundColor: TransparenceColors.lime,
+                  minimumSize: const Size.fromHeight(58),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: TransparenceRadii.all,
+                  ),
+                ),
+                onPressed: onPutBack,
+                child: Text(
+                  putBackLabel,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: TransparenceColors.lime,
+                    fontVariations: const [FontVariation('wght', 700)],
+                  ),
+                ),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 10),
-        OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: TransparenceColors.ink,
-            minimumSize: const Size.fromHeight(52),
-            side: const BorderSide(color: TransparenceColors.ink, width: 2),
-            shape: const RoundedRectangleBorder(
-              borderRadius: TransparenceRadii.all,
+        const SizedBox(height: 8),
+        Align(
+          alignment: Alignment.center,
+          child: TextButton(
+            onPressed: onBuy,
+            child: Text(
+              buyLabel,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: TransparenceColors.mute,
+                decoration: TextDecoration.underline,
+                decorationColor: TransparenceColors.mute,
+              ),
             ),
           ),
-          onPressed: onBuy,
-          child: Text(buyLabel),
         ),
       ],
     );

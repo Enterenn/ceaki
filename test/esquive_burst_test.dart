@@ -12,7 +12,7 @@ void main() {
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: EsquiveBurst(
-            line: "Reposé. famille Bolloré n'aura pas celui-ci.",
+            line: "Reposé. la famille Bolloré n'aura pas celui-ci.",
             rankTitle: 'Première esquive',
           ),
         ),
@@ -24,7 +24,7 @@ void main() {
 
     expect(find.text('ESQUIVE'), findsOneWidget);
     expect(
-      find.text("Reposé. famille Bolloré n'aura pas celui-ci."),
+      find.text("Reposé. la famille Bolloré n'aura pas celui-ci."),
       findsOneWidget,
     );
     expect(find.text('Première esquive'), findsOneWidget);

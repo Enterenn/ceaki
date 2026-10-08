@@ -138,14 +138,27 @@ String putBackLine(List<String> fortuneNames) {
     throw ArgumentError.value(fortuneNames, 'fortuneNames');
   }
   final subject = fortuneNames.length == 1
-      ? fortuneNames.single
-      : '${fortuneNames.sublist(0, fortuneNames.length - 1).join(', ')} et ${fortuneNames.last}';
+      ? fortuneWithArticle(fortuneNames.single)
+      : '${fortuneNames.sublist(0, fortuneNames.length - 1).map(fortuneWithArticle).join(', ')} et ${fortuneWithArticle(fortuneNames.last)}';
   final verb = fortuneNames.length == 1 ? "n'aura pas" : "n'auront pas";
   return 'Reposé. $subject $verb celui-ci.';
 }
 
+/// Adds a French article when the fortune label starts with « famille ».
+String fortuneWithArticle(String fortuneName) {
+  final name = fortuneName.trim();
+  final lower = name.toLowerCase();
+  if (lower.startsWith('la ') ||
+      lower.startsWith('le ') ||
+      lower.startsWith('les ')) {
+    return name;
+  }
+  if (lower.startsWith('famille ')) return 'la $name';
+  return name;
+}
+
 String _bannerPunch(String fortuneName) {
-  return 'Acheter ça, c’est nourrir $fortuneName.';
+  return 'Acheter ça, c’est mettre des sous dans la poche de ${fortuneWithArticle(fortuneName)}.';
 }
 
 String _bannerDetail(Library library, BrandChain chain, String fortuneId) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:transparence/domain/player_rank.dart';
 import 'package:transparence/l10n/app_localizations.dart';
-import 'package:transparence/ui/library/fiche_chrome.dart';
+import 'package:transparence/ui/chrome/stamp_tag.dart';
 import 'package:transparence/ui/theme.dart';
 
-/// Soft milestone card — paliers 1 / 10 / 50 without RPG chrome.
+/// Soft milestone — lime B block with a thick progress bar.
 class RankCard extends StatelessWidget {
   const RankCard({required this.rank, super.key});
 
@@ -14,57 +14,54 @@ class RankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return FichePanel(
-      margin: EdgeInsets.zero,
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            l10n.rankEsquives(rank.esquives),
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontVariations: const [FontVariation('wght', 700)],
-            ),
-          ),
-          if (rank.hasMilestone) ...[
-            const SizedBox(height: 8),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: TransparenceColors.lime,
-                borderRadius: TransparenceRadii.all,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: TransparenceTiles.rank,
+        borderRadius: TransparenceRadii.tile,
+        boxShadow: TransparenceShadows.stampStrong,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.rankEsquives(rank.esquives),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                color: TransparenceColors.ink,
+                fontVariations: const [FontVariation('wght', 800)],
+                letterSpacing: -0.4,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: Text(
-                  rank.title,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: TransparenceColors.ink,
-                    fontVariations: const [FontVariation('wght', 700)],
-                  ),
+            ),
+            if (rank.hasMilestone) ...[
+              const SizedBox(height: 12),
+              StampTag(
+                label: rank.title,
+                background: TransparenceColors.ink,
+                foreground: TransparenceColors.lime,
+              ),
+            ],
+            if (!rank.isMax) ...[
+              const SizedBox(height: 16),
+              ClipRRect(
+                borderRadius: TransparenceRadii.all,
+                child: LinearProgressIndicator(
+                  value: rank.progress,
+                  minHeight: 10,
+                  backgroundColor: TransparenceColors.ink.withValues(alpha: 0.12),
+                  color: TransparenceColors.ink,
                 ),
               ),
-            ),
-          ],
-          if (!rank.isMax) ...[
-            const SizedBox(height: 12),
-            ClipRRect(
-              borderRadius: TransparenceRadii.all,
-              child: LinearProgressIndicator(
-                value: rank.progress,
-                minHeight: 4,
-                backgroundColor: TransparenceColors.mist,
-                color: TransparenceColors.ink,
+              const SizedBox(height: 8),
+              Text(
+                l10n.rankNextAt(rank.nextAt!),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: TransparenceColors.ink.withValues(alpha: 0.65),
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              l10n.rankNextAt(rank.nextAt!),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: TransparenceColors.mute,
-              ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

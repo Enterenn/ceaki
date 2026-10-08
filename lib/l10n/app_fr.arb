@@ -41,8 +41,8 @@
   "putBack": "Je le repose",
   "buyAnyway": "Je l’achète quand même",
   "esquiveBadge": "Esquive",
-  "notebookTitle": "Ils n’auront pas",
-  "notebookSub": "Ce qu’ils n’ont pas eu, fortune par fortune.",
+  "notebookTitle": "Reposes",
+  "notebookSub": "Ce que tu as laissé en rayon, fortune par fortune.",
   "notebookEmpty": "Vide. Repose un produit rattaché, ça s’écrit ici.",
   "notebookLine": "{name}, {count} {count, plural, =0{reposés} =1{reposé} other{reposés}}",
   "@notebookLine": {

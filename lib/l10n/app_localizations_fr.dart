@@ -131,10 +131,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get esquiveBadge => 'Esquive';
 
   @override
-  String get notebookTitle => 'Ils n’auront pas';
+  String get notebookTitle => 'Reposes';
 
   @override
-  String get notebookSub => 'Ce qu’ils n’ont pas eu, fortune par fortune.';
+  String get notebookSub =>
+      'Ce que tu as laissé en rayon, fortune par fortune.';
 
   @override
   String get notebookEmpty =>
