@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:transparence/domain/library.dart';
 import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/chrome/stamp_tag.dart';
 import 'package:transparence/ui/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FortuneBannerView extends StatefulWidget {
-  const FortuneBannerView({required this.banner, super.key});
+  const FortuneBannerView({
+    required this.banner,
+    required this.library,
+    super.key,
+  });
 
   final FortuneBanner banner;
+  final Library library;
 
   @override
   State<FortuneBannerView> createState() => _FortuneBannerViewState();
@@ -25,7 +32,7 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
 
     return Semantics(
       container: true,
-      label: '$grandeFortuneTitle. ${banner.title}. ${banner.body}',
+      label: '${banner.verdict}. ${banner.title}. ${banner.body}',
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
         child: DecoratedBox(
@@ -40,7 +47,7 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 StampTag(
-                  label: grandeFortuneTitle,
+                  label: banner.verdict,
                   background: TransparenceColors.ink,
                   foreground: Colors.white,
                   tilt: -0.045,
@@ -98,14 +105,40 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
                     curve: Curves.easeOutCubic,
                     alignment: Alignment.topCenter,
                     child: _open
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              banner.detail,
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.95),
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                  banner.detail,
+                                  style: theme.textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.95),
+                                  ),
+                                ),
                               ),
-                            ),
+                              if (banner.sources.isNotEmpty) ...[
+                                const SizedBox(height: 12),
+                                Text(
+                                  'Sources :',
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.9),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  children: [
+                                    for (final sourceId in banner.sources)
+                                      _SourceLink(
+                                        library: widget.library,
+                                        sourceId: sourceId,
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ],
                           )
                         : const SizedBox(width: double.infinity),
                   ),
@@ -116,5 +149,36 @@ class _FortuneBannerViewState extends State<FortuneBannerView> {
         ),
       ),
     );
+  }
+}
+
+class _SourceLink extends StatelessWidget {
+  const _SourceLink({required this.library, required this.sourceId});
+
+  final Library library;
+  final String sourceId;
+
+  @override
+  Widget build(BuildContext context) {
+    final source = library.sourceOrNull(sourceId);
+    if (source == null) return const SizedBox();
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: () => _launchUrl(source.url),
+      child: Text(
+        source.title,
+        style: theme.textTheme.bodySmall?.copyWith(
+          color: Colors.white,
+          decoration: TextDecoration.underline,
+          decorationColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }

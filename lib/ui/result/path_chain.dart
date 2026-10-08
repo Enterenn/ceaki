@@ -5,6 +5,7 @@ import 'package:transparence/domain/wording.dart';
 import 'package:transparence/l10n/app_localizations.dart';
 import 'package:transparence/ui/library/holding_list.dart';
 import 'package:transparence/ui/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PathChain extends StatelessWidget {
   const PathChain({
@@ -147,7 +148,7 @@ class _OwnerBranch extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _OwnerTile(library: library, holding: holding, depth: depth),
-                if (child != null) child!,
+                if (child != null) ...[child!],
                 if (child == null)
                   for (var i = 0; i < holding.above.length; i++)
                     _OwnerBranch(
@@ -184,6 +185,7 @@ class _OwnerTile extends StatelessWidget {
       OwnerKind.company => library.company(holding.owner.id).name,
       OwnerKind.fortune => library.fortune(holding.owner.id).name,
     };
+    final source = holding.sourceId != null ? library.sourceOrNull(holding.sourceId!) : null;
     return Padding(
       padding: EdgeInsets.fromLTRB(depth == 0 ? 16 : 4, 6, 16, 6),
       child: Column(
@@ -207,6 +209,20 @@ class _OwnerTile extends StatelessWidget {
               color: TransparenceColors.mute,
             ),
           ),
+          if (source != null) ...[
+            const SizedBox(height: 2),
+            InkWell(
+              onTap: () => _launchUrl(source.url),
+              child: Text(
+                'Source : ${source.title}',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: TransparenceColors.mute,
+                  decoration: TextDecoration.underline,
+                  decorationColor: TransparenceColors.mute,
+                ),
+              ),
+            ),
+          ],
           if (holding.stoppedForDepth) ...[
             const SizedBox(height: 4),
             Text(l10n.chainCut),
@@ -218,6 +234,12 @@ class _OwnerTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }
 

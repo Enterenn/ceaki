@@ -97,7 +97,7 @@ class _ResultBody extends ConsumerWidget {
             Entrance(
               slide: 0.08,
               scaleFrom: 0.96,
-              child: FortuneBannerView(banner: banner),
+              child: FortuneBannerView(banner: banner, library: library),
             ),
           if (scan.banners.isEmpty && scan.state != null)
             Entrance(

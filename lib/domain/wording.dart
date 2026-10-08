@@ -29,6 +29,8 @@ final class FortuneBanner {
     required this.title,
     required this.punch,
     required this.detail,
+    required this.verdict,
+    required this.sources,
   });
 
   final String fortuneId;
@@ -39,6 +41,12 @@ final class FortuneBanner {
 
   /// Ownership figures, shown under « Pourquoi ? ».
   final String detail;
+
+  /// Reformulated verdict (e.g., "Sous contrôle de [X]", "Cotée en bourse").
+  final String verdict;
+
+  /// List of source IDs for the ownership chain.
+  final List<String> sources;
 
   String get body => detail.isEmpty ? punch : '$punch $detail';
 }
@@ -102,11 +110,26 @@ String labelFor(ChainState state) {
   };
 }
 
+String verdictLabel(ChainState state, bool isListed) {
+  return switch (state) {
+    ChainState.signaled => isListed ? 'Cotée en bourse' : 'Grande fortune',
+    ChainState.alertMuted => 'Aucun acteur de référence',
+    ChainState.noDocumentedFortune => 'Aucun acteur de référence',
+    ChainState.currentOwnerUndocumented => 'Pas encore référencé',
+  };
+}
+
 List<FortuneBanner> bannersFor({
   required Library library,
   required BrandChain chain,
   required Set<String> excludedFortuneIds,
 }) {
+  final state = chainState(chain.chain, excludedFortuneIds);
+  final isListed = chain.chain.owners.any((owner) =>
+    owner.owner.kind == OwnerKind.company &&
+    library.company(owner.ownedCompanyId).role == 'listed'
+  );
+  
   return [
     for (final fortuneId in chain.chain.fortuneIds)
       if (!excludedFortuneIds.contains(fortuneId))
@@ -115,8 +138,26 @@ List<FortuneBanner> bannersFor({
           title: library.fortune(fortuneId).name,
           punch: _bannerPunch(library.fortune(fortuneId).name),
           detail: _bannerDetail(library, chain, fortuneId),
+          verdict: verdictLabel(state, isListed),
+          sources: _collectSources(chain.chain),
         ),
   ];
+}
+
+List<String> _collectSources(CompanyChain chain) {
+  final sources = <String>{};
+  void walk(Holding holding) {
+    if (holding.sourceId != null) {
+      sources.add(holding.sourceId!);
+    }
+    for (final next in holding.above) {
+      walk(next);
+    }
+  }
+  for (final owner in chain.owners) {
+    walk(owner);
+  }
+  return sources.toList();
 }
 
 List<String> documentedOwnerNames(Library library, List<BrandChain> chains) {

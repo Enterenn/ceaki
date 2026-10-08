@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "app.transparence.transparence"
+    namespace = "app.ceaki"
     // permission_handler_android requires API 37; Flutter defaults to 36 today.
     compileSdk = 37
     ndkVersion = flutter.ndkVersion
@@ -25,7 +25,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "app.transparence.capitalistique"
+        applicationId = "app.ceaki"
         minSdk = 33
         targetSdk = flutter.targetSdkVersion
         // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
