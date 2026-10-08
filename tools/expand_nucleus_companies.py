@@ -14,6 +14,54 @@ LOGO_NOTE = (
 
 COMPANIES = [
     {
+        "id": "company.e-leclerc",
+        "name": "E.Leclerc",
+        "aliases": ["Leclerc", "E Leclerc"],
+        "country": "FR",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
+        "id": "company.intermarche",
+        "name": "Intermarché",
+        "aliases": ["Les Mousquetaires", "ITM"],
+        "country": "FR",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
+        "id": "company.lidl",
+        "name": "Lidl",
+        "aliases": ["Lidl France"],
+        "country": "DE",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
+        "id": "company.aldi",
+        "name": "Aldi",
+        "aliases": ["Aldi Nord", "Aldi Sud"],
+        "country": "DE",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
+        "id": "company.spar",
+        "name": "Spar",
+        "aliases": [],
+        "country": "NL",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
+        "id": "company.netto",
+        "name": "Netto",
+        "aliases": [],
+        "country": "DK",
+        "siren": None,
+        "role": "groupe opérationnel",
+    },
+    {
         "id": "company.danone",
         "name": "Danone",
         "aliases": ["Danone SA", "Groupe Danone"],
@@ -152,6 +200,16 @@ BRANDS = [
     ("brand.nivea", "Nivea", ["NIVEA"], "hygiene", "company.beiersdorf", "nivea"),
     # Retail
     ("brand.carrefour", "Carrefour", [], "distribution", "company.carrefour", "carrefour"),
+    ("brand.relay", "Relay", ["Relay SA"], "distribution", "company.lagardere-sa", "relay"),
+    ("brand.leclerc", "E.Leclerc", ["Leclerc", "E Leclerc"], "distribution", "company.e-leclerc", "leclerc"),
+    ("brand.monoprix", "Monoprix", [], "distribution", "company.casino", "monoprix"),
+    ("brand.intermarche", "Intermarché", ["Intermarché Super"], "distribution", "company.intermarche", "intermarche"),
+    ("brand.lidl", "Lidl", [], "distribution", "company.lidl", "lidl"),
+    ("brand.aldi", "Aldi", [], "distribution", "company.aldi", "aldi"),
+    ("brand.casino", "Casino", [], "distribution", "company.casino", "casino"),
+    ("brand.franprix", "Franprix", [], "distribution", "company.casino", "franprix"),
+    ("brand.spar", "Spar", [], "distribution", "company.spar", "spar"),
+    ("brand.netto", "Netto", [], "distribution", "company.netto", "netto"),
     # Edition (company known, no fortune in nucleus yet)
     ("brand.gallimard", "Gallimard", ["Éditions Gallimard"], "edition", "company.gallimard", "gallimard"),
     ("brand.folio", "Folio", [], "edition", "company.gallimard", "folio"),
@@ -162,6 +220,28 @@ BRANDS = [
 ]
 
 OWNERSHIPS = [
+    {
+        "ownedCompanyId": "company.relay",
+        "owner": {"type": "company", "id": "company.lagardere-sa"},
+        "capitalPercent": 100,
+        "votingPercent": 100,
+        "linkType": "control",
+        "factDate": "2024-12-31",
+        "sourceId": "source.relay-lagardere",
+        "status": "active",
+        "note": "Relay est une filiale à 100% de Lagardère SA.",
+    },
+    {
+        "ownedCompanyId": "company.lagardere-sa",
+        "owner": {"type": "fortune", "id": "fortune.bollore"},
+        "capitalPercent": None,
+        "votingPercent": None,
+        "linkType": "control",
+        "factDate": "2024-12-31",
+        "sourceId": "source.lagardere-bollore",
+        "status": "active",
+        "note": "Lagardère SA est contrôlée par la famille Bolloré.",
+    },
     {
         "ownedCompanyId": "company.gallimard",
         "owner": {"type": "company", "id": "company.madrigall"},
@@ -192,6 +272,18 @@ SOURCES = [
         "title": "Le groupe Madrigall",
         "url": "https://www.gallimard.fr/",
         "publisher": "Gallimard / Madrigall",
+    },
+    {
+        "id": "source.relay-lagardere",
+        "title": "Relay - Filiale de Lagardère",
+        "url": "https://www.relay.com/fr",
+        "publisher": "Lagardère SA",
+    },
+    {
+        "id": "source.lagardere-bollore",
+        "title": "Lagardère - Contrôle par la famille Bolloré",
+        "url": "https://www.lagardere.com/fr",
+        "publisher": "Lagardère SA",
     },
 ]
 

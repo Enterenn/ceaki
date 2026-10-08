@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.5",
+  "version": "2026.10.3",
   "updatedOn": "2026-10-06",
   "sectors": [
     "edition",
@@ -96,6 +96,18 @@
       "title": "Rapport financier et déclaration de performance extra-financière",
       "url": "https://www.auchan-retail.com/storage/app/uploads/public/66a/c76/e2e/66ac76e2e89c3389924940.pdf",
       "publisher": "ELO / Auchan Retail"
+    },
+    {
+      "id": "source.relay-lagardere",
+      "title": "Relay - Filiale de Lagardère",
+      "url": "https://www.relay.com/fr",
+      "publisher": "Lagardère SA"
+    },
+    {
+      "id": "source.lagardere-bollore",
+      "title": "Lagardère - Contrôle par la famille Bolloré",
+      "url": "https://www.lagardere.com/fr",
+      "publisher": "Lagardère SA"
     }
   ],
   "fortunes": [
@@ -572,6 +584,65 @@
       "country": "FR",
       "siren": null,
       "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.e-leclerc",
+      "name": "E.Leclerc",
+      "aliases": [
+        "Leclerc",
+        "E Leclerc"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.intermarche",
+      "name": "Intermarché",
+      "aliases": [
+        "Les Mousquetaires",
+        "ITM"
+      ],
+      "country": "FR",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.lidl",
+      "name": "Lidl",
+      "aliases": [
+        "Lidl France"
+      ],
+      "country": "DE",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.aldi",
+      "name": "Aldi",
+      "aliases": [
+        "Aldi Nord",
+        "Aldi Sud"
+      ],
+      "country": "DE",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.spar",
+      "name": "Spar",
+      "aliases": [],
+      "country": "NL",
+      "siren": null,
+      "role": "groupe opérationnel"
+    },
+    {
+      "id": "company.netto",
+      "name": "Netto",
+      "aliases": [],
+      "country": "DK",
+      "siren": null,
+      "role": "groupe opérationnel"
     }
   ],
   "brands": [
@@ -939,11 +1010,7 @@
       "id": "brand.coca-cola",
       "name": "Coca-Cola",
       "aliases": [
-        "COCA COLA",
-        "COCA-COLA SERVICES SA/NV",
         "Coca Cola",
-        "Coca-Cola Services",
-        "Coca-Cola Services SA",
         "Coke"
       ],
       "sectors": [
@@ -1287,6 +1354,103 @@
       "companyId": "company.loreal",
       "logoAsset": "assets/logos/lancome.png",
       "logoSource": "Monogramme Céaki — identité géométrique, pas une reproduction de marque déposée"
+    },
+    {
+      "id": "brand.relay",
+      "name": "Relay",
+      "aliases": [
+        "Relay SA"
+      ],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.lagardere-sa"
+    },
+    {
+      "id": "brand.leclerc",
+      "name": "E.Leclerc",
+      "aliases": [
+        "Leclerc",
+        "E Leclerc"
+      ],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.e-leclerc"
+    },
+    {
+      "id": "brand.monoprix",
+      "name": "Monoprix",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.casino"
+    },
+    {
+      "id": "brand.intermarche",
+      "name": "Intermarché",
+      "aliases": [
+        "Intermarché Super"
+      ],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.intermarche"
+    },
+    {
+      "id": "brand.lidl",
+      "name": "Lidl",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.lidl"
+    },
+    {
+      "id": "brand.aldi",
+      "name": "Aldi",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.aldi"
+    },
+    {
+      "id": "brand.casino",
+      "name": "Casino",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.casino"
+    },
+    {
+      "id": "brand.franprix",
+      "name": "Franprix",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.casino"
+    },
+    {
+      "id": "brand.spar",
+      "name": "Spar",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.spar"
+    },
+    {
+      "id": "brand.netto",
+      "name": "Netto",
+      "aliases": [],
+      "sectors": [
+        "distribution"
+      ],
+      "companyId": "company.netto"
     }
   ],
   "ownerships": [
@@ -1695,6 +1859,34 @@
       "sourceId": "source.elo-rfa-2023",
       "status": "active",
       "note": "ELO réunit Auchan Retail et New Immo Holding."
+    },
+    {
+      "ownedCompanyId": "company.relay",
+      "owner": {
+        "type": "company",
+        "id": "company.lagardere-sa"
+      },
+      "capitalPercent": 100,
+      "votingPercent": 100,
+      "linkType": "control",
+      "factDate": "2024-12-31",
+      "sourceId": "source.relay-lagardere",
+      "status": "active",
+      "note": "Relay est une filiale à 100% de Lagardère SA."
+    },
+    {
+      "ownedCompanyId": "company.lagardere-sa",
+      "owner": {
+        "type": "fortune",
+        "id": "fortune.bollore"
+      },
+      "capitalPercent": null,
+      "votingPercent": null,
+      "linkType": "control",
+      "factDate": "2024-12-31",
+      "sourceId": "source.lagardere-bollore",
+      "status": "active",
+      "note": "Lagardère SA est contrôlée par la famille Bolloré."
     }
   ]
 }
