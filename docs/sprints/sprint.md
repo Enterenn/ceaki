@@ -2,7 +2,7 @@
 **Objectif** : Reformuler le verdict et "Pourquoi ?", ajouter la recherche texte, créer les fiches enseignes, gérer le cas "pas encore référencé", mettre à jour la page À propos, et créer la base de données initiale.
 
 **Tâches** :
-1. Reformuler le verdict et "Pourquoi ?" avec sources et dates (F3, F4)
+1. ~~Reformuler le verdict et "Pourquoi ?" avec sources et dates (F3, F4)~~ ✅
 2. Ajouter un champ de recherche texte sur l'écran Scan (F2)
 3. Créer l'entité "Enseigne" et ajouter 30-50 enseignes majeures (F6)
 4. Ajouter le sélecteur d'enseigne facultatif (F5)
