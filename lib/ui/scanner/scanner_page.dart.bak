@@ -25,7 +25,6 @@ class ScannerPage extends ConsumerStatefulWidget {
 
 class _ScannerPageState extends ConsumerState<ScannerPage> {
   final _code = TextEditingController();
-  final _search = TextEditingController();
   String? _error;
   var _busy = false;
   var _manual = false;
@@ -33,7 +32,6 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
   @override
   void dispose() {
     _code.dispose();
-    _search.dispose();
     super.dispose();
   }
 
@@ -140,23 +138,6 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                           ),
                         ),
                       ),
-                       const SizedBox(height: 18),
-                       Entrance(
-                         delay: const Duration(milliseconds: 280),
-                         child: TextField(
-                           controller: _search,
-                           enabled: !_busy,
-                           keyboardType: TextInputType.text,
-                           textInputAction: TextInputAction.search,
-                           decoration: InputDecoration(
-                             hintText: l10n.searchHint,
-                             prefixIcon: const Icon(Icons.search),
-                             border: const OutlineInputBorder(),
-                           ),
-                           onSubmitted: _searchProduct,
-                         ),
-                       ),
-                       const SizedBox(height: 8),
                       const SizedBox(height: 18),
                       Entrance(
                         delay: const Duration(milliseconds: 320),
@@ -255,27 +236,5 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
       GtinReject.unrecognized => l10n.codeUnrecognized,
       GtinReject.invalidCheck => l10n.codeInvalidCheck,
     };
-  }
-
-  Future<void> _searchProduct(String query) async {
-    if (_busy || query.isEmpty) return;
-    setState(() {
-      _busy = true;
-      _error = null;
-    });
-    try {
-      final library = await ref.read(capitalLibraryProvider.future);
-      final id = await ref.read(scanBookProvider).search(query, library);
-      if (!mounted) return;
-      setState(() => _busy = false);
-      await Navigator.of(
-        context,
-      ).push(MaterialPageRoute<void>(builder: (_) => ResultPage(scanId: id)));
-    } catch (_) {
-      if (!mounted) return;
-      setState(() => _error = AppLocalizations.of(context).productUnknown);
-    } finally {
-      if (mounted && _busy) setState(() => _busy = false);
-    }
   }
 }

@@ -277,6 +277,25 @@ class ScanBook {
 
   Future<bool> buyAnyway(int id) => database.buyAnyway(id);
 
+  Future<int> search(String query, Library library) async {
+    final id = await database.insertScan(
+      ScansCompanion.insert(
+        scannedAt: _now(),
+        gtin: query,
+        productName: Value.absent(),
+        creator: Value.absent(),
+        category: Value.absent(),
+        brandNames: Value.absent(),
+        signaledFortuneIds: Value.absent(),
+        signaledFortuneNames: Value.absent(),
+        libraryVersion: library.version,
+        issue: ScanIssue.brandUnknown.name,
+        chosenBrandIds: Value.absent(),
+      ),
+    );
+    return id;
+  }
+
   ProductCatalog _catalogFor(Gtin gtin) {
     return gtin.codeCategory == CodeCategory.livre ? books : other;
   }

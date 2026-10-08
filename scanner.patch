@@ -1,0 +1,71 @@
+--- a/lib/ui/scanner/scanner_page.dart
++++ b/lib/ui/scanner/scanner_page.dart
+@@ -25,6 +25,7 @@ class ScannerPage extends ConsumerStatefulWidget {
+ 
+ class _ScannerPageState extends ConsumerState<ScannerPage> {
+   final _code = TextEditingController();
++  final _search = TextEditingController();
+   String? _error;
+   var _busy = false;
+   var _manual = false;
+@@ -33,6 +34,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
+ 
+   @override
+   void dispose() {
+     _code.dispose();
++    _search.dispose();
+     super.dispose();
+   }
+ 
+@@ -140,6 +142,18 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
+                       ),
+                       const SizedBox(height: 18),
+                       Entrance(
++                        delay: const Duration(milliseconds: 280),
++                        child: TextField(
++                          controller: _search,
++                          enabled: !_busy,
++                          keyboardType: TextInputType.text,
++                          textInputAction: TextInputAction.search,
++                          decoration: InputDecoration(
++                            hintText: l10n.searchHint,
++                            prefixIcon: const Icon(Icons.search),
++                            border: const OutlineInputBorder(),
++                          ),
++                          onSubmitted: _searchProduct,
++                        ),
++                      ),
++                      const SizedBox(height: 8),
++                      Entrance(
+                         delay: const Duration(milliseconds: 320),
+                         child: Align(
+                           alignment: Alignment.centerLeft,
+@@ -209,6 +223,28 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
+         await _open(gtin);
+     }
+   }
++
++  Future<void> _searchProduct(String query) async {
++    if (_busy || query.isEmpty) return;
++    setState(() {
++      _busy = true;
++      _error = null;
++    });
++    try {
++      final library = await ref.read(capitalLibraryProvider.future);
++      final id = await ref.read(scanBookProvider).search(query, library);
++      if (!mounted) return;
++      setState(() => _busy = false);
++      await Navigator.of(
++        context,
++      ).push(MaterialPageRoute<void>(builder: (_) => ResultPage(scanId: id)));
++    } catch (_) {
++      if (!mounted) return;
++      setState(() => _error = AppLocalizations.of(context).productUnknown);
++    } finally {
++      if (mounted && _busy) setState(() => _busy = false);
++    }
++  }
+ 
+   Future<void> _open(Gtin gtin) async {
+     final l10n = AppLocalizations.of(context);
